@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="cs" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskTým · Trénink FMEA</title>
+<meta name="description" content="RiskTým: moderuj FMEA poradu týmu nad montáží aku vrtacího šroubováku. Následky na třech úrovních, příčiny podle 4M, hodnocení S, O, D, priorita AP, kontrolní plán a reklamace 8D.">
+<style>
+/* písmo Inter (licence SIL OFL) je uložené u webu, stránka nic nenačítá z Googlu */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+:root{
+  --bg:#f3f5f8; --panel:#ffffff; --panel-2:#f6f8fb; --text:#111827; --muted:#5b6475; --line:#e2e7ef;
+  --brand:#0f2742; --brand-2:#1d4ed8; --amber:#f59e0b;
+  --good:#15803d; --good-bg:#e9f7ee; --part:#a16207; --part-bg:#fdf5e1; --bad:#b91c1c; --bad-bg:#fdecec;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 10px 30px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1220; --panel:#131c2e; --panel-2:#18233a; --text:#e8edf5; --muted:#9aa6ba; --line:#253149;
+    --brand:#0a1a2f; --brand-2:#7aa2ff;
+    --good:#4ade80; --good-bg:#10291c; --part:#fbbf24; --part-bg:#2b230e; --bad:#f87171; --bad-bg:#2e1414;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1220; --panel:#131c2e; --panel-2:#18233a; --text:#e8edf5; --muted:#9aa6ba; --line:#253149;
+  --brand:#0a1a2f; --brand-2:#7aa2ff;
+  --good:#4ade80; --good-bg:#10291c; --part:#fbbf24; --part-bg:#2b230e; --bad:#f87171; --bad-bg:#2e1414;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding-left:16px;padding-right:16px}
+.hidden{display:none !important}
+h1,h2,h3{letter-spacing:-.015em;line-height:1.2}
+p{margin:.45em 0}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.85rem;font-weight:600;color:var(--muted)}
+a{color:var(--brand-2)}
+
+.top{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);color:var(--text);position:relative;border-bottom:1px solid var(--line)}
+.top::after{content:none}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:66px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none}
+.logo small{display:block;font-weight:500;font-size:.75rem;opacity:.75}
+.top .spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);white-space:nowrap;text-decoration:none}
+@media (max-width:480px){.pill{display:none}}
+
+.btn{appearance:none;border:0;border-radius:11px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer;background:var(--brand-2);color:#fff;transition:transform .08s ease,filter .15s ease;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 4px 14px rgba(29,78,216,.25)}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn.big{padding:15px 28px;font-size:1.08rem}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.choice:focus-visible,input:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn:not(.ghost){color:#0b1220}}
+:root[data-theme="dark"] .btn:not(.ghost){color:#0b1220}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+@media (max-width:640px){.card{padding:18px}}
+main{padding-top:24px;padding-bottom:6px}
+.section{margin-top:16px}
+
+/* úvod */
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:2.1rem;margin:.2em 0 .5em}
+@media (max-width:640px){.hero h1{font-size:1.6rem}}
+.msg{display:flex;gap:14px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:16px}
+.avatar{flex:none;width:48px;height:48px;border-radius:50%;background:#0f2742;display:grid;place-items:center;color:#fff;font-weight:800}
+.msg .who{font-weight:700}
+.msg .who span{font-weight:500;color:var(--muted);font-size:.85rem}
+.msg p{margin:.35em 0 0}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0 6px;font-weight:700}
+.formula .f{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--panel-2);text-align:center;line-height:1.2}
+.formula .f small{display:block;font-weight:500;color:var(--muted);font-size:.75rem}
+.formula .f.r{background:var(--brand);color:#fff;border-color:transparent}
+.formula .f.r small{color:#b8c7da}
+.side{display:grid;gap:18px}
+.side h3{margin:0 0 10px;font-size:1rem}
+.scoring{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.scoring li{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;border-bottom:1px dashed var(--line);padding-bottom:7px}
+.scoring li:last-child{border-bottom:0;padding-bottom:0}
+.plus{color:var(--good)}
+.steps-mini{margin:0;padding-left:1.2em;font-size:.92rem}
+.steps-mini li{margin:.3em 0}
+
+/* průběh */
+.progress{display:flex;gap:6px;margin:0 0 14px}
+.progress i{flex:1;height:6px;border-radius:99px;background:var(--line)}
+.progress i.done{background:var(--good)} .progress i.now{background:var(--brand-2)}
+.row-head{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+@media (max-width:700px){.row-head{grid-template-columns:1fr}}
+.fact{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fact span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.fact b{font-size:.98rem}
+.fact.fail{border-color:#dc2626;background:var(--bad-bg)}
+h2.q{font-size:1.15rem;margin:18px 0 10px}
+.choices{display:grid;gap:10px}
+.choice{appearance:none;width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border-radius:13px;border:1.5px solid var(--line);background:var(--panel);color:var(--text);font:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.choice:hover{border-color:var(--brand-2)}
+.choice .dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--brand-2)}
+.choice small{display:block;color:var(--muted);font-size:.84rem}
+.choice.picked{border-color:var(--brand-2);background:var(--panel-2)}
+.verdict{border-radius:12px;padding:11px 14px;font-weight:700;margin-top:12px}
+.verdict.ok{background:var(--good-bg);color:var(--good)}
+.verdict.part{background:var(--part-bg);color:var(--part)}
+.verdict.bad{background:var(--bad-bg);color:var(--bad)}
+.why{margin-top:10px;padding-left:12px;border-left:3px solid var(--line)}
+
+.sliders{display:grid;gap:14px;margin-top:6px}
+.sl{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--panel)}
+.sl .top-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sl label{font-weight:700}
+.sl label small{font-weight:500;color:var(--muted)}
+.sl output{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums;min-width:2ch;text-align:right}
+.sl .ctx{font-size:.85rem;color:var(--muted);margin:2px 0 8px}
+.sl .ctx b{color:var(--text);font-weight:600}
+.sl .desc{font-size:.9rem;margin-top:6px;min-height:1.4em}
+input[type=range]{width:100%;accent-color:var(--brand-2);height:28px}
+.ticks{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);padding:0 4px}
+.rpn-box{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:14px;border-radius:14px;padding:14px;background:var(--panel-2);border:1px solid var(--line)}
+.rpn-box .num{font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.rpn-box .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.bar{flex:1;min-width:160px;height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;transition:width .6s ease,background .3s}
+.cmp{display:grid;grid-template-columns:auto repeat(4,1fr);gap:6px;margin-top:12px;font-size:.92rem;align-items:center}
+.cmp div{padding:6px 8px;border-radius:8px;text-align:center;background:var(--panel-2)}
+.cmp .h{background:none;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.cmp .l{text-align:left;background:none;font-weight:600}
+.cmp .ok{background:var(--good-bg);color:var(--good);font-weight:800}
+.cmp .part{background:var(--part-bg);color:var(--part);font-weight:800}
+.cmp .bad{background:var(--bad-bg);color:var(--bad);font-weight:800}
+.after{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px;font-weight:700}
+.after .arrow{font-size:1.4rem;color:var(--muted)}
+.pill2{border-radius:10px;padding:8px 12px;background:var(--panel-2);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.actions-row{display:flex;justify-content:flex-end;margin-top:16px}
+.next-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:14px 16px;border-radius:14px;border:2px dashed var(--brand-2);background:var(--panel-2);font-weight:600}
+@media (max-width:640px){.next-box .btn{width:100%;justify-content:center}}
+
+/* formulář FMEA - papír */
+.sheet{background:#fff;color:#111827;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.08),0 18px 40px rgba(0,0,0,.12);padding:26px 26px 20px;border-top:6px solid #0f2742;font-size:12.5px}
+@media (max-width:640px){.sheet{padding:18px 12px}}
+.sheet .sh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-bottom:2px solid #0f2742;padding-bottom:10px;margin-bottom:12px}
+.sheet h2{margin:0;font-size:1.25rem;letter-spacing:.02em}
+.sheet .sub{color:#4b5563;font-size:.8rem}
+.sheet dl{display:grid;grid-template-columns:auto auto;gap:2px 12px;margin:0;font-size:.78rem}
+.sheet dt{color:#6b7280} .sheet dd{margin:0;font-weight:700}
+.tbl{overflow-x:auto}
+.sheet table{width:100%;border-collapse:collapse;min-width:980px}
+.sheet th{background:#e5e9f0;color:#1f2937;font-size:.68rem;text-transform:uppercase;letter-spacing:.03em;padding:6px 5px;border:1px solid #c5ccd6;vertical-align:bottom;line-height:1.2}
+.sheet th.n{width:34px;text-align:center}
+.sheet th.g{background:#0f2742;color:#fff}
+.sheet td{border:1px solid #d6dbe3;padding:6px 5px;vertical-align:top;line-height:1.35}
+.sheet td.n{text-align:center;font-weight:800;font-size:.95rem}
+.sheet td.n.ok{background:#e7f6ec;color:#166534} .sheet td.n.part{background:#fdf3dc;color:#8a5300} .sheet td.n.bad{background:#fde4e4;color:#991b1b}
+.sheet td.rpn{text-align:center;font-weight:800}
+.sheet tr.empty td{color:#9ca3af;font-style:italic}
+.sheet .note{margin-top:12px;font-size:.74rem;color:#6b7280}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:.74rem;color:#4b5563}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+/* výsledky */
+.res-head{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+@media (max-width:640px){.res-head{grid-template-columns:1fr;justify-items:start}}
+.ring-score{position:relative;width:156px;height:156px}
+.ring-score svg{width:156px;height:156px;transform:rotate(-90deg)}
+.ring-score .val{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-score .val b{font-size:2.1rem;line-height:1}
+.ring-score .val span{font-size:.8rem;color:var(--muted)}
+.rank{font-size:1.7rem;font-weight:800;margin:.1em 0}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tile span{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.tile b{font-size:1.45rem;font-variant-numeric:tabular-nums}
+.info{border-left:4px solid var(--amber)}
+.cta{background:#0f2742;color:#fff;border:0}
+.cta h2{margin:0 0 6px}
+.cta p,.cta li{color:#d6e0ee}
+.cta ol{margin:.6em 0 0;padding-left:1.2em}
+.cta .btn{background:#fff;color:#0f2742}
+
+.float{position:fixed;z-index:30;pointer-events:none;font-weight:800;font-size:1.15rem;padding:4px 12px;border-radius:99px;color:#fff;transform:translate(-50%,-50%);animation:floatUp 1.4s ease-out forwards;white-space:nowrap}
+@keyframes floatUp{0%{opacity:0;transform:translate(-50%,-30%) scale(.8)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}100%{opacity:0;transform:translate(-50%,-160%)}}
+.float.ok{background:#16a34a} .float.part{background:#d97706} .float.bad{background:#dc2626}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+@media (prefers-reduced-motion: reduce){.float{animation-duration:.01s}.bar i{transition:none}}
+footer{font-size:.82rem;color:var(--muted);padding:22px 0 30px;margin-top:10px}
+@media print{
+  body{background:#fff}
+  body *{visibility:hidden}
+  body:not([data-print=record]) #sheet, body:not([data-print=record]) #sheet *{visibility:visible}
+  body:not([data-print=record]) #sheet{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:0}
+  body[data-print=record] #record, body[data-print=record] #record *{visibility:visible}
+  body[data-print=record] #record{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:0}
+  body[data-print=record] #record input{border:0;border-bottom:1px solid #9ca3af;border-radius:0}
+  .no-print{display:none !important}
+  .sheet table{min-width:0;font-size:10px}
+  @page{size:landscape}
+}
+
+/* ===== porada ===== */
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media (max-width:760px){.team{grid-template-columns:repeat(2,1fr)}}
+.member{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--panel)}
+.av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem}
+.member b{display:block;font-size:.95rem;line-height:1.2}
+.member small{color:var(--muted);font-size:.78rem;line-height:1.2;display:block}
+.substeps{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.substeps span{font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted)}
+.substeps span.now{background:var(--brand-2);color:#fff;border-color:transparent}
+.substeps span.done{color:var(--good);border-color:var(--good)}
+.zz{display:inline-block;font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:99px;background:#fde68a;color:#78350f;margin-left:6px;vertical-align:2px}
+.askcard{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--panel);margin-top:12px}
+.askcard h3{margin:0 0 6px;font-size:1.1rem}
+.askcard .hint{font-size:1.02rem;color:var(--text);line-height:1.45;margin:0 0 12px}
+.who-btns{display:flex;flex-wrap:wrap;gap:6px}
+.who-btn{appearance:none;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--panel);color:var(--text);border-radius:99px;padding:3px 10px 3px 3px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;gap:6px}
+.who-btn:hover{border-color:var(--brand-2)}
+.who-btn .av{width:22px;height:22px;font-size:.6rem}
+.who-btn:disabled{cursor:default;opacity:.55}
+.who-btn.picked{opacity:1;border-color:var(--brand-2)}
+.bubble{display:flex;gap:10px;align-items:flex-start;margin-top:12px}
+.bubble .txt{background:var(--panel-2);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:.95rem}
+.bubble .txt b{display:block;font-size:.8rem;color:var(--muted)}
+.mini{font-size:.85rem;font-weight:700;margin-top:8px}
+.mini.ok{color:var(--good)} .mini.part{color:var(--part)} .mini.bad{color:var(--bad)}
+.slwrap{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.slwrap .top-row{display:flex;justify-content:space-between;align-items:baseline}
+.slwrap output{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.sumbar{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+.sumbar .pill2{font-weight:700}
+.cp{width:100%;border-collapse:collapse;min-width:640px;margin-top:6px}
+.sheet .cp th{background:#e5e9f0}
+.minutes{display:grid;gap:4px;font-size:.85rem;margin:0}
+.minutes li{margin:.2em 0}
+
+/* ===== v8 ===== */
+.team{grid-template-columns:repeat(5,1fr)}
+@media (max-width:900px){.team{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.team{grid-template-columns:repeat(2,1fr)}}
+.effcard{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--panel);margin-top:10px}
+.effcard p{margin:0 0 8px;font-weight:600}
+.lv-btns{display:flex;flex-wrap:wrap;gap:8px}
+.lv-btn{appearance:none;border:1.5px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:99px;padding:6px 12px;font:inherit;font-size:.88rem;font-weight:600;cursor:pointer}
+.lv-btn:hover{border-color:var(--brand-2)}
+.lv-btn.picked{border-color:var(--brand-2);background:#dbeafe}
+.lv-btn:disabled{cursor:default}
+.lv-btn.right{border-color:#16a34a;background:#dcfce7}
+.lv-btn.wrong{border-color:#dc2626;background:#fee2e2}
+.m4-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+@media (max-width:640px){.m4-btns{grid-template-columns:repeat(2,1fr)}}
+.m4{appearance:none;border:1.5px solid var(--line);background:var(--panel);border-radius:14px;padding:14px 10px;font:inherit;font-weight:700;cursor:pointer;text-align:center;color:var(--text)}
+.m4 span{display:block;font-size:1.6rem;margin-bottom:4px}
+.m4 small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+.m4:hover{border-color:var(--brand-2)}
+.m4.picked{border-color:var(--brand-2);background:#dbeafe}
+.cause{background:var(--panel-2);border:1px solid var(--line);border-left:4px solid #f59e0b;border-radius:12px;padding:12px 14px;font-weight:600}
+.rev{margin:6px 0 0;padding-left:1.1em;font-size:.85rem}
+.flag{border-radius:12px;padding:12px 14px;margin-top:12px;font-weight:600}
+.flag.ok{background:#e9f7ee;color:#15803d}
+.flag.bad{background:#fdecec;color:#b91c1c}
+.alert{display:flex;gap:12px;align-items:flex-start;border:2px solid #dc2626;background:#fff5f5;border-radius:16px;padding:16px;margin-bottom:6px}
+.alert .ic{font-size:1.8rem;line-height:1}
+.alert b{display:block;color:#991b1b}
+.lvl{display:block;font-size:.72rem;color:#64748b}
+.fact span.zz{display:inline-block;font-size:.7rem;letter-spacing:0;text-transform:none;color:#78350f;margin-left:6px;vertical-align:2px}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+@media (max-width:700px){.rec-grid{grid-template-columns:1fr}}
+.rec-grid label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:#6b7280;font-weight:600}
+.rec-grid input{font:inherit;font-size:.95rem;color:#111827;background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px}
+.sh3{font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:#0f2742;margin:22px 0 6px}
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0f2742"/><path d="M17 7 L28 26 H6 Z" fill="#f59e0b"/><circle cx="12" cy="22" r="2.4" fill="#0f2742"/><circle cx="17" cy="22" r="2.4" fill="#0f2742"/><circle cx="22" cy="22" r="2.4" fill="#0f2742"/><rect x="15.8" y="12" width="2.4" height="6" rx="1.2" fill="#0f2742"/></svg>
+      <div>RiskTým<small>FMEA porady bez přepisování</small></div>
+    </a>
+    <span class="spacer"></span>
+    <a class="pill" href="index.html">← Úvod</a><span class="pill">Montáž aku nářadí</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="intro" class="hero">
+  <div class="hero-grid">
+    <div class="card">
+      <h1>Nový projekt: aku vrtací šroubovák</h1>
+      <div class="msg">
+        <div class="avatar" aria-hidden="true">PM</div>
+        <div>
+          <div class="who">Petra Malá <span>· vedoucí kvality (postava je vymyšlená)</span></div>
+          <p>„Obchodní síť si u nás objednala nový aku vrtací šroubovák 18 V. Než spustíme výrobu, potřebujeme procesní FMEA montáže. Svolala jsem tým a poradu povedeš ty. Projdeme 5 rizik, pak kontrolní plán. A připrav se, že FMEA je živý dokument: kdyby přišla reklamace, budeme ji aktualizovat.“</p>
+        </div>
+      </div>
+      <div class="team" id="teamIntro"></div>
+      <div class="formula" aria-label="RPN se rovná závažnost krát výskyt krát detekce">
+        <div class="f">S<small>závažnost</small></div>×<div class="f">O<small>výskyt</small></div>×<div class="f">D<small>detekce</small></div>=<div class="f r">RPN<small>rizikové číslo</small></div>
+      </div>
+      <p class="muted" style="font-size:.9rem;margin:0">RPN je jen pro orientaci, prioritu podle AIAG a VDA určuje Action Priority.</p>
+      <p class="muted" style="font-size:.9rem">Detekce: 1 znamená, že vadu jistě zachytíme, 10 že ji nezachytí nikdo. Aktuální příručka AIAG a VDA určuje prioritu přes <b>Action Priority</b> (H, M, L). Procvičíš kroky 4 až 7 ze 7: analýzu vad, analýzu rizik, optimalizaci a dokumentaci.</p>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:.85rem;font-weight:600;color:var(--muted);margin-top:14px">Jméno do zápisu z porady (nepovinné)<input type="text" id="playerName" maxlength="40" placeholder="např. Jana Nováková" autocomplete="name" style="font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 14px"></label>
+      <p style="margin-top:16px"><button class="btn big" id="startBtn">Zahájit poradu</button></p>
+    </div>
+    <div class="side">
+      <div class="card">
+        <h3>Průběh porady</h3>
+        <ol class="steps-mini">
+          <li><b>5 rizik</b>, každé v 5 krocích: následky na 3 úrovních, příčina podle 4M, porada o S, O, D, priorita, opatření.</li>
+          <li><b>Kontrolní plán</b> pro zvláštní znak a kontrola souladu s FMEA.</li>
+          <li><b>Reklamace 8D</b> od obchodní sítě a nová revize FMEA.</li>
+        </ol>
+        <p class="muted" style="font-size:.85rem;margin-top:10px">Rizika se při každém tréninku vybírají z 9 typických vad montáže nářadí.</p>
+      </div>
+      <div class="card">
+        <h3>Bodování</h3>
+        <ul class="scoring">
+          <li>Následek na správné úrovni <b class="plus">+3</b></li>
+          <li>Příčina ve správné kategorii 4M <b class="plus">+5</b></li>
+          <li>Správný člověk na otázku <b class="plus">+5</b></li>
+          <li>Hodnocení přesně nebo s odchylkou ±1 <b class="plus">+10</b></li>
+          <li>Správná priorita <b class="plus">+10</b></li>
+          <li>Nejúčinnější opatření <b class="plus">+15</b></li>
+          <li>Kontrolní plán a 8D <b class="plus">až +55</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="hidden">
+  <div class="card">
+    <div class="progress" id="progress"></div>
+    <div class="eyebrow" id="wStep"></div>
+    <div class="row-head" id="rowHead">
+      <div class="fact"><span id="fL1">Krok procesu</span><b id="wKrok"></b></div>
+      <div class="fact"><span id="fL2">Funkce</span><b id="wFunkce"></b></div>
+      <div class="fact fail"><span id="fL3">Možná vada</span><b id="wVada"></b></div>
+    </div>
+    <div class="substeps" id="substeps"></div>
+    <div id="stepBody"></div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="card">
+    <div class="res-head">
+      <div class="ring-score">
+        <svg viewBox="0 0 156 156"><circle cx="78" cy="78" r="66" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="ringArc" cx="78" cy="78" r="66" fill="none" stroke="var(--brand-2)" stroke-width="12" stroke-linecap="round" stroke-dasharray="415" stroke-dashoffset="415" style="transition:stroke-dashoffset 1.2s ease"/></svg>
+        <div class="val"><b id="pct">0 %</b><span id="pts">0 bodů</span></div>
+      </div>
+      <div>
+        <div class="eyebrow">Tvé hodnocení</div>
+        <p class="rank" id="rank"></p>
+        <p class="muted" id="summary"></p>
+        <div class="btn-row">
+          <button class="btn" id="recBtn">Záznam o zaškolení ↓</button>
+          <button class="btn ghost" id="docsBtn">Dokumenty z porady ↓</button>
+          <button class="btn ghost" id="againBtn">Znovu s jinými riziky</button>
+          <a class="btn ghost" href="index.html">← Úvod</a>
+        </div>
+      </div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><span>Následky a 4M</span><b id="tEff"></b></div>
+      <div class="tile"><span>Správně oslovení</span><b id="tAsk"></b></div>
+      <div class="tile"><span>Hodnocení ±1</span><b id="tRate"></b></div>
+      <div class="tile"><span>Kontrolní plán a 8D</span><b id="tCp"></b></div>
+    </div>
+  </div>
+  <div class="card section info">
+    <h2 style="margin:0 0 6px;font-size:1.1rem">Na co se při auditu FMEA dívají</h2>
+    <p>Jestli FMEA dělal opravdu tým (zápis s účastníky), jestli odpovídá vývojovému diagramu procesu a kontrolnímu plánu, jestli jsou správně označené zvláštní znaky a jestli se FMEA aktualizuje po reklamacích (8D), změnách procesu a konstrukce. U montáže nářadí se zákazníci často ptají i na hlídání utahovacích momentů, zkoušky akumulátorů a ověřování zkušebních stanic.</p>
+  </div>
+</section>
+
+<article class="sheet section hidden" id="record">
+  <div class="sh">
+    <div>
+      <h2>ZÁZNAM O ZAŠKOLENÍ</h2>
+      <div class="sub">Interaktivní trénink RiskTým · Procesní FMEA (cvičný scénář: montáž aku vrtacího šroubováku)</div>
+    </div>
+    <dl><dt>Datum</dt><dd id="recDate"></dd><dt>Délka</dt><dd>asi 20 minut</dd></dl>
+  </div>
+  <div class="rec-grid">
+    <label>Účastník<input type="text" id="recName" maxlength="60"></label>
+    <label>Firma / oddělení<input type="text" id="recFirm" maxlength="80" placeholder="doplňte"></label>
+    <label>Pracovní pozice<input type="text" id="recRole" maxlength="60" placeholder="doplňte"></label>
+  </div>
+  <h3 class="sh3">Obsah tréninku</h3>
+  <ul class="minutes">
+    <li>Následky vady na třech úrovních (vlastní závod, zákazník, konečný uživatel) a hodnocení závažnosti podle nejhoršího následku</li>
+    <li>Příčiny podle 4M (člověk, stroj, materiál, prostředí)</li>
+    <li>Hodnocení závažnosti, výskytu a detekce (S, O, D) a priorita opatření Action Priority podle principů AIAG a VDA</li>
+    <li>Opatření, odpovědnosti a role v týmu FMEA (technologie, kvalita, výroba, údržba, BOZP)</li>
+    <li>Vazba FMEA na kontrolní plán, zvláštní znaky a ověřování poka-yoke</li>
+    <li>Reakce na reklamaci (8D) a revize FMEA jako živého dokumentu</li>
+  </ul>
+  <h3 class="sh3">Výsledek</h3>
+  <div class="tbl"><table class="cp">
+    <thead><tr><th>Celkem</th><th>Hodnocení</th><th>Správně oslovení</th><th>Shoda S, O, D s týmem</th><th>Kontrolní plán a 8D</th><th>Splněno (70 % a víc)</th></tr></thead>
+    <tbody><tr><td id="recPct"></td><td id="recRank"></td><td id="recAsk"></td><td id="recRate"></td><td id="recCp"></td><td id="recPass"></td></tr></tbody>
+  </table></div>
+  <div class="sign" style="display:flex;gap:40px;margin-top:28px;flex-wrap:wrap"><div style="border-top:1px solid #9ca3af;padding-top:4px;min-width:200px;font-size:.78rem;color:#6b7280">Podpis účastníka</div><div style="border-top:1px solid #9ca3af;padding-top:4px;min-width:200px;font-size:.78rem;color:#6b7280">Podpis vedoucího / školitele</div></div>
+  <p class="note">Záznam o absolvování interního tréninku. Může sloužit jako jeden z podkladů o zaškolení a kompetenci pracovníka. Nejde o certifikát ani o oficiální školení AIAG, VDA nebo IATF.</p>
+  <p class="no-print" style="margin-top:12px"><button class="btn" id="printRecBtn"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg> Vytisknout záznam / uložit jako PDF</button></p>
+</article>
+
+<article class="sheet section hidden" id="sheet">
+  <div class="sh">
+    <div>
+      <h2>PROCESNÍ FMEA (PFMEA)</h2>
+      <div class="sub">Proces: Montáž aku vrtacího šroubováku 18 V · Montážní linka, hala B · Ozubené kolečko, výrobce nářadí (vymyšlená firma)</div>
+    </div>
+    <dl><dt>Moderátor</dt><dd class="pName">účastník</dd><dt>Datum</dt><dd>17. 11. 2026</dd><dt>Revize</dt><dd id="revNow">01 · nový projekt</dd></dl>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr>
+      <th>Krok / funkce</th><th>Možná vada</th><th>Následky</th><th class="n">S</th><th class="n">ZZ</th><th>Příčina (4M)</th><th>Prevence</th><th class="n">O</th><th>Detekce</th><th class="n">D</th><th class="n">RPN</th><th class="n">AP</th><th>Opatření</th><th>Odpovědnost / termín</th><th class="n g">S</th><th class="n g">O</th><th class="n g">D</th><th class="n g">RPN</th><th class="n g">AP</th>
+    </tr></thead>
+    <tbody id="shRows"></tbody>
+  </table></div>
+  <div class="legend"><span><i style="background:#e7f6ec"></i>shoda s týmem (±1)</span><span><i style="background:#fdf3dc"></i>odchylka 2</span><span><i style="background:#fde4e4"></i>odchylka víc než 2</span><span>ZZ = zvláštní znak</span><span>Tmavé sloupce = po opatření, AP po opatření podle logiky tabulky AIAG a VDA</span></div>
+
+  <h3 class="sh3">Historie revizí</h3>
+  <ul class="minutes" id="revisions"></ul>
+
+  <h3 class="sh3">Zápis z FMEA porady</h3>
+  <ul class="minutes" id="minutes"></ul>
+
+  <h3 class="sh3">Kontrolní plán (výřez)</h3>
+  <div class="tbl"><table class="cp">
+    <thead><tr><th>Znak / kontrola</th><th>Metoda a četnost</th><th>Reakční plán</th><th>Odpovídá</th><th>Soulad s FMEA</th></tr></thead>
+    <tbody id="cpRows"></tbody>
+  </table></div>
+  <p class="note">Cvičné dokumenty z RiskTýmu. Firma, osoby i rizika jsou vymyšlené, stupnice jsou zjednodušené. Čísla S, O, D a AP jsou hodnocení účastníka, barva ukazuje shodu s doporučeným hodnocením cvičného týmu. Ve firmě se AP určuje podle tabulek příručky AIAG a VDA a zvláštní znaky podle požadavků zákazníka.</p>
+  <p class="no-print" style="margin-top:12px"><button class="btn" id="printBtn"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg> Vytisknout / uložit jako PDF</button></p>
+</article>
+
+<section id="ctaBox" class="card section cta hidden">
+  <h2>Vyzkoušej i pracovní nástroj</h2>
+  <p>Na skutečné poradě tým tajně hlasuje o S, O, D a PFMEA, kontrolní plán, opatření, zápis i 8D se vyplní samy. V nástroji si načti ukázkový projekt montáže nebo velkou ukázku s 22 riziky.</p>
+  <p style="margin-top:14px"><a class="btn" href="porada.html">Otevřít nástroj na poradu</a></p>
+  <p id="contact"></p>
+</section>
+
+</main>
+
+<footer class="wrap"><p style="margin:0 0 8px"><b>Ukázková verze RiskTýmu.</b> Firma Ozubené kolečko, její aku vrtací šroubovák, osoby i všechna rizika jsou vymyšlené a nesouvisí s žádným skutečným výrobcem nářadí. Stupnice jsou zjednodušené pro výuku.</p><p style="margin:0 0 8px"><b>Osobní údaje:</b> web nesbírá osobní údaje, nepoužívá cookies ani analytické nástroje a RiskTým nikam neodesílá data ani výsledky.</p>Nezávislý projekt, není spojený s AIAG, VDA QMC ani IATF. Nenahrazuje školení FMEA ani příručky a požadavky, podle kterých pracuje vaše firma. Autorka: Simona Fichtnerová.</footer>
+
+<script>
+const KONTAKT_EMAIL = '';
+
+const TEAM = {
+  tech:{n:'Tomáš', r:'Technolog', c:'#2563eb', i:'TB'},
+  kval:{n:'Lucie', r:'Kvalita', c:'#16a34a', i:'LK'},
+  vyr: {n:'Karel', r:'Výroba · mistr', c:'#ea580c', i:'KM'},
+  udrz:{n:'Martin', r:'Údržba', c:'#0891b2', i:'MÚ'},
+  bozp:{n:'Jana', r:'Bezpečnostní technik', c:'#9333ea', i:'JB'}
+};
+const GEN = {tech:'Tomáše, technologa', kval:'Lucie z kvality', vyr:'Karla, mistra', udrz:'Martina z údržby', bozp:'Jany, bezpečnostní techničky'};
+const LV = {zavod:'Náš závod', linka:'Zákazník', ridic:'Konečný uživatel'};
+const ICO = {"print": "<path d=\"M6 9V3h12v6\"/><rect x=\"3\" y=\"9\" width=\"18\" height=\"8\" rx=\"2\"/><path d=\"M7 14h10v7H7z\"/>", "save": "<path d=\"M5 3h11l3 3v15H5z\"/><path d=\"M8 3v6h8V3M8 21v-7h8v7\"/>", "folder": "<path d=\"M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>", "download": "<path d=\"M12 3v12M7 10l5 5 5-5M4 20h16\"/>", "clock": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l3 2M9 2h6\"/>", "eye": "<path d=\"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>", "factory": "<path d=\"M3 21V10l6 4v-4l6 4V5h6v16z\"/>", "truck": "<path d=\"M3 16V7h11v9M14 10h4l3 3v3h-7\"/><circle cx=\"7\" cy=\"17\" r=\"2\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/>", "user": "<circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 4-6 8-6s8 2 8 6\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1\"/>", "box": "<path d=\"M3 7l9-4 9 4v10l-9 4-9-4z\"/><path d=\"M3 7l9 4 9-4M12 11v10\"/>", "thermo": "<path d=\"M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z\"/>", "alert": "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v4M12 17.5v.5\"/>"};
+const ic = (n, s) => `<svg class="i" width="${s || 18}" height="${s || 18}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[n]}</svg>`;
+const LVI = {zavod:ic('factory'), linka:ic('truck'), ridic:ic('user')};
+const M4 = {clovek:[ic('user', 22),'Člověk','obsluha, zaučení, spěch'], stroj:[ic('gear', 22),'Stroj','robot, přípravek, zařízení'], material:[ic('box', 22),'Materiál','články, maziva, nepřímý materiál'], prostredi:[ic('thermo', 22),'Prostředí','průvan, prach, teplota']};
+const SCALE = {
+  S: v => v<=1 ? 'Zákazník vadu vůbec nepozná.' : v<=3 ? 'Drobná nepříjemnost, funkce je v pořádku.' : v<=6 ? 'Zhoršená funkce nebo vzhled, díl zákazník odmítne nebo reklamuje.' : v<=8 ? 'Ztráta hlavní funkce nebo zastavení linky u zákazníka.' : 'Ohrožení bezpečnosti (i obsluhy) nebo rozpor s předpisy.',
+  O: v => v<=1 ? 'Příčině brání technické řešení, prakticky nenastane.' : v<=3 ? 'Ojediněle.' : v<=6 ? 'Občas.' : v<=8 ? 'Často.' : 'Téměř jistě, opakovaně.',
+  D: v => v<=1 ? 'Vadu nelze fyzicky vyrobit (poka-yoke), nebo ji zařízení vždy zachytí a díl nepustí.' : v<=3 ? 'Stroj automaticky kontroluje každý kus a vadný díl vyřadí.' : v<=6 ? 'Kontrola měřidlem nebo kalibrem u každého kusu, nebo stroj, který na vadu upozorní.' : v<=8 ? 'Vizuální kontrola obsluhou nebo kontrola jen vzorku.' : 'Jen občasný audit nebo žádná kontrola.'
+};
+const QLABEL = {S:'Závažnost (S)', O:'Výskyt (O)', D:'Detekce (D)'};
+const QHINT = {S:'Jak vážný je nejhorší z následků? Závažnost se hodnotí podle nejzávažnějšího následku.', O:'Jak často příčina nastane při dnešní prevenci? Výskyt se hodnotí podle toho, jak dobře jí prevence brání.', D:'Zachytíme vadu dřív, než odejde z firmy?'};
+
+// ===== 9 rizik montáže nářadí (cvičný obsah, obecná dobrá praxe) =====
+// t = doporučené hodnocení týmu [S,O,D]; acts[0] nejlepší, n = nové [O,D]; m4 = kategorie hlavní příčiny
+const POOL = [
+  { id:'pruvar', krok:'Bodové svařování článků akumulátoru', funkce:'Spoj niklového pásku s článkem s předepsanou pevností', vada:'Slabý svarový spoj pásku s článkem', zz:true,
+    eff:{zavod:'Akumulátor neprojde odtrhovou zkouškou, šarže se blokuje', linka:'Reklamace a vracení akumulátorů z obchodní sítě', ridic:'Spoj se uvolní a zahřívá, nářadí vypadává a akumulátor se může přehřát'},
+    pricina:'Opotřebené elektrody svářečky zhoršují přenos proudu a spoj je slabší', m4:{best:'stroj', ok:[]},
+    prevence:'Broušení elektrod podle zkušenosti obsluhy', detekce:'Odtrhová zkouška 1× za směnu, vizuálně 100 %',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Pevnost spoje je zvláštní znak. Uvolněný spoj se u uživatele zahřívá a akumulátor se může přehřát. To je bezpečnost.'},
+          O:{best:'udrz', ok:['vyr','tech'], say:'Elektrody brousíme, až když svary začnou jiskřit. Plán výměn nemáme, takže pár slabších spojů občas projde.'},
+          D:{best:'kval', ok:['tech'], say:'Pevnost spoje okem nepoznáš. Odtrhovou zkoušku děláme u jednoho akumulátoru za směnu, ostatní kontrolujeme jen vizuálně.'} },
+    t:[9,5,7], whyT:'S 9: nejhorší následek je u uživatele (přehřátí akumulátoru). O 5: elektrody se brousí až po problému. D 7: pevnost se ověřuje jen na vzorku.',
+    ap:'H', apAlt:[], whyAP:'Vysoká: závažnost 9. U bezpečnosti je priorita vysoká skoro vždy.',
+    acts:[{a:'Monitorování proudu a odporu u každého svaru (spoj mimo povolené okno svářečka vyřadí) a výměna elektrod podle plánu údržby', n:[3,5]},
+          {a:'Odtrhová zkouška dvakrát za směnu místo jednou', n:[5,6]},
+          {a:'Připomenout obsluze, ať elektrody brousí dřív', n:[4,7]}],
+    owner:{best:'tech', ok:['udrz','kval']}, termin:'před spuštěním sériové výroby',
+    whyA:'Plánovaná výměna elektrod odstraní hlavní příčinu. Monitorování hlídá parametry každého svaru (proud, čas a odpor spoje), ne přímo pevnost, tu dál ověřuje odtrhová zkouška. Po každé výměně elektrod je potřeba ověřit první spoje. Častější odtrhová zkouška je pořád jen vzorek.',
+    cp:{metody:['Monitorování proudu a odporu u každého svaru (100 %) a odtrhová zkouška 1× za směnu','Odtrhová zkouška 2× za směnu a vizuální kontrola 100 %','Odtrhová zkouška 1× za směnu a vizuální kontrola 100 %']} },
+  { id:'varianta', krok:'Montáž převodovky', funkce:'Založit sadu ozubených kol správné varianty', vada:'Založena sada kol jiné varianty', zz:false,
+    eff:{zavod:'Nářadí neprojde měřením otáček, převodovka se rozebírá', linka:'Nářadí nemá parametry z obalu, obchodní síť vrací celou dodávku', ridic:'Kdyby prošlo, šroubovák nedotáhne šroub nebo se točí příliš rychle'},
+    pricina:'Přípravek nemá kódování a podobné sady kol nerozliší', m4:{best:'stroj', ok:['clovek']},
+    prevence:'Pracovní návodka s fotkou varianty', detekce:'Vizuální kontrola obsluhou, otáčky se měří jen u vzorku',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Nejhorší by bylo, že obchodní síť vrátí celou dodávku. K uživateli se takové nářadí skoro jistě nedostane, na prodejně se zkouší.'},
+          O:{best:'vyr', ok:['tech'], say:'Sady vypadají skoro stejně. Při přestavbě na jinou variantu se záměna letos stala dvakrát.'},
+          D:{best:'kval', ok:['tech'], say:'Otáčky měříme jen u vzorku. Poka-yoke na variantu nemáme, zbývá oko obsluhy.'} },
+    t:[7,5,7], whyT:'S 7: hrozí vrácení celé dodávky. O 5: záměna se už stala. D 7: variantu kontroluje jen obsluha okem.',
+    ap:'H', apAlt:['M'], whyAP:'Vysoká: hrozí vrácení dodávky a variantu dnes nic spolehlivě nehlídá.',
+    acts:[{a:'Kódovaný přípravek (poka-yoke), do kterého jiná sada kol nejde založit, a skener kódu sady. Obsluha na začátku každé směny ověří funkci referenční sadou a zapíše výsledek, kvalita to kontroluje audity.', n:[2,3]},
+          {a:'Barevně odlišit zásobníky s variantami a proškolit obsluhu', n:[4,7]},
+          {a:'Zapsat riziko do FMEA a dál ho sledovat', n:[5,7]}],
+    owner:{best:'tech', ok:['kval']}, termin:'do 60 dní',
+    whyA:'Nejlepší je chybu fyzicky znemožnit (poka-yoke). Technologie ho navrhuje a nastavuje při vývoji projektu. Funkci ověřuje obsluha na začátku každé směny: zkusí založit špatnou referenční sadu, ověří, že ji přípravek nepustí, a zapíše výsledek. Kvalita audity kontroluje, že se to opravdu dělá.' },
+  { id:'tesnost', krok:'Koncová zkouška funkce', funkce:'Odhalit každé nefunkční nářadí', vada:'Nářadí obejde koncovou zkoušku', zz:true,
+    eff:{zavod:'Neotestované kusy se musí dohledat a otestovat', linka:'Nefunkční nářadí v prodeji, reklamace s 8D', ridic:'Nefunkční brzda motoru: vrták po puštění spínače dobíhá'},
+    pricina:'Při poruše zkušební stanice obsluha odloží nářadí do přepravky, že ho otestuje později', m4:{best:'clovek', ok:['stroj']},
+    prevence:'Pracovní návodka', detekce:'Štítek OK po zkoušce, kontrola obsluhou',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Funkce brzdy motoru je zvláštní znak. Když vrták dobíhá, uživatel se o něj může zranit.'},
+          O:{best:'vyr', ok:['tech','udrz'], say:'Když stanice stojí, nářadí se občas odloží rovnou do přepravky. Na dodatečnou zkoušku se pak zapomene.'},
+          D:{best:'kval', ok:['tech','vyr'], say:'Mezi zkušební stanicí a balením není žádná vazba. Neotestovaný kus pozná jen ten, kdo si všimne, že chybí štítek OK.'} },
+    t:[9,4,7], whyT:'S 9: hrozí zranění uživatele. O 4: obcházení se děje jen při poruše stanice. D 7: nic nezabrání zabalit neotestované nářadí.',
+    ap:'H', apAlt:[], whyAP:'Vysoká: závažnost 9 a vadu dnes spolehlivě nezachytíme.',
+    acts:[{a:'Blokace: bez výsledku OK ze zkoušky nelze nářadí označit ani zabalit. Obsluha na začátku každé směny ověří stanici referenčním vadným kusem a zapíše výsledek, kvalita to kontroluje audity.', n:[2,2]},
+          {a:'Podpis obsluhy do listu u každé přepravky', n:[4,6]},
+          {a:'Upozornit na to na poradě směny', n:[4,7]}],
+    owner:{best:'tech', ok:['kval']}, termin:'před spuštěním sériové výroby',
+    whyA:'Blokace zabrání, aby nářadí zkoušku obešlo. Ověření referenčním vadným kusem dokazuje, že stanice vadu opravdu pozná. Dělá ho obsluha na začátku směny, kvalita kontroluje audity a technologie blokaci nastavuje při vývoji projektu.' },
+  { id:'popaleni', krok:'Lisování ložiska na hřídel kotvy', funkce:'Bezpečně nalisovat ložisko', vada:'Obsluha sáhne do lisu během lisování', zz:false,
+    eff:{zavod:'Sevření prstů obsluhy (pracovní úraz)', linka:'Díl je v pořádku, zákazník nic nepozná', ridic:'Bez dopadu na uživatele'},
+    pricina:'Krátký takt, obsluha spěchá a rovná ložisko rukou ještě při pohybu lisu', m4:{best:'clovek', ok:['stroj']},
+    prevence:'Rukavice (OOP), cedule Pozor lis', detekce:'Žádná',
+    ask:{ S:{best:'bozp', ok:[], say:'Sevření prstů je pracovní úraz. Když vada akutně ohrožuje zdraví obsluhy, hodnotí se závažnost 10, i když je díl v pořádku.'},
+          O:{best:'vyr', ok:['bozp'], say:'Při zpoždění se spěchá a lidi rovnají ložisko rukou. Skoronehody jsme letos měli třikrát.'},
+          D:{best:'bozp', ok:['vyr'], say:'Nic nehlídá, kde má obsluha ruce. Spoléháme jen na cedulku a pozornost.'} },
+    t:[10,5,10], whyT:'S 10: akutní ohrožení zdraví obsluhy, i když zákazník nic nepozná. O 5: skoronehody se už staly. D 10: nic nehlídá, kde má obsluha ruce. Riziko patří i do hodnocení rizik pracoviště (BOZP).',
+    ap:'H', apAlt:[], whyAP:'Vysoká: ohrožení zdraví obsluhy. Tady se nečeká.',
+    acts:[{a:'Světelná závora, která lis při zásahu do pracovního prostoru zastaví, a dvouruční ovládání. Funkci závory obsluha ověří na začátku každé směny.', n:[2,3]},
+          {a:'Pořídit pevnější rukavice', n:[4,10]},
+          {a:'Přidat další ceduli Pozor lis', n:[5,10]}],
+    owner:{best:'tech', ok:['bozp']}, termin:'do 30 dní',
+    whyA:'Technické řešení oddělí ruce obsluhy od lisu. Závoru navrhuje a zavádí technologie, bezpečnostní technik radí a schvaluje. Ochranné pomůcky jsou až poslední záchrana a riziko samy neodstraní.' },
+  { id:'dmc', krok:'Laserové značení výrobního štítku', funkce:'Vypálit čitelné sériové číslo (typ, datum, šarže)', vada:'Sériové číslo je nečitelné', zz:false,
+    eff:{zavod:'Kryt se musí přeznačit a nářadí čeká', linka:'Obchodní síť nemůže zaevidovat záruku a kus vrátí', ridic:'Při svolávací akci nejde dohledat, kterých kusů se týká'},
+    pricina:'Prach z odjehlování plastových krytů zanáší optiku laseru', m4:{best:'prostredi', ok:['stroj']},
+    prevence:'Čištění optiky podle potřeby', detekce:'Vizuální kontrola obsluhou',
+    ask:{ S:{best:'kval', ok:[], say:'Obchodní síť kód skenuje na příjmu. Nečitelný kus vrátí a při reklamaci nebo svolávací akci bychom nevěděli, z jaké šarže je.'},
+          O:{best:'udrz', ok:['vyr','tech'], say:'Optiku čistíme, když si někdo všimne, že kódy blednou. Odsávání u laseru nestačí, takže se to stává zhruba jednou za pár týdnů.'},
+          D:{best:'kval', ok:[], say:'Kód kontroluje jen obsluha okem. Že je pro čtečku nečitelný, okem často nepoznáš.'} },
+    t:[6,5,7], whyT:'S 6: zákazník kus vrátí a chybí sledovatelnost. O 5: optika se čistí až po problému. D 7: čitelnost okem neověříš.',
+    ap:'M', apAlt:['H'], whyAP:'Střední: zákazník kus vrátí, ale nejde o bezpečnost. Kdo dá vysokou kvůli sledovatelnosti, má to obhajitelné.',
+    acts:[{a:'Čtečka ověří třídu kvality (grade) každého kódu hned po značení a nevyhovující kus stanice nepustí. Optika se čistí podle plánu a u laseru se doplní odsávání.', n:[3,2]},
+          {a:'Obsluha naskenuje jeden kód za hodinu', n:[5,5]},
+          {a:'Zapsat riziko do FMEA a dál ho sledovat', n:[5,7]}],
+    owner:{best:'tech', ok:['udrz','kval']}, termin:'do 60 dní',
+    whyA:'Automatické ověření každého kódu zachytí vadu hned a čištění podle plánu s odsáváním odstraní příčinu.' },
+  { id:'pory', krok:'Pájení vodičů k vypínači', funkce:'Vodivý pájený spoj bez studených spojů', vada:'Studený pájený spoj', zz:false,
+    eff:{zavod:'Nářadí neprojde koncovou zkouškou, oprava', linka:'Vracené kusy, nářadí vypadává', ridic:'Spoj se zahřívá a nářadí časem přestane fungovat'},
+    pricina:'Průvan od otevřených vrat ochlazuje hrot pájky a spoj se nestihne prohřát', m4:{best:'prostredi', ok:['stroj']},
+    prevence:'Nastavená teplota pájky', detekce:'Koncová zkouška funkce 100 %, viditelné vady vidí obsluha',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Kdyby studený spoj prošel, nářadí u uživatele časem vypadává a spoj se zahřívá. Většinu ale zachytí koncová zkouška.'},
+          O:{best:'vyr', ok:['udrz','tech'], say:'V zimě při závozu materiálu necháváme vrata otevřená. Pak se studené spoje objevují častěji.'},
+          D:{best:'kval', ok:['tech'], say:'Koncová zkouška kontroluje každý kus automaticky, takže vadný spoj většinou zachytí.'} },
+    t:[8,4,3], whyT:'S 8: spoj se u uživatele zahřívá a nářadí přestane fungovat. O 4: hlavně v zimě při otevřených vratech. D 3: automatická koncová zkouška každého kusu.',
+    ap:'M', apAlt:['H'], whyAP:'Střední: závažnost 8, ale každý kus prochází koncovou zkouškou. Kdo dá vysokou kvůli zahřívání spoje, má to obhajitelné.',
+    acts:[{a:'Zástěna proti průvanu u pracoviště a pájecí stanice, která hlídá teplotu hrotu a při poklesu ohlásí chybu', n:[2,3]},
+          {a:'Natrvalo zvýšit teplotu pájky', n:[4,3]},
+          {a:'Pokyn zavírat vrata, když je zima', n:[4,3]}],
+    owner:{best:'tech', ok:['udrz']}, termin:'do 60 dní',
+    whyA:'Zástěna odstraní příčinu a hlídání teploty zastaví pájení dřív, než vznikne vadný spoj. Vyšší teplota spaluje tavidlo a může poškodit izolaci vodičů. Pokyn se v praxi dodržuje různě.' },
+  { id:'propal', krok:'Šroubování krytu', funkce:'Pevně spojit obě poloviny krytu', vada:'Strhnutý závit v plastovém krytu', zz:false,
+    eff:{zavod:'Kryt drží volně, oprava nebo výměna krytu', linka:'Kdyby prošel, obchodní síť vrací kusy s rozevřeným krytem', ridic:'Kryt se při práci rozevře, hrozí kontakt s pohyblivými díly'},
+    pricina:'Utahovací moment není ověřený pro kryty z plastu na spodní hranici pevnosti', m4:{best:'stroj', ok:['material']},
+    prevence:'Materiálový list plastu od dodavatele', detekce:'Utahovák hlídá moment a úhel u každého šroubu',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Kdyby se kryt u uživatele rozevřel, hrozí kontakt s pohyblivými díly. To je bezpečnost.'},
+          O:{best:'kval', ok:['tech','vyr'], say:'Pevnost plastu se mění v rámci tolerance. U dvou letošních dodávek na spodní hranici jsme měli víc strhnutých závitů.'},
+          D:{best:'kval', ok:['tech'], say:'Strhnutí zachytí utahovák, hlídá moment i úhel u každého šroubu.'} },
+    t:[9,4,3], whyT:'S 9: rozevřený kryt ohrožuje uživatele. O 4: jen u dodávek s měkčím plastem. D 3: utahovák hlídá každý šroub.',
+    ap:'H', apAlt:[], whyAP:'Vysoká: u závažnosti 9 a výskytu 4 nestačí ani dobrá detekce.',
+    acts:[{a:'Ověřit okno utahovacího momentu na krajních hodnotách pevnosti plastu a hlídat úhel dotažení', n:[2,3]},
+          {a:'Upozornit dodavatele plastu, ať drží střed tolerance', n:[3,3]},
+          {a:'Zapsat riziko do FMEA a dál ho sledovat', n:[4,3]}],
+    owner:{best:'tech', ok:['kval']}, termin:'do 60 dní',
+    whyA:'Plast v toleranci je správný plast. Proces musí umět šroubovat v celé toleranci, proto se moment ověřuje i na jejích krajích. Upozornění dodavatele tolerance nezmění.' },
+  { id:'deformace', krok:'Lisování ložiska na hřídel kotvy', funkce:'Ložisko v předepsané poloze', vada:'Ložisko nedolisované do polohy', zz:false,
+    eff:{zavod:'Motor neprojde zkouškou hluku, rozebírá se', linka:'Obchodní síť vrací hlučné kusy', ridic:'Hlučný chod, motor se přehřívá a dřív odejde'},
+    pricina:'Lis má jen mechanický doraz a nehlídá sílu ani dráhu', m4:{best:'stroj', ok:[]},
+    prevence:'Seřízení dorazu podle návodky', detekce:'Měření polohy ložiska, 1 kus za hodinu',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Nejhorší je, že motor u uživatele dřív odejde a obchodní síť vrací kusy. Bezpečnost to není.'},
+          O:{best:'vyr', ok:['tech'], say:'Stává se to občas, hlavně po výměně nástroje lisu.'},
+          D:{best:'kval', ok:['vyr'], say:'Polohu ložiska měříme u jednoho kusu za hodinu.'} },
+    t:[7,5,7], whyT:'S 7: motor dřív odejde a zákazník vrací kusy. O 5: občas, hlavně po výměně nástroje. D 7: měří se jen vzorek, 1 kus za hodinu.',
+    ap:'H', apAlt:['M'], whyAP:'Vysoká: zákazník vadu pozná a dnes ji zachytíme jen náhodně.',
+    acts:[{a:'Lis se sledováním síly a dráhy u každého kusu. Kus mimo povolenou křivku lis vyřadí.', n:[3,3]},
+          {a:'Měřit 2 kusy za hodinu', n:[5,7]},
+          {a:'Dolisovat ložiska ručně podle potřeby', n:[5,7]}],
+    owner:{best:'tech', ok:['kval']}, termin:'do 90 dní',
+    whyA:'Sledování síly a dráhy odhalí nedolisování u každého kusu a ukáže, kdy se lis rozladil. Ruční dolisování je oprava, ne prevence.' },
+  { id:'rozstrik', krok:'Montáž sklíčidla', funkce:'Sklíčidlo zajištěné na vřetenu', vada:'Chybí zajišťovací lepidlo na závitu sklíčidla', zz:false,
+    eff:{zavod:'Sklíčidlo se musí sundat a znovu zajistit', linka:'Reklamace, sklíčidla se povolují', ridic:'Sklíčidlo se při zpětném chodu povolí a může odpadnout'},
+    pricina:'Lepidlo obsluha nanáší ručně a občas ho zapomene', m4:{best:'clovek', ok:['stroj']},
+    prevence:'Lepidlo v dávkovači u pracoviště', detekce:'Kontrola momentu povolení namátkově',
+    ask:{ S:{best:'kval', ok:['tech'], say:'Když se sklíčidlo za provozu povolí, uživatel se může zranit. Pro obchodní síť je to vážná reklamace.'},
+          O:{best:'vyr', ok:['tech'], say:'Lepidlo nanášejí ručně. Na noční směně se zapomene častěji.'},
+          D:{best:'kval', ok:['vyr'], say:'Moment povolení kontrolujeme jen namátkově.'} },
+    t:[8,5,7], whyT:'S 8: sklíčidlo se u uživatele povolí. O 5: lepidlo se občas zapomene. D 7: moment povolení jen namátkově.',
+    ap:'H', apAlt:['M'], whyAP:'Vysoká: uživatel vadu pozná a kontrola je jen namátková.',
+    acts:[{a:'Dávkovač lepidla se senzorem (bez dávky se utahovák sklíčidla nespustí) a kontrola momentu povolení u každého kusu', n:[2,4]},
+          {a:'Proškolit obsluhu, ať lepidlo nezapomíná', n:[4,7]},
+          {a:'Dotahovat sklíčidla na konci linky', n:[5,7]}],
+    owner:{best:'tech', ok:['kval']}, termin:'do 60 dní',
+    whyA:'Když se utahovák bez dávky lepidla nespustí, nejde lepidlo zapomenout. Školení se spoléhá na pozornost a dotahování na konci linky je oprava, ne prevence.' }
+];
+
+
+// Action Priority podle logiky tabulky AIAG-VDA (2019), řádky: S 9-10, 7-8, 4-6, 2-3, 1;
+// sloupce: O 8-10, 6-7, 4-5, 2-3, 1; znaky v řetězci: D 7-10, 5-6, 2-4, 1
+const AP_T = [
+  ['HHHH','HHHH','HHHM','HMLL','LLLL'],
+  ['HHHH','HHHM','HMMM','MMLL','LLLL'],
+  ['HHMM','MMML','MLLL','LLLL','LLLL'],
+  ['MMLL','LLLL','LLLL','LLLL','LLLL'],
+  ['LLLL','LLLL','LLLL','LLLL','LLLL']];
+function apOf(S, O, D){
+  const s = S >= 9 ? 0 : S >= 7 ? 1 : S >= 4 ? 2 : S >= 2 ? 3 : 4;
+  const o = O >= 8 ? 0 : O >= 6 ? 1 : O >= 4 ? 2 : O >= 2 ? 3 : 4;
+  const d = D >= 7 ? 0 : D >= 5 ? 1 : D >= 2 ? 2 : 3;
+  return AP_T[s][o][d];
+}
+const AP_CLS = {H:'bad', M:'part', L:'ok'};
+const STEPS = ['Následky','Příčina 4M','Porada','Priorita','Opatření'];
+const PER = 9 + 5 + 15 + 30 + 10 + 15 + 5;     // 89 za riziko
+const CP_MAX = 20, D8_MAX = 35;
+let st, cur;
+const $ = id => document.getElementById(id);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const shuffle = a => a.map(v => [Math.random(), v]).sort((x,y) => x[0]-y[0]).map(x => x[1]);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const av = k => `<span class="av" style="background:${TEAM[k].c}">${TEAM[k].i}</span>`;
+const rpnColor = r => 'var(--text)';   // RPN se nebarví podle prahů, prioritu určuje AP
+function show(id, on){ $(id).classList.toggle('hidden', !on); }
+function goTo(el){ const y = el.getBoundingClientRect().top + window.scrollY - 16; window.scrollTo({top: Math.max(0,y), behavior: reduced ? 'auto' : 'smooth'}); }
+function floatAt(el, text, cls){
+  const r = el.getBoundingClientRect(); const f = document.createElement('div'); f.className = 'float ' + cls; f.textContent = text;
+  f.style.left = (r.left + r.width/2) + 'px'; f.style.top = (r.top + 10) + 'px'; document.body.appendChild(f); setTimeout(() => f.remove(), 1500);
+}
+function verdict(cls, text){ return `<div class="verdict ${cls}">${esc(text)}</div>`; }
+function nextBtn(label, id){ return `<div class="actions-row"><button class="btn big" id="${id || 'goStep'}">${label}</button></div>`; }
+let playerName = '';
+try { playerName = (new URLSearchParams(location.search).get('jmeno') || '').trim(); } catch(e) {}
+if (playerName) $('playerName').value = playerName;
+
+$('teamIntro').innerHTML = Object.keys(TEAM).map(k => `<div class="member">${av(k)}<div><b>${TEAM[k].n}</b><small>${TEAM[k].r}</small></div></div>`).join('');
+
+function start(){
+  playerName = $('playerName').value.trim() || playerName;
+  const rest = shuffle(POOL.filter(r => r.id !== 'pruvar')).slice(0, 4);
+  const rows = [POOL.find(r => r.id === 'pruvar'), ...rest];
+  st = {rows: shuffle(rows), i:0, phase:'risk', score:0, eff:0, m4:0, ask:0, rate:0, ap:0, best:0, owner:0, res:[], cp:null, d8:null, cpPts:0, d8Pts:0};
+  st.max = st.rows.length * PER + CP_MAX + D8_MAX;
+  show('intro', false); show('result', false); show('ctaBox', false); show('sheet', false); show('record', false); show('work', true);
+  $('result').after($('sheet')); $('sheet').after($('ctaBox'));
+  loadRow(0);
+}
+function progress(){
+  const total = st.rows.length + 2, k = st.phase === 'risk' ? st.i : st.phase === 'cp' ? st.rows.length : st.rows.length + 1;
+  $('progress').innerHTML = Array.from({length: total}, (_,j) => `<i class="${j < k ? 'done' : j === k ? 'now' : ''}"></i>`).join('');
+}
+function setHead(l1, v1, l2, v2, l3, v3html){
+  $('fL1').textContent = l1; $('wKrok').textContent = v1; $('fL2').textContent = l2; $('wFunkce').textContent = v2; $('fL3').textContent = l3; $('wVada').innerHTML = v3html;
+}
+function loadRow(i){
+  st.i = i; st.phase = 'risk';
+  cur = {step:0, effAssign:{}, effDone:false, m4:null, asked:{}, vals:{S:5,O:5,D:5}, cls:null, ap:null, apCls:null, act:null, owner:null, effPts:0};
+  const r = st.rows[i]; progress();
+  $('wStep').textContent = 'Riziko ' + (i+1) + ' z ' + st.rows.length;
+  setHead('Krok procesu', r.krok, 'Funkce', r.funkce, 'Možná vada', esc(r.vada) + (r.zz ? '<span class="zz" title="zvláštní znak">ZZ</span>' : ''));
+  renderStep(); goTo($('work'));
+}
+function substeps(){ $('substeps').innerHTML = st.phase !== 'risk' ? '' : STEPS.map((s,k) => `<span class="${k < cur.step ? 'done' : k === cur.step ? 'now' : ''}">${k+1} · ${s}</span>`).join(''); }
+function renderStep(){
+  substeps(); const r = st.rows[st.i]; const b = $('stepBody');
+  if (cur.step === 0){
+    const order = shuffle(['zavod','linka','ridic']);
+    b.innerHTML = `<h2 class="q">Kde se který následek projeví?</h2><p class="muted" style="margin-top:-4px">Podle AIAG a VDA se následky popisují na třech úrovních. U každého vyber, komu nastane.</p>`
+      + order.map(k => `<div class="effcard" data-effcard="${k}"><p>${esc(r.eff[k])}</p><div class="lv-btns">${Object.keys(LV).map(l => `<button class="lv-btn" data-eff="${k}" data-lv="${l}">${LVI[l]} ${LV[l]}</button>`).join('')}</div></div>`).join('')
+      + `<div id="vEff"></div>`;
+  }
+  if (cur.step === 1){
+    b.innerHTML = `<h2 class="q">Do které kategorie 4M patří hlavní příčina?</h2><p class="muted" style="margin-top:-4px">Příčiny se ve FMEA hledají podle 4M: člověk, stroj, materiál a prostředí.</p>
+      <div class="cause">Příčina: ${esc(r.pricina)}</div>
+      <div class="m4-btns">${Object.keys(M4).map(k => `<button class="m4" data-m4="${k}"><span>${M4[k][0]}</span>${M4[k][1]}<small>${M4[k][2]}</small></button>`).join('')}</div><div id="vM4"></div>`;
+  }
+  if (cur.step === 2){
+    b.innerHTML = `<h2 class="q">Porada: koho se zeptáš?</h2><p class="muted" style="margin-top:-4px">U každé otázky vyber člověka, který to ví nejlíp. Pak podle jeho odpovědi nastav hodnocení.</p>`
+      + ['S','O','D'].map(q => `<div class="askcard" id="ask-${q}"><h3>${QLABEL[q]}</h3><p class="hint">${QHINT[q]}</p>
+          <div class="who-btns">${Object.keys(TEAM).map(k => `<button class="who-btn" data-q="${q}" data-who="${k}">${av(k)}${TEAM[k].r}</button>`).join('')}</div>
+          <div class="ans"></div></div>`).join('')
+      + `<div class="next-box hidden" id="rateBox"><span>Máš všechna tři hodnocení? Pak pokračuj:</span><button class="btn big" id="rateBtn">Hotovo, porovnat s týmem</button></div><div id="vRate"></div>`;
+  }
+  if (cur.step === 3){
+    const {S,O,D} = cur.vals;
+    b.innerHTML = `<h2 class="q">Jakou prioritu má opatření? <small class="muted" style="font-weight:500;font-size:.85rem">(Action Priority)</small></h2>
+      <div class="sumbar"><span class="pill2">S ${S}</span><span class="pill2">O ${O}</span><span class="pill2">D ${D}</span><span class="pill2">RPN ${S*O*D}</span></div>
+      <div class="choices">
+        <button class="choice" data-ap="H"><span class="dot" style="background:#dc2626"></span><span><b>H · Vysoká</b><small>Opatření je nutné, jinak je potřeba písemně zdůvodnit, proč ne.</small></span></button>
+        <button class="choice" data-ap="M"><span class="dot" style="background:#d97706"></span><span><b>M · Střední</b><small>Opatření je vhodné.</small></span></button>
+        <button class="choice" data-ap="L"><span class="dot" style="background:#16a34a"></span><span><b>L · Nízká</b><small>Opatření je možné, ale není nutné.</small></span></button>
+      </div><div id="vAp"></div>`;
+  }
+  if (cur.step === 4){
+    const order = shuffle([0,1,2]);
+    b.innerHTML = `<h2 class="q">Které opatření riziko sníží nejvíc?</h2><div class="choices">${order.map(k => `<button class="choice" data-act="${k}"><span class="dot"></span><span>${esc(r.acts[k].a)}</span></button>`).join('')}</div>
+      <div id="vActOnly"></div><div id="ownerBox" class="hidden next-box" style="display:block"><h2 class="q" style="margin-top:0">Ještě poslední otázka: které oddělení opatření zajistí?</h2><p class="muted" style="margin:0 0 10px;font-weight:500">Až vybereš oddělení, objeví se tlačítko dál.</p><div class="who-btns">${Object.keys(TEAM).map(k => `<button class="who-btn" data-owner="${k}">${av(k)}${TEAM[k].r}</button>`).join('')}</div></div>
+      <div id="vAct"></div>`;
+  }
+}
+
+// ----- krok 1: následky na třech úrovních -----
+function pickLevel(effKey, lv){
+  if (cur.effDone) return;
+  cur.effAssign[effKey] = lv;
+  document.querySelectorAll(`[data-eff="${effKey}"]`).forEach(b => b.classList.toggle('picked', b.dataset.lv === lv));
+  if (Object.keys(cur.effAssign).length < 3) return;
+  cur.effDone = true; let pts = 0;
+  ['zavod','linka','ridic'].forEach(k => {
+    const ok = cur.effAssign[k] === k; if (ok){ pts += 3; st.eff++; }
+    document.querySelectorAll(`[data-eff="${k}"]`).forEach(b => { b.disabled = true; b.classList.remove('picked');
+      if (b.dataset.lv === k) b.classList.add('right'); else if (b.dataset.lv === cur.effAssign[k]) b.classList.add('wrong'); });
+  });
+  cur.effPts = pts; st.score += pts;
+  $('vEff').innerHTML = verdict(pts === 9 ? 'ok' : pts >= 3 ? 'part' : 'bad', (pts === 9 ? '✓ Všechny tři správně' : '~ Správně ' + (pts/3) + ' ze 3, zeleně je správná úroveň') + ' (+' + pts + ' b.)')
+    + `<p class="why">Závažnost (S) se pak hodnotí podle nejzávažnějšího z těchto tří následků.</p>` + nextBtn('Pokračovat: příčina →');
+  floatAt($('vEff'), '+' + pts, pts === 9 ? 'ok' : 'part'); goTo($('vEff'));
+}
+// ----- krok 2: 4M -----
+function pickM4(k){
+  if (cur.m4) return; const r = st.rows[st.i]; cur.m4 = k;
+  const pts = k === r.m4.best ? 5 : r.m4.ok.includes(k) ? 3 : 0; st.score += pts; if (pts === 5) st.m4++;
+  document.querySelectorAll('[data-m4]').forEach(b => { b.disabled = true; if (b.dataset.m4 === k) b.classList.add('picked'); });
+  const best = M4[r.m4.best][1];
+  $('vM4').innerHTML = verdict(pts === 5 ? 'ok' : pts === 3 ? 'part' : 'bad', pts === 5 ? '✓ Přesně tak (+5 b.)' : pts === 3 ? '~ Dá se obhájit, hlavní kategorie je ' + best + ' (+3 b.)' : '✕ Hlavní kategorie je ' + best + ' (0 b.)')
+    + `<p class="why">Kategorie 4M pomáhá, aby tým na žádný zdroj příčin nezapomněl. Kdo opatření navrhne, často záleží právě na ní: na stroj a přípravky technologie a údržba, na lidi výroba a zaučení.</p>` + nextBtn('Pokračovat: porada →');
+  floatAt($('vM4'), '+' + pts, pts === 5 ? 'ok' : pts === 3 ? 'part' : 'bad'); goTo($('vM4'));
+}
+// ----- krok 3: porada -----
+function ask(q, who){
+  if (cur.asked[q]) return; const r = st.rows[st.i], a = r.ask[q];
+  const pts = who === a.best ? 5 : a.ok.includes(who) ? 3 : 0; cur.asked[q] = {who, pts};
+  st.score += pts; if (pts === 5) st.ask++;
+  const card = $('ask-' + q);
+  card.querySelectorAll('.who-btn').forEach(b => { b.disabled = true; if (b.dataset.who === who) b.classList.add('picked'); });
+  const speaker = pts > 0 ? who : a.best;
+  const pre = pts > 0 ? '' : `<div class="bubble">${av(who)}<div class="txt"><b>${TEAM[who].n} · ${TEAM[who].r}</b>„Tohle nevím přesně, zeptej se ${GEN[a.best]}.“</div></div>`;
+  const mini = pts === 5 ? '<p class="mini ok">✓ Správný člověk (+5 b.)</p>' : pts === 3 ? `<p class="mini part">~ Ví to taky, ale nejlíp to ví ${esc(TEAM[a.best].r)} (+3 b.)</p>` : '<p class="mini bad">✕ Špatný člověk (0 b.)</p>';
+  const v = cur.vals[q];
+  card.querySelector('.ans').innerHTML = pre + `<div class="bubble">${av(speaker)}<div class="txt"><b>${TEAM[speaker].n} · ${TEAM[speaker].r}</b>„${esc(a.say)}“</div></div>` + mini
+    + `<div class="slwrap"><div class="top-row"><label for="sl-${q}"><b>${QLABEL[q]}</b></label><output id="o-${q}">${v}</output></div>
+       <input type="range" id="sl-${q}" data-sl="${q}" min="1" max="10" value="${v}">
+       <div class="ticks"><span>1</span><span>${q === 'D' ? '10 = nezachytí nikdo' : '10'}</span></div><div class="desc" id="d-${q}">${SCALE[q](v)}</div></div>`;
+  if (['S','O','D'].every(x => cur.asked[x])) show('rateBox', true);
+}
+function slide(q, v){ cur.vals[q] = v; $('o-' + q).textContent = v; $('d-' + q).textContent = SCALE[q](v); }
+function rate(){
+  if (cur.cls) return; const r = st.rows[st.i], mine = [cur.vals.S, cur.vals.O, cur.vals.D]; let pts = 0; const cls = [];
+  mine.forEach((m,k) => { const d = Math.abs(m - r.t[k]); if (d <= 1){ pts += 10; st.rate++; cls.push('ok'); } else if (d === 2){ pts += 5; cls.push('part'); } else cls.push('bad'); });
+  cur.cls = cls; st.score += pts;
+  document.querySelectorAll('[data-sl]').forEach(s => s.disabled = true); show('rateBox', false);
+  const rm = mine[0]*mine[1]*mine[2], rt = r.t[0]*r.t[1]*r.t[2];
+  $('vRate').innerHTML = `<div class="cmp"><div class="h l"></div><div class="h">S</div><div class="h">O</div><div class="h">D</div><div class="h">RPN</div>
+    <div class="l">Ty</div>${mine.map((m,k) => `<div class="${cls[k]}">${m}</div>`).join('')}<div>${rm}</div>
+    <div class="l">Tým</div>${r.t.map(t => `<div>${t}</div>`).join('')}<div>${rt}</div></div><p class="why">${esc(r.whyT)}</p>` + nextBtn('Pokračovat: priorita →');
+  floatAt($('vRate'), '+' + pts, pts >= 25 ? 'ok' : pts >= 10 ? 'part' : 'bad'); goTo($('vRate'));
+}
+// ----- krok 4: AP -----
+function pickAp(ap){
+  if (cur.ap) return; const r = st.rows[st.i]; cur.ap = ap;
+  const pts = ap === r.ap ? 10 : r.apAlt.includes(ap) ? 5 : 0; cur.apCls = pts === 10 ? 'ok' : pts === 5 ? 'part' : 'bad';
+  st.score += pts; if (pts === 10) st.ap++;
+  document.querySelectorAll('[data-ap]').forEach(b => { b.disabled = true; if (b.dataset.ap === ap) b.classList.add('picked'); });
+  const names = {H:'H · vysoká', M:'M · střední', L:'L · nízká'};
+  $('vAp').innerHTML = verdict(cur.apCls, (pts === 10 ? '✓ Přesně tak' : pts === 5 ? '~ Dá se obhájit' : '✕ Tady ne') + ' (+' + pts + ' b.). Tým: ' + names[r.ap])
+    + `<p class="why">${esc(r.whyAP)} O prioritě rozhoduje hlavně závažnost, ne samotné RPN.</p>` + nextBtn('Pokračovat: opatření →');
+  floatAt($('vAp'), '+' + pts, cur.apCls); goTo($('vAp'));
+}
+// ----- krok 5: opatření + oddělení -----
+function pickAct(k){
+  if (cur.act !== null) return; cur.act = k; const r = st.rows[st.i];
+  const pts = k === 0 ? 15 : k === 1 ? 5 : 0; st.score += pts; if (k === 0) st.best++;
+  document.querySelectorAll('[data-act]').forEach(b => { b.disabled = true; if (+b.dataset.act === k) b.classList.add('picked'); });
+  $('vActOnly').innerHTML = verdict(k === 0 ? 'ok' : k === 1 ? 'part' : 'bad', k === 0 ? '✓ Nejúčinnější opatření (+15 b.)' : k === 1 ? '~ Pomůže, ale málo (+5 b.). Nejlepší: ' + r.acts[0].a : '✕ Riziko se nezmění (0 b.). Nejlepší: ' + r.acts[0].a);
+  show('ownerBox', true); goTo($('vActOnly'));
+}
+function pickOwner(who){
+  if (cur.owner || cur.act === null) return; const r = st.rows[st.i]; cur.owner = who;
+  const op = who === r.owner.best ? 5 : r.owner.ok.includes(who) ? 3 : 0; st.score += op; if (op === 5) st.owner++;
+  document.querySelectorAll('[data-owner]').forEach(b => { b.disabled = true; if (b.dataset.owner === who) b.classList.add('picked'); });
+  const k = cur.act, {S,O,D} = cur.vals, nO = Math.min(O, r.acts[k].n[0]), nD = Math.min(D, r.acts[k].n[1]);
+  const t2 = op === 5 ? '✓ Správné oddělení (+5 b.)' : op === 3 ? `~ Může, ale hlavní odpovědnost má ${TEAM[r.owner.best].r} (+3 b.)` : `✕ Opatření zajišťuje ${TEAM[r.owner.best].r} (0 b.)`;
+  st.res[st.i] = {effAssign:{...cur.effAssign}, m4:cur.m4, vals:[S,O,D], cls:cur.cls, ap:cur.ap, apCls:cur.apCls, act:k, owner:who};
+  const last = st.i === st.rows.length - 1;
+  $('vAct').innerHTML = verdict(op === 5 ? 'ok' : op === 3 ? 'part' : 'bad', t2)
+    + `<div class="after"><span class="pill2">Před: S ${S} · O ${O} · D ${D} → AP ${apOf(S,O,D)} (RPN ${S*O*D})</span><span class="arrow">→</span><span class="pill2">Po: S ${S} · O ${nO} · D ${nD} → <b>AP ${apOf(S,nO,nD)}</b> (RPN ${S*nO*nD})</span></div>`
+    + `<p class="why">${esc(r.whyA)} Závažnost se opatřením obvykle nemění, mění se výskyt a detekce.</p>`
+    + nextBtn(last ? 'Pokračovat: kontrolní plán →' : 'Další riziko →', 'nextRow');
+  floatAt($('vAct'), '+' + ((k === 0 ? 15 : k === 1 ? 5 : 0) + op), k === 0 && op === 5 ? 'ok' : 'part'); goTo($('vAct'));
+}
+
+// ----- kontrolní plán -----
+function loadCp(){
+  st.phase = 'cp'; progress(); substeps(); st.cp = {metoda:null, reakce:null, kdo:null};
+  const pi = st.rows.findIndex(r => r.id === 'pruvar'), r = st.rows[pi], res = st.res[pi];
+  $('wStep').textContent = 'Dokumentace · kontrolní plán';
+  setHead('Dokument', 'Kontrolní plán', 'Znak', 'Pevnost spoje článků', 'Zvláštní znak', 'Pevnost spoje článků <span class="zz">ZZ</span>');
+  const order = shuffle([0,1,2]);
+  $('stepBody').innerHTML = `<h2 class="q">Vyplň kontrolní plán pro zvláštní znak Pevnost spoje článků</h2>
+    <p class="muted" style="margin-top:-4px">Ve tvé FMEA je u svarového spoje článků opatření: <b>${esc(r.acts[res.act].a)}</b>. Kontrolní plán musí s FMEA souhlasit, nesoulad je při auditu častá neshoda.</p>
+    <div class="askcard"><h3>1 · Metoda a četnost kontroly</h3><div class="choices">${order.map(k => `<button class="choice" data-cpm="${k}"><span class="dot"></span><span>${esc(r.cp.metody[k])}</span></button>`).join('')}</div></div>
+    <div class="askcard"><h3>2 · Reakční plán, když kontrola selže</h3><div class="choices">
+      <button class="choice" data-cpr="0"><span class="dot"></span><span>Zastavit, zablokovat díly od poslední OK kontroly a prověřit je</span></button>
+      <button class="choice" data-cpr="1"><span class="dot"></span><span>Pokračovat a informovat mistra na konci směny</span></button>
+      <button class="choice" data-cpr="2"><span class="dot"></span><span>Vadný díl vyřadit a pokračovat ve výrobě</span></button></div></div>
+    <div class="askcard"><h3>3 · Kdo provádí odtrhovou zkoušku?</h3><div class="who-btns">${Object.keys(TEAM).map(k => `<button class="who-btn" data-cpk="${k}">${av(k)}${TEAM[k].r}</button>`).join('')}</div></div>
+    <div id="vCp"></div>`;
+  goTo($('work'));
+}
+function cpPick(kind, val){
+  if (st.cp[kind] !== null) return; st.cp[kind] = val;
+  const attr = {metoda:'data-cpm', reakce:'data-cpr', kdo:'data-cpk'}[kind];
+  document.querySelectorAll(`[${attr}]`).forEach(b => { b.disabled = true; if (b.getAttribute(attr) === String(val)) b.classList.add('picked'); });
+  if (st.cp.metoda === null || st.cp.reakce === null || st.cp.kdo === null) return;
+  const pi = st.rows.findIndex(r => r.id === 'pruvar'), r = st.rows[pi], res = st.res[pi];
+  const soulad = st.cp.metoda === res.act;
+  const p1 = soulad ? 10 : 0, p2 = st.cp.reakce === 0 ? 5 : 0, p3 = st.cp.kdo === 'kval' ? 5 : st.cp.kdo === 'vyr' ? 3 : 0;
+  st.cpPts = p1 + p2 + p3; st.score += st.cpPts; st.cp.soulad = soulad;
+  $('vCp').innerHTML = `<div class="flag ${soulad ? 'ok' : 'bad'}">${soulad ? '✓ Kontrolní plán odpovídá FMEA (+10 b.)' : '✕ Nesoulad: ve FMEA máš „' + esc(r.acts[res.act].a) + '“, ale v kontrolním plánu „' + esc(r.cp.metody[st.cp.metoda]) + '“. Při auditu by to byla neshoda (0 b.).'}</div>`
+    + verdict(p2 ? 'ok' : 'bad', p2 ? '✓ Reakční plán: zastavit a zablokovat podezřelé díly (+5 b.)' : '✕ Správně je zastavit a zablokovat díly od poslední OK kontroly. Jinak podezřelé díly odjedou k zákazníkovi (0 b.)')
+    + verdict(p3 === 5 ? 'ok' : p3 ? 'part' : 'bad', p3 === 5 ? '✓ Odtrhovou zkoušku dělá kvalita v laboratoři (+5 b.)' : p3 ? '~ Často ji dělá i vyškolený seřizovač u linky, periodické zkoušky ale laboratoř kvality (+3 b.)' : '✕ Odtrhovou zkoušku obvykle dělá kvalita (laboratoř) nebo vyškolený seřizovač (0 b.)')
+    + `<p class="why">Odtrhová zkouška se kromě pravidelné četnosti dělá i na začátku směny, po výměně nebo broušení elektrod a po údržbě svářečky. Na tohle se zákazníci ptají i při auditu procesu.</p>`
+    + nextBtn('Pokračovat →', 'toD8');
+  floatAt($('vCp'), '+' + st.cpPts, st.cpPts >= 15 ? 'ok' : 'part'); goTo($('vCp'));
+}
+
+// ----- reklamace 8D -----
+function loadD8(){
+  st.phase = 'd8'; progress(); substeps(); st.d8 = {radek:null, o:null, d:null, dal:null};
+  $('wStep').textContent = 'Po spuštění výroby · reklamace';
+  setHead('Událost', 'Reklamace od obchodní sítě', 'Postup', 'Řešení 8D', 'Problém', 'Uvolněný spoj článků u 3 akumulátorů');
+  const rowsOrder = shuffle(st.rows.map((r,i) => i));
+  $('stepBody').innerHTML = `<div class="alert"><span class="ic">${ic('alert', 28)}</span><div><b>Reklamace od obchodní sítě</b>„U tří akumulátorů se uvolnil spoj článků, nářadí vypadává a jeden akumulátor se přehřál. Zahajujeme 8D. Jedním z výstupů musí být aktualizovaná FMEA.“ · Petra Malá</div></div>
+    <div class="askcard"><h3>1 · Kterého řádku tvé FMEA se reklamace týká?</h3><div class="choices">${rowsOrder.map(i => `<button class="choice" data-d8r="${i}"><span class="dot"></span><span>${esc(st.rows[i].krok)}: ${esc(st.rows[i].vada)}</span></button>`).join('')}</div></div>
+    <div class="askcard"><h3>2 · Co s výskytem (O)?</h3><div class="choices">
+      <button class="choice" data-d8o="0"><span class="dot"></span><span>Zvýšit: vada se u zákazníka skutečně objevila, náš odhad byl moc optimistický</span></button>
+      <button class="choice" data-d8o="1"><span class="dot"></span><span>Nechat: tři akumulátory jsou náhoda</span></button>
+      <button class="choice" data-d8o="2"><span class="dot"></span><span>Snížit: vadu už známe, takže se nebude opakovat</span></button></div></div>
+    <div class="askcard"><h3>3 · Co s detekcí (D)?</h3><div class="choices">
+      <button class="choice" data-d8d="0"><span class="dot"></span><span>Přehodnotit: naše kontrola vadu nezachytila, detekce je horší, než jsme si mysleli</span></button>
+      <button class="choice" data-d8d="1"><span class="dot"></span><span>Nechat: kontrola je nastavená správně</span></button>
+      <button class="choice" data-d8d="2"><span class="dot"></span><span>Dát 1: od teď budeme kontrolovat pečlivěji</span></button></div></div>
+    <div class="askcard"><h3>4 · Co dál s FMEA?</h3><div class="choices">
+      <button class="choice" data-d8x="0"><span class="dot"></span><span>Doplnit skutečnou příčinu a opatření z 8D, vydat novou revizi FMEA a promítnout změny do kontrolního plánu</span></button>
+      <button class="choice" data-d8x="1"><span class="dot"></span><span>Opravit čísla ve FMEA, revizi neměnit</span></button>
+      <button class="choice" data-d8x="2"><span class="dot"></span><span>FMEA neměnit, reklamaci řeší 8D zvlášť</span></button></div></div>
+    <div id="vD8"></div>`;
+  goTo($('work'));
+}
+function d8Pick(kind, val){
+  if (st.d8[kind] !== null) return; st.d8[kind] = val;
+  const attr = {radek:'data-d8r', o:'data-d8o', d:'data-d8d', dal:'data-d8x'}[kind];
+  document.querySelectorAll(`[${attr}]`).forEach(b => { b.disabled = true; if (b.getAttribute(attr) === String(val)) b.classList.add('picked'); });
+  if (Object.values(st.d8).some(v => v === null)) return;
+  const pi = st.rows.findIndex(r => r.id === 'pruvar');
+  const p = [st.d8.radek === pi ? 5 : 0, st.d8.o === 0 ? 10 : 0, st.d8.d === 0 ? 10 : 0, st.d8.dal === 0 ? 10 : 0];
+  st.d8Pts = p.reduce((a,b) => a+b, 0); st.score += st.d8Pts;
+  $('vD8').innerHTML = verdict(p[0] ? 'ok' : 'bad', p[0] ? '✓ Ano, jde o svarový spoj článků (+5 b.)' : '✕ Uvolněný spoj souvisí se svarovým spojem článků (0 b.)')
+    + verdict(p[1] ? 'ok' : 'bad', p[1] ? '✓ Výskyt zvýšit, realita ukázala, že vada nastává (+10 b.)' : '✕ Výskyt se zvyšuje: vada se u zákazníka prokazatelně objevila (0 b.)')
+    + verdict(p[2] ? 'ok' : 'bad', p[2] ? '✓ Detekce se přehodnotí, kontrola vadu nezachytila (+10 b.)' : '✕ Detekce se přehodnotí: kontrola vadu nezachytila. Lepší detekci dá až nové opatření, ne předsevzetí (0 b.)')
+    + verdict(p[3] ? 'ok' : 'bad', p[3] ? '✓ Nová revize FMEA a navazující kontrolní plán (+10 b.)' : '✕ FMEA je živý dokument: poznatky z 8D se do ní zapisují, vydává se nová revize a mění se kontrolní plán (0 b.)')
+    + `<p class="why">V 8D se kromě příčiny vzniku hledá i příčina nezachycení: proč naše kontrola vadu nezachytila. Poznatky se přenesou i do podobných procesů a jejich FMEA. Auditoři se dívají, jestli se FMEA po reklamaci opravdu změnila. FMEA, která se po spuštění výroby nikdy nezměnila, je varovný signál.</p>`
+    + nextBtn('Ukončit poradu a zobrazit dokumenty ✓', 'finishBtn');
+  floatAt($('vD8'), '+' + st.d8Pts, st.d8Pts >= 25 ? 'ok' : 'part'); goTo($('vD8'));
+}
+
+// ----- dokumenty -----
+function renderSheet(){
+  const tb = $('shRows'); tb.innerHTML = '';
+  const pi = st.rows.findIndex(r => r.id === 'pruvar');
+  const rev2 = st.d8 && st.d8.dal === 0;
+  st.rows.forEach((r, i) => {
+    const d = st.res[i], tr = document.createElement('tr');
+    const [S,O,D] = d.vals, nO = Math.min(O, r.acts[d.act].n[0]), nD = Math.min(D, r.acts[d.act].n[1]);
+    let aO = nO, aD = nD;
+    if (i === pi && st.d8){ if (st.d8.o === 0) aO = Math.min(10, nO + 2); if (st.d8.d === 0) aD = Math.min(10, nD + 2); }
+    const effHtml = ['zavod','linka','ridic'].map(k => `<span class="lvl">${LV[k]}</span>${esc(r.eff[k])}`).join('<br>');
+    const note = (i === pi && rev2) ? '<br><b style="color:#b91c1c">Rev. 02: reklamace 8D, O a D přehodnoceny</b>' : '';
+    tr.innerHTML = `<td><b>${esc(r.krok)}</b><br>${esc(r.funkce)}</td><td>${esc(r.vada)}</td><td>${effHtml}</td><td class="n ${d.cls[0]}">${S}</td><td class="n">${r.zz ? '<span class="zz">ZZ</span>' : ''}</td>`
+      + `<td>${esc(r.pricina)}<br><b>[${M4[d.m4][1]}]</b></td><td>${esc(r.prevence)}</td><td class="n ${d.cls[1]}">${O}</td><td>${esc(r.detekce)}</td><td class="n ${d.cls[2]}">${D}</td>`
+      + `<td class="rpn">${S*O*D}</td><td class="n ${d.apCls}">${d.ap}</td><td>${esc(r.acts[d.act].a)}${note}</td><td>${esc(TEAM[d.owner].r)} · ${esc(r.termin)}</td>`
+      + `<td class="n">${S}</td><td class="n">${aO}</td><td class="n">${aD}</td><td class="rpn">${S*aO*aD}</td><td class="n ${AP_CLS[apOf(S,aO,aD)]}">${apOf(S,aO,aD)}</td>`;
+    tb.appendChild(tr);
+  });
+  document.querySelectorAll('.pName').forEach(e => e.textContent = playerName || 'účastník');
+  $('revNow').textContent = rev2 ? '02 · po reklamaci 8D' : '01 · nový projekt';
+  $('revisions').innerHTML = `<li><b>Rev. 01</b> · nový projekt, týmová porada (${st.rows.length} rizik)</li>`
+    + (rev2 ? `<li><b>Rev. 02</b> · reklamace od obchodní sítě (uvolněný spoj článků u 3 akumulátorů), 8D: výskyt a detekce u svarového spoje přehodnoceny, změna promítnuta do kontrolního plánu</li>` : `<li style="color:#b91c1c">Po reklamaci nebyla vydána nová revize. Při auditu by to byla neshoda.</li>`);
+  $('minutes').innerHTML = `<li><b>Účastníci:</b> ${Object.keys(TEAM).map(k => esc(TEAM[k].n + ' (' + TEAM[k].r.toLowerCase() + ')')).join(', ')}, moderátor: ${esc(playerName || 'účastník')}</li>`
+    + `<li><b>Projednáno:</b> PFMEA montáže aku vrtacího šroubováku, ${st.rows.length} rizik.</li>`
+    + st.res.map((d,i) => `<li><b>Opatření ${i+1}:</b> ${esc(st.rows[i].acts[d.act].a)} · odpovídá ${esc(TEAM[d.owner].r)}, ${esc(st.rows[i].termin)}</li>`).join('')
+    + `<li><b>Úkol:</b> zapracovat zvláštní znaky a ověřování poka-yoke (obsluha na začátku směny, kvalita auditem) do kontrolního plánu a pracovních návodek · odpovídá kvalita, do 14 dní.</li>`
+    + `<li><b>Další revize FMEA:</b> při každé reklamaci (8D), změně procesu nebo konstrukce.</li>`;
+  const r = st.rows[pi];
+  const reakce = ['Zastavit, zablokovat díly od poslední OK kontroly a prověřit je','Pokračovat a informovat mistra na konci směny','Vadný díl vyřadit a pokračovat ve výrobě'];
+  $('cpRows').innerHTML = `<tr><td><b>Pevnost spoje článků</b> <span class="zz">ZZ</span></td><td>${esc(r.cp.metody[st.cp.metoda])}</td><td>${esc(reakce[st.cp.reakce])}</td><td>${esc(TEAM[st.cp.kdo].r)}</td><td>${st.cp.soulad ? '<b style="color:#15803d">✓ ano</b>' : '<b style="color:#b91c1c">✕ nesoulad</b>'}</td></tr>`
+    + `<tr><td><b>Ověření poka-yoke a zkušebních zařízení</b></td><td>Referenčními vadnými díly, každou směnu</td><td>Zastavit, zablokovat díly od posledního úspěšného ověření a prověřit je. Do opravy náhradní 100% kontrola schválená kvalitou</td><td>Obsluha (se záznamem), kvalita auditem</td><td><b style="color:#15803d">✓ ano</b></td></tr>`;
+}
+function confetti(){
+  if (reduced) return; const box = document.createElement('div'); box.className = 'confetti';
+  const cols = ['#f59e0b','#1d4ed8','#16a34a','#dc2626','#a855f7','#06b6d4'];
+  for (let i = 0; i < 90; i++){ const c = document.createElement('i'); c.style.left = Math.random()*100 + 'vw'; c.style.background = cols[i % cols.length];
+    c.style.animationDuration = (2.2 + Math.random()*1.8) + 's'; c.style.animationDelay = (Math.random()*.6) + 's'; box.appendChild(c); }
+  document.body.appendChild(box); setTimeout(() => box.remove(), 4800);
+}
+function finish(){
+  st.phase = 'done'; renderSheet();
+  show('work', false); show('result', true); show('ctaBox', true); show('sheet', true); show('record', true);
+  $('result').after($('record')); $('record').after($('sheet'));
+  const pct = Math.round(st.score / st.max * 100);
+  $('pct').textContent = pct + ' %'; $('pts').textContent = st.score + ' z ' + st.max + ' bodů';
+  $('ringArc').style.strokeDashoffset = '415';
+  requestAnimationFrame(() => requestAnimationFrame(() => { $('ringArc').style.strokeDashoffset = String(415 * (1 - pct/100)); }));
+  $('rank').textContent = pct >= 90 ? 'Expert FMEA' : pct >= 70 ? 'Zkušený moderátor' : pct >= 40 ? 'Pozorný člen týmu' : 'Nováček v týmu FMEA';
+  const n = st.rows.length;
+  $('summary').textContent = 'Správně oslovený člověk: ' + st.ask + ' z ' + (n*3) + ' případů. Shoda s týmem v hodnocení: ' + st.rate + ' z ' + (n*3) + '. Níže najdeš FMEA s historií revizí, zápis z porady a kontrolní plán.';
+  $('tEff').textContent = (st.eff + st.m4) + ' / ' + (n*4);
+  $('tAsk').textContent = st.ask + ' / ' + (n*3);
+  $('tRate').textContent = st.rate + ' / ' + (n*3);
+  $('tCp').textContent = (st.cpPts + st.d8Pts) + ' / ' + (CP_MAX + D8_MAX) + ' b.';
+  if (KONTAKT_EMAIL){ const c = $('contact'); c.textContent = ''; const a = document.createElement('a');
+    a.href = 'mailto:' + KONTAKT_EMAIL + '?subject=RiskT%C3%BDm%20pro%20na%C5%A1i%20firmu'; a.className = 'btn'; a.textContent = 'Chci RiskTým pro naši firmu'; c.appendChild(a); }
+  $('recDate').textContent = new Date().toLocaleDateString('cs-CZ');
+  $('recName').value = playerName || '';
+  $('recPct').textContent = pct + ' % (' + st.score + ' z ' + st.max + ' b.)';
+  $('recRank').textContent = $('rank').textContent.replace(/\s*🏆/, '');
+  $('recAsk').textContent = st.ask + ' z ' + (n*3);
+  $('recRate').textContent = st.rate + ' z ' + (n*3);
+  $('recCp').textContent = (st.cpPts + st.d8Pts) + ' z ' + (CP_MAX + D8_MAX) + ' b.';
+  $('recPass').innerHTML = pct >= 70 ? '<b style="color:#15803d">✓ ano</b>' : '<b style="color:#b91c1c">✕ ne, doporučeno zopakovat</b>';
+  goTo($('result')); if (pct >= 70) confetti();
+}
+
+$('stepBody').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  const d = b.dataset;
+  if (d.eff && d.lv) return pickLevel(d.eff, d.lv);
+  if (d.m4) return pickM4(d.m4);
+  if (d.q) return ask(d.q, d.who);
+  if (b.id === 'rateBtn') return rate();
+  if (d.ap) return pickAp(d.ap);
+  if (d.act !== undefined) return pickAct(+d.act);
+  if (d.owner) return pickOwner(d.owner);
+  if (b.id === 'goStep'){ cur.step++; renderStep(); goTo($('work')); return; }
+  if (b.id === 'nextRow') return st.i < st.rows.length - 1 ? loadRow(st.i + 1) : loadCp();
+  if (d.cpm !== undefined) return cpPick('metoda', +d.cpm);
+  if (d.cpr !== undefined) return cpPick('reakce', +d.cpr);
+  if (d.cpk) return cpPick('kdo', d.cpk);
+  if (b.id === 'toD8') return loadD8();
+  if (d.d8r !== undefined) return d8Pick('radek', +d.d8r);
+  if (d.d8o !== undefined) return d8Pick('o', +d.d8o);
+  if (d.d8d !== undefined) return d8Pick('d', +d.d8d);
+  if (d.d8x !== undefined) return d8Pick('dal', +d.d8x);
+  if (b.id === 'finishBtn') return finish();
+});
+$('stepBody').addEventListener('input', e => { const s = e.target.closest('[data-sl]'); if (s) slide(s.dataset.sl, +s.value); });
+$('startBtn').onclick = start;
+$('playerName').addEventListener('keydown', e => { if (e.key === 'Enter') start(); });
+$('againBtn').onclick = start;
+$('docsBtn').onclick = () => goTo($('sheet'));
+$('recBtn').onclick = () => goTo($('record'));
+$('printBtn').onclick = () => { document.body.dataset.print = 'sheet'; window.print(); };
+$('printRecBtn').onclick = () => { document.body.dataset.print = 'record'; window.print(); };
+window.addEventListener('afterprint', () => { delete document.body.dataset.print; });
+</script>
+</body>
+</html>

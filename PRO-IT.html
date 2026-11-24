@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskTým · Informace pro IT</title>
+<meta name="description" content="Jak provozovat RiskTým na firemním intranetu: soubory, bezpečnostní hlavičky, kde jsou data, aktualizace a licence.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+:root{--bg:#f7f8fa;--panel:#fff;--text:#0f172a;--muted:#556070;--line:#e3e8ef;--brand:#0f2742;--brand-2:#1d4ed8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header{background:#fff;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:10px;min-height:64px}
+header a{color:var(--text);text-decoration:none;font-weight:800;display:flex;align-items:center;gap:10px}
+header small{display:block;font-weight:500;font-size:.72rem;color:var(--muted)}
+main{padding:32px 0 56px}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.2;margin:0 0 8px}
+h2{font-size:1.2rem;margin:32px 0 8px}
+p,li{color:#273244}
+.lead{font-size:1.08rem;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0;list-style:none}
+.facts li{background:#fff;border:1px solid var(--line);border-left:4px solid var(--brand-2);border-radius:10px;padding:10px 12px}
+@media (max-width:640px){.facts{grid-template-columns:1fr}}
+code,pre{font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;font-size:.85rem}
+code{background:#eef2f7;border-radius:5px;padding:1px 5px}
+pre{background:#0f2742;color:#e2e8f0;border-radius:12px;padding:14px 16px;overflow-x:auto;white-space:pre;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f2f4f8}
+td.h{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;word-break:break-all}
+.tbl{overflow-x:auto}
+.note{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px}
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:.85rem}
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
+</head>
+<body>
+<header><div class="wrap"><a href="index.html"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0f2742"/><path d="M17 7 L28 26 H6 Z" fill="#f59e0b"/><circle cx="12" cy="22" r="2.4" fill="#0f2742"/><circle cx="17" cy="22" r="2.4" fill="#0f2742"/><circle cx="22" cy="22" r="2.4" fill="#0f2742"/><rect x="15.8" y="12" width="2.4" height="6" rx="1.2" fill="#0f2742"/></svg><span>RiskTým<small>Informace pro IT</small></span></a></div></header>
+<main><div class="wrap">
+<h1>RiskTým na firemním intranetu</h1>
+<p class="lead">Podklad pro správce IT: co RiskTým je, jak ho nasadit na interní server, kde jsou uložená data a co při nasazení zkontrolovat.</p>
+
+<h2>Co to je</h2>
+<ul class="facts">
+  <li><b>Statické soubory.</b> HTML, JavaScript a písmo, celkem asi 1,3 MB. Žádný serverový program ani databáze.</li>
+  <li><b>Žádná spojení ven.</b> Písmo i knihovna pro Excel jsou součástí složky. Nic se nenačítá z internetu.</li>
+  <li><b>Bez cookies a analytiky.</b> Žádné sledování, žádné přihlašování, žádné formuláře odesílající data.</li>
+  <li><b>Data v prohlížeči.</b> Projekty se ukládají do úložiště prohlížeče (localStorage) u konkrétního uživatele.</li>
+</ul>
+
+<h2>Instalace</h2>
+<ol>
+  <li>Zkopírujte celou složku (všechny soubory i podsložky <code>fonts</code> a <code>lib</code>) na interní webový server, například IIS, Apache nebo nginx.</li>
+  <li>Uživatelům dejte adresu stránky <code>porada.html</code> (nástroj na poradu) a případně <code>fmea.html</code> (trénink).</li>
+  <li>Doporučujeme nastavit bezpečnostní hlavičky níže.</li>
+</ol>
+<p>Stránky jdou otevřít i přímo ze síťové složky bez serveru. Pak ale každý počítač ukládá data zvlášť a záleží na nastavení prohlížeče, proto doporučujeme webový server. SharePoint Online soubory HTML jako stránky nespouští, použijte webový server.</p>
+
+<h2>Doporučené bezpečnostní hlavičky</h2>
+<p>S touto politikou zabezpečení obsahu (CSP) jsme RiskTým otestovali: všechny tři stránky, export do Excelu, import FMEA z Excelu i export do šablony fungují. Politika zakazuje jakékoli síťové spojení ze stránky (<code>connect-src 'none'</code>) a nepotřebuje <code>unsafe-eval</code>.</p>
+<pre>Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'none'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'
+X-Content-Type-Options: nosniff
+Referrer-Policy: no-referrer</pre>
+<p>Příklad pro nginx:</p>
+<pre>location /risktym/ {
+  add_header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'none'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "no-referrer" always;
+}</pre>
+<p>Příklad pro IIS (soubor <code>web.config</code> ve složce RiskTýmu):</p>
+<pre>&lt;configuration&gt;
+  &lt;system.webServer&gt;
+    &lt;staticContent&gt;
+      &lt;remove fileExtension=".woff2" /&gt;
+      &lt;mimeMap fileExtension=".woff2" mimeType="font/woff2" /&gt;
+    &lt;/staticContent&gt;
+    &lt;httpProtocol&gt;
+      &lt;customHeaders&gt;
+        &lt;add name="Content-Security-Policy" value="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'none'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'" /&gt;
+        &lt;add name="X-Content-Type-Options" value="nosniff" /&gt;
+        &lt;add name="Referrer-Policy" value="no-referrer" /&gt;
+      &lt;/customHeaders&gt;
+    &lt;/httpProtocol&gt;
+  &lt;/system.webServer&gt;
+&lt;/configuration&gt;</pre>
+
+<h2>Kde jsou data a jak je nepřijít</h2>
+<ul>
+  <li>Projekty jsou v úložišti prohlížeče daného uživatele, vázané na adresu serveru. Na server se nic neukládá.</li>
+  <li><b>Ukládání do souboru:</b> v Chrome a Edge si uživatel může zapnout automatické ukládání projektu do souboru, například na firemní disk nebo do sdílené složky, kterou zálohujete. Každá změna se tam zapíše do pár sekund. Prohlížeč si pamatuje jen odkaz na zvolený soubor (v IndexedDB) a po znovuotevření žádá potvrzení. Když soubor mezitím změní někdo jiný, RiskTým ho nepřepíše a upozorní.</li>
+  <li><b>Změna adresy serveru:</b> na nové adrese prohlížeč staré projekty neuvidí. Před přesunem ať si uživatelé uloží projekty do souboru (záložka Soubor) a na nové adrese je znovu nahrají.</li>
+  <li><b>Vymazání dat prohlížeče</b> nebo výměna počítače smaže projekty v prohlížeči. Soubory na firemním disku zůstanou, jsou to běžné soubory JSON. Proto doporučujeme zapnout ukládání do souboru. RiskTým na projekt bez souboru sám upozorní.</li>
+  <li><b>Sdílení v týmu:</b> společný soubor projektu na sdíleném disku nebo export do Excelu. RiskTým nemá společnou databázi, na poradě se obvykle pracuje na jednom počítači nebo projektoru.</li>
+  <li><b>Záznam změn:</b> RiskTým zapisuje změny hodnot (kdo, kdy, co bylo a co je) a schválené verze ukládá uzamčené. Jméno bere z výběru „Kdo pracuje“, nejde o elektronický podpis ani o ověření identity.</li>
+  <li><b>Schválení FMEA:</b> schvalovatel revizi potvrdí tím, že napíše své celé jméno. RiskTým uloží jméno, datum a čas. Protože nástroj nemá přihlašování, nejde o elektronický podpis. Kde je podpis potřeba, PFMEA se vytiskne s místem pro podpis.</li>
+  <li><b>Ztráta nebo krádež počítače:</b> projekty v prohlížeči jsou chráněné stejně jako ostatní data v uživatelském profilu, tedy vaším šifrováním disku a přihlášením do Windows. Vlastní šifrování RiskTým nemá. Soubory projektu na firemním disku chrání vaše oprávnění ke složce.</li>
+  <li><b>Nezávislost na dodavateli:</b> RiskTým nemá licenční klíč ani časové omezení a nepřipojuje se k žádnému serveru dodavatele. Dodaná složka technicky funguje dál i bez nás. Data jsou v souborech JSON a Excel a kód nástroje je čitelný přímo v souborech HTML.</li>
+</ul>
+
+<h2>Aktualizace</h2>
+<p>Novou verzi dodáme jako stejnou složku. Soubory na serveru stačí nahradit a adresu ponechat beze změny, data uživatelů v prohlížeči zůstanou. Před aktualizací doporučujeme, aby si uživatelé projekty uložili do souboru.</p>
+
+<h2>Prohlížeče</h2>
+<p>Ověřeno v Google Chrome. Microsoft Edge běží na stejném jádru. Ve starších prohlížečích nemusí fungovat všechny prvky vzhledu.</p>
+
+<h2>Licence součástí třetích stran</h2>
+<div class="tbl"><table>
+<tr><th>Součást</th><th>Soubor</th><th>Licence</th></tr>
+<tr><td>ExcelJS 4.4.0 (práce se soubory .xlsx)</td><td><code>lib/exceljs.min.js</code></td><td>MIT, text v <code>lib/LICENSE-exceljs.txt</code></td></tr>
+<tr><td>Písmo Inter</td><td><code>fonts/*.woff2</code></td><td>SIL Open Font License 1.1, text v <code>fonts/LICENSE-Inter.txt</code></td></tr>
+</table></div>
+
+<h2>Kontrolní součty souborů (SHA-256)</h2>
+<p>Podle nich ověříte, že soubory na serveru odpovídají dodané verzi.</p>
+<div class="tbl"><table>
+<tr><th>Soubor</th><th>SHA-256</th></tr>
+<tr><td><code>index.html</code></td><td class="h">d1671ff9bc37cf1c152dcaf39be106911dadfc4c92b115e3d25861d0fea59e29</td></tr>
+<tr><td><code>fmea.html</code></td><td class="h">b017797497d80ece4cfb46370fcad2514465f3a2c2550de45cba33b5a76f8ffc</td></tr>
+<tr><td><code>porada.html</code></td><td class="h">41e3d2ceb755778755bb9fd4e699fe9e915a8b85a83820ed7ef710b805283691</td></tr>
+<tr><td><code>fonts/inter-latin.woff2</code></td><td class="h">3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62</td></tr>
+<tr><td><code>fonts/inter-latin-ext.woff2</code></td><td class="h">34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956</td></tr>
+<tr><td><code>fonts/LICENSE-Inter.txt</code></td><td class="h">426ef06df3fa0af49e84ec5c89908fa9234a756e6872deeae0016bb1822f0544</td></tr>
+<tr><td><code>lib/exceljs.min.js</code></td><td class="h">7e49da68588e250dbb8bba190d2caa8ab3787cc0284bda1d8b2f805c4df742c9</td></tr>
+<tr><td><code>lib/LICENSE-exceljs.txt</code></td><td class="h">2ed526b7e7c7681dc2347995b5036ddf73dc27d0539cdea59b6d4a72b63a57a0</td></tr>
+</table></div>
+
+<div class="note" style="margin-top:24px">RiskTým vytváří návrhy dokumentů. Obsah kontroluje, schvaluje a podepisuje odpovědná osoba ve firmě.</div>
+</div></main>
+<footer><div class="wrap">Ukázková verze RiskTýmu. Autorka: Simona Fichtnerová. · <a href="index.html">Zpět na RiskTým</a></div></footer>
+</body>
+</html>
