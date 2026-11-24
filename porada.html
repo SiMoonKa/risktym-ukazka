@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RiskTým · Porada</title>
-<meta name="description" content="RiskTým: nástroj na FMEA porady. Tým projde skutečný proces, ohodnotí S, O, D a z rozhodnutí se vyplní PFMEA, kontrolní plán, seznam opatření, zápis i 8D. Data zůstávají v prohlížeči.">
+<meta name="description" content="RiskTým: nástroj na FMEA porady. Tým projde skutečný proces, ohodnotí S, O, D a z rozhodnutí se vyplní PFMEA, kontrolní plán, seznam opatření, zápis i 8D. Data zůstávají v prohlížeči.">
 <style>
 /* písmo Inter (licence SIL OFL) je uložené u webu */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -274,7 +274,7 @@ footer{font-size:.78rem;color:var(--muted);padding:18px 0 30px}
   input,select,textarea{border:0 !important;padding:0 !important;background:transparent !important;resize:none}
   @page{size:landscape;margin:10mm}
 }
-</style>
+h1,h2,h3,h4,summary,.q,.btn,.chip,.tag{text-wrap:balance}p,li,dd,td,.muted{text-wrap:pretty}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
 </head>
 <body>
@@ -640,7 +640,7 @@ function vRisk(r){
     <label class="f">Stávající detekce (DC)<textarea class="auto" rows="1" data-r="detekce">${esc(r.detekce)}</textarea></label>
   </div>
   <label style="display:flex;gap:6px;align-items:center;margin-top:8px;font-size:.88rem"><input type="checkbox" data-r="zz" ${r.zz?'checked':''}>Zvláštní znak (ZZ)</label>
-  <div class="krokh"><span class="kn">4</span><div><b>Hodnocení S, O, D</b><small>Každý hodnotí sám za sebe 1 až 10, hlasy se pak odhalí najednou.</small></div></div>
+  <div class="krokh"><span class="kn">4</span><div><b>Hodnocení S, O, D</b><small>Každý hodnotí sám za sebe 1 až 10, hlasy se pak odhalí najednou.</small></div></div>
   ${!r.sZdroj && !r.S && !r.sRozhodnuto && !Object.keys(r.votes.S).length ? `<div class="sq" id="sOtazka"><b>Je závažnost už určená?</b><span class="muted">V PFMEA se závažnost následku na výrobku obvykle přebírá z DFMEA nebo od zákazníka a nehlasuje se o ní.</span><div class="row-actions"><button class="btn small" data-act="sAno">Ano, převzít (DFMEA, zákazník, katalog)</button><button class="btn small ghost" data-act="sNe">Ne, navrhne tým</button></div></div>` : ''}
   <div class="sbox">
     <label class="f">Odkud je závažnost (S)<select data-sz="1">${Object.keys(SZ).map(k => `<option value="${k}" ${(r.sZdroj||'')===k?'selected':''}>${SZ[k]}</option>`).join('')}</select></label>
@@ -731,7 +731,7 @@ function vPlan(){
 
 // ===== 4 OPATŘENÍ =====
 
-// ===== knihovna typických vad montáže nářadí (bez hodnocení: S, O, D určuje tým) =====
+// ===== knihovna typických vad montáže nářadí (bez hodnocení: S, O, D určuje tým) =====
 const LIB = [
   {vada:'Slabý svarový spoj pásku s článkem', zz:true, eff:{zavod:'Akumulátor neprojde odtrhovou zkouškou, šarže se blokuje', linka:'Reklamace a vracení akumulátorů', ridic:'Spoj se zahřívá, nářadí vypadává, hrozí přehřátí akumulátoru'}, pricina:'Opotřebené elektrody svářečky zhoršují přenos proudu', m4:'stroj', prevence:'Broušení elektrod podle zkušenosti obsluhy', detekce:'Odtrhová zkouška 1× za směnu, vizuálně 100 %'},
   {vada:'Studený pájený spoj', eff:{zavod:'Nářadí neprojde koncovou zkouškou, oprava', linka:'Vracené kusy, nářadí vypadává', ridic:'Spoj se zahřívá a nářadí časem přestane fungovat'}, pricina:'Průvan od otevřených vrat ochlazuje hrot pájky', m4:'prostredi', prevence:'Nastavená teplota pájky', detekce:'Koncová zkouška funkce 100 %'},
@@ -928,7 +928,7 @@ function demoVelka(){
     ['OP 100','sklad','Skladování a expedice','Odeslat jen uvolněné nářadí']];
   p.steps = K.map(([op, typ, krok, funkce, znak, nok]) => { const st = {id:uid(), op, krok, funkce}; if (typ) st.typ = typ; if (znak) st.znakVyrobku = znak; if (nok){ st.nok = nok; st.nokNa = st.id; } return st; });
   const dfmea = 'DFMEA aku vrtacího šroubováku, rev. 04';
-  // [krok, vada, závod, zákazník, uživatel, příčina, 4M, prevence, detekce, S, O, D, ZZ, podklad O, podklad D, projednáno]
+  // [krok, vada, závod, zákazník, uživatel, příčina, 4M, prevence, detekce, S, O, D, ZZ, podklad O, podklad D, projednáno]
   const V = [
     [0,'Články z neschválené šarže','Díly se musí vytřídit','Stažení akumulátorů z prodeje','Přehřátí akumulátoru','Záměna šarže u dodavatele','material','Certifikát ke každé dodávce','Kontrola certifikátu při příjmu',8,2,5,false,'Bez záměny šarže za 3 roky, dodavatel schválený','Kontroluje se jen papír, ne články',1],
     [0,'Plastový kryt mimo rozměr','Kryt nejde smontovat, zmetek','','','Opotřebená forma u dodavatele','material','Dohoda o kvalitě s dodavatelem','Měření 5 kusů z dodávky',5,3,5,false,'2 vrácené dodávky za rok','Vzorek 5 kusů, ne každý kus',1],
@@ -953,7 +953,7 @@ function demoVelka(){
     [10,'Nabíječka jiné varianty v balení','Třídění','Reklamace','Akumulátor nejde nabít','Podobné krabice nabíječek na jednom místě','clovek','Oddělené balicí místo, barevné štítky','Sken čárového kódu při balení',6,3,3,false,'1 záměna za rok','Skener u každého kusu',0],
     [11,'Expedice neuvolněného nářadí','Dohledávání kusů','Reklamace','Nefunkční nářadí u uživatele','Neuvolněné palety stojí u uvolněných','clovek','Oddělené místo pro neuvolněné palety','Kontrola štítku uvolnění při nakládce',9,3,6,false,'1 záměna palety za rok','Kontrola štítku pohledem při nakládce',0]];
   const den = Date.now() - 3 * 86400000, za = d => new Date(Date.now() + d * 86400000).toISOString().slice(0, 10);
-  p.rows = V.map(([k, vada, zavod, linka, ridic, pricina, m4, prevence, detekce, S, O, D, zz, pO, pD, proj]) => { const r = newRow(p.steps[k].id);
+  p.rows = V.map(([k, vada, zavod, linka, ridic, pricina, m4, prevence, detekce, S, O, D, zz, pO, pD, proj]) => { const r = newRow(p.steps[k].id);
     Object.assign(r, {vada, eff:{zavod, linka, ridic}, pricina, m4, prevence, detekce, zz, S:S || null, O:O || null, D:D || null, podklad:{O:pO, D:pD}});
     if (zz && S){ r.sZdroj = 'dfmea'; r.sPozn = dfmea; }
     if (proj) r.projednano = den;
@@ -1350,7 +1350,7 @@ async function xlsxExport(kind){ const ExcelJS = await loadExcel(), wb = new Exc
   const keep = ui.c8; P.complaints.forEach(c => { ui.c8 = c.id; kv(('8D č. ' + c.n).slice(0, 31), '8D REPORT č. ' + c.n, tableRows('d8')); }); ui.c8 = keep;
   if ((P.changes || []).length) table('Záznam změn', 'ZÁZNAM ZMĚN', [['Kdy','Kdo','Co','Kde','Bylo','Je']].concat(P.changes.slice().reverse().map(c => [new Date(c.t).toLocaleString('cs-CZ'), c.who, c.co, c.kde, chv(c.key, c.from), chv(c.key, c.to)])));
   const pc = pilotCalc(), pb = pilotOf().before; if (pilotOf().meetings.length) kv('Pilot', 'MĚŘENÍ PILOTU', [['Dřív: porada (min)', pb.min], ['Dřív: dokumenty po poradě (min)', pb.prepis], ['Dřív: projednaná rizika', pb.rizik], ['Dřív: lidí na poradě', pb.lidi]].concat(pilotOf().meetings.map(m => ['Porada ' + fd(m.datum), m.min + ' min, rizik ' + m.rizik + ', lidí ' + m.lidi + ', dokumenty ' + (m.prepis || 0) + ' min'])).concat(pc.ok ? [['Minuty na 1 riziko', f1(pc.bT) + ' → ' + f1(pc.aT)], ['Člověkominuty na 1 riziko', f1(pc.bP) + ' → ' + f1(pc.aP)], ['Změna času na riziko', (pc.pct > 0 ? '-' : '+') + Math.abs(pc.pct) + ' %'], ['Úspora za pilotní období', f1(Math.max(0, pc.savedH)) + ' člověkohodin' + (pc.kc !== null && pc.savedH > 0 ? ', přibližně ' + pc.kc.toLocaleString('cs-CZ') + ' Kč' : '')]] : []).concat([['Poznámka', 'Údaje zadává firma sama. Výsledek je jen z měřených porad.']]));
-  table('Stupnice', 'HODNOTICÍ STUPNICE S, O, D' + (P.scales ? '' : ' (výchozí texty RiskTýmu)'), [['Hodnota','Závažnost (S)','Výskyt (O)','Detekce (D)']].concat([10,9,8,7,6,5,4,3,2,1].map(v => [v, hintOf('S', v), hintOf('O', v), hintOf('D', v)])));
+  table('Stupnice', 'HODNOTICÍ STUPNICE S, O, D' + (P.scales ? '' : ' (výchozí texty RiskTýmu)'), [['Hodnota','Závažnost (S)','Výskyt (O)','Detekce (D)']].concat([10,9,8,7,6,5,4,3,2,1].map(v => [v, hintOf('S', v), hintOf('O', v), hintOf('D', v)])));
   const c8 = P.complaints.find(c => c.id === ui.c8), want = kind === 'd8' && c8 ? ('8D č. ' + c8.n).slice(0, 31) : ({tok:'Diagram procesu', fmea:'PFMEA', plan:'Kontrolní plán', ukoly:'Opatření', zapis:'Zápis'})[kind] || 'PFMEA';
   let at = Math.max(0, wb.worksheets.findIndex(w => w.name === want));
   wb.views = [{x:0, y:0, width:20000, height:12000, firstSheet:0, activeTab:at, visibility:'visible'}];
@@ -1500,10 +1500,10 @@ function openSnap(v){ const keepP = P, keepUi = ui; let html = '';
   const old = $('snapView'); if (old) old.remove(); document.body.appendChild(d); document.body.classList.add('snapmode'); }
 SNAP = flat(); SNAPOBJ = P;
 
-// ===== firemní stupnice S, O, D =====
+// ===== firemní stupnice S, O, D =====
 function hintOf(k, v){ const sc = P.scales && P.scales[k]; return (sc && v && sc[v - 1]) || HINT[k](v); }
 function scaleCard(){ const others = Object.values(STORE.items).filter(x => x.id !== P.id && x.scales);
-  const head = `<h2>Hodnoticí stupnice S, O, D</h2><p class="muted">Texty, které tým vidí při hlasování u každé hodnoty 1 až 10. Nastavte je podle hodnoticích tabulek vaší firmy. Tabulky z příručky AIAG a VDA do RiskTýmu nekopírujeme, firma pracuje se svou příručkou.</p>`;
+  const head = `<h2>Hodnoticí stupnice S, O, D</h2><p class="muted">Texty, které tým vidí při hlasování u každé hodnoty 1 až 10. Nastavte je podle hodnoticích tabulek vaší firmy. Tabulky z příručky AIAG a VDA do RiskTýmu nekopírujeme, firma pracuje se svou příručkou.</p>`;
   if (!P.scales) return `<div class="card" id="scaleCard">${head}<p>Teď se používají obecné výchozí texty RiskTýmu.</p><div class="row-actions"><button class="btn" data-act="scaleInit">Nastavit stupnice firmy</button>${others.length ? `<select id="scaleFrom" aria-label="Projekt se stupnicemi">${others.map(x => `<option value="${x.id}">${esc(projName(x))}</option>`).join('')}</select><button class="btn ghost" data-act="scaleCopy">Převzít z projektu</button>` : ''}</div></div>`;
   return `<div class="card" id="scaleCard">${head}<div class="scales">${['S','O','D'].map(k => `<div><h3>${DIM[k]}</h3><table class="doc sct"><tbody>${[10,9,8,7,6,5,4,3,2,1].map(v => `<tr><td class="n"><b>${v}</b></td><td><textarea class="auto" rows="1" data-sc="${k}" data-i="${v - 1}">${esc(P.scales[k][v - 1] || '')}</textarea></td></tr>`).join('')}</tbody></table></div>`).join('')}</div>
     <div class="row-actions"><button class="btn ghost small" data-act="scaleReset">Vrátit výchozí texty RiskTýmu</button></div></div>`; }

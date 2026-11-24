@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RiskTým · Trénink FMEA</title>
-<meta name="description" content="RiskTým: moderuj FMEA poradu týmu nad montáží aku vrtacího šroubováku. Následky na třech úrovních, příčiny podle 4M, hodnocení S, O, D, priorita AP, kontrolní plán a reklamace 8D.">
+<meta name="description" content="RiskTým: moderuj FMEA poradu týmu nad montáží aku vrtacího šroubováku. Následky na třech úrovních, příčiny podle 4M, hodnocení S, O, D, priorita AP, kontrolní plán a reklamace 8D.">
 <style>
 /* písmo Inter (licence SIL OFL) je uložené u webu, stránka nic nenačítá z Googlu */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
@@ -277,7 +277,7 @@ footer{font-size:.82rem;color:var(--muted);padding:22px 0 30px;margin-top:10px}
 .rec-grid label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:#6b7280;font-weight:600}
 .rec-grid input{font:inherit;font-size:.95rem;color:#111827;background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px}
 .sh3{font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:#0f2742;margin:22px 0 6px}
-</style>
+h1,h2,h3,h4,summary,.q,.btn,.chip,.tag{text-wrap:balance}p,li,dd,td,.muted{text-wrap:pretty}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
 </head>
 <body>
@@ -319,7 +319,7 @@ footer{font-size:.82rem;color:var(--muted);padding:22px 0 30px;margin-top:10px}
       <div class="card">
         <h3>Průběh porady</h3>
         <ol class="steps-mini">
-          <li><b>5 rizik</b>, každé v 5 krocích: následky na 3 úrovních, příčina podle 4M, porada o S, O, D, priorita, opatření.</li>
+          <li><b>5 rizik</b>, každé v 5 krocích: následky na 3 úrovních, příčina podle 4M, porada o S, O, D, priorita, opatření.</li>
           <li><b>Kontrolní plán</b> pro zvláštní znak a kontrola souladu s FMEA.</li>
           <li><b>Reklamace 8D</b> od obchodní sítě a nová revize FMEA.</li>
         </ol>
@@ -404,14 +404,14 @@ footer{font-size:.82rem;color:var(--muted);padding:22px 0 30px;margin-top:10px}
   <ul class="minutes">
     <li>Následky vady na třech úrovních (vlastní závod, zákazník, konečný uživatel) a hodnocení závažnosti podle nejhoršího následku</li>
     <li>Příčiny podle 4M (člověk, stroj, materiál, prostředí)</li>
-    <li>Hodnocení závažnosti, výskytu a detekce (S, O, D) a priorita opatření Action Priority podle principů AIAG a VDA</li>
+    <li>Hodnocení závažnosti, výskytu a detekce (S, O, D) a priorita opatření Action Priority podle principů AIAG a VDA</li>
     <li>Opatření, odpovědnosti a role v týmu FMEA (technologie, kvalita, výroba, údržba, BOZP)</li>
     <li>Vazba FMEA na kontrolní plán, zvláštní znaky a ověřování poka-yoke</li>
     <li>Reakce na reklamaci (8D) a revize FMEA jako živého dokumentu</li>
   </ul>
   <h3 class="sh3">Výsledek</h3>
   <div class="tbl"><table class="cp">
-    <thead><tr><th>Celkem</th><th>Hodnocení</th><th>Správně oslovení</th><th>Shoda S, O, D s týmem</th><th>Kontrolní plán a 8D</th><th>Splněno (70 % a víc)</th></tr></thead>
+    <thead><tr><th>Celkem</th><th>Hodnocení</th><th>Správně oslovení</th><th>Shoda S, O, D s týmem</th><th>Kontrolní plán a 8D</th><th>Splněno (70 % a víc)</th></tr></thead>
     <tbody><tr><td id="recPct"></td><td id="recRank"></td><td id="recAsk"></td><td id="recRate"></td><td id="recCp"></td><td id="recPass"></td></tr></tbody>
   </table></div>
   <div class="sign" style="display:flex;gap:40px;margin-top:28px;flex-wrap:wrap"><div style="border-top:1px solid #9ca3af;padding-top:4px;min-width:200px;font-size:.78rem;color:#6b7280">Podpis účastníka</div><div style="border-top:1px solid #9ca3af;padding-top:4px;min-width:200px;font-size:.78rem;color:#6b7280">Podpis vedoucího / školitele</div></div>
@@ -446,13 +446,13 @@ footer{font-size:.82rem;color:var(--muted);padding:22px 0 30px;margin-top:10px}
     <thead><tr><th>Znak / kontrola</th><th>Metoda a četnost</th><th>Reakční plán</th><th>Odpovídá</th><th>Soulad s FMEA</th></tr></thead>
     <tbody id="cpRows"></tbody>
   </table></div>
-  <p class="note">Cvičné dokumenty z RiskTýmu. Firma, osoby i rizika jsou vymyšlené, stupnice jsou zjednodušené. Čísla S, O, D a AP jsou hodnocení účastníka, barva ukazuje shodu s doporučeným hodnocením cvičného týmu. Ve firmě se AP určuje podle tabulek příručky AIAG a VDA a zvláštní znaky podle požadavků zákazníka.</p>
+  <p class="note">Cvičné dokumenty z RiskTýmu. Firma, osoby i rizika jsou vymyšlené, stupnice jsou zjednodušené. Čísla S, O, D a AP jsou hodnocení účastníka, barva ukazuje shodu s doporučeným hodnocením cvičného týmu. Ve firmě se AP určuje podle tabulek příručky AIAG a VDA a zvláštní znaky podle požadavků zákazníka.</p>
   <p class="no-print" style="margin-top:12px"><button class="btn" id="printBtn"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg> Vytisknout / uložit jako PDF</button></p>
 </article>
 
 <section id="ctaBox" class="card section cta hidden">
   <h2>Vyzkoušej i pracovní nástroj</h2>
-  <p>Na skutečné poradě tým tajně hlasuje o S, O, D a PFMEA, kontrolní plán, opatření, zápis i 8D se vyplní samy. V nástroji si načti ukázkový projekt montáže nebo velkou ukázku s 22 riziky.</p>
+  <p>Na skutečné poradě tým tajně hlasuje o S, O, D a PFMEA, kontrolní plán, opatření, zápis i 8D se vyplní samy. V nástroji si načti ukázkový projekt montáže nebo velkou ukázku s 22 riziky.</p>
   <p style="margin-top:14px"><a class="btn" href="porada.html">Otevřít nástroj na poradu</a></p>
   <p id="contact"></p>
 </section>
@@ -626,7 +626,7 @@ const AP_T = [
   ['HHMM','MMML','MLLL','LLLL','LLLL'],
   ['MMLL','LLLL','LLLL','LLLL','LLLL'],
   ['LLLL','LLLL','LLLL','LLLL','LLLL']];
-function apOf(S, O, D){
+function apOf(S, O, D){
   const s = S >= 9 ? 0 : S >= 7 ? 1 : S >= 4 ? 2 : S >= 2 ? 3 : 4;
   const o = O >= 8 ? 0 : O >= 6 ? 1 : O >= 4 ? 2 : O >= 2 ? 3 : 4;
   const d = D >= 7 ? 0 : D >= 5 ? 1 : D >= 2 ? 2 : 3;
