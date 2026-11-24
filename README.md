@@ -13,3 +13,5 @@ Ukázková verze. Výrobce nářadí Ozubené kolečko, jeho aku vrtací šroubo
 Běží jen v prohlížeči, bez serveru a databáze. Data zůstávají v prohlížeči nebo v souboru na disku.
 
 Vytvořila Simona Fichtnerová vibe codingem.
+
+© 2026 Simona Fichtnerová, všechna práva vyhrazena. Nejde o open source, podrobnosti v souboru LICENSE.
