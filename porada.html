@@ -377,7 +377,7 @@ if (!STORE || !STORE.items){
   if (old && old.v === 1){ old.id = old.id || uid(); STORE.items[old.id] = old; STORE.active = old.id; }
 }
 Object.values(STORE.items).forEach(x => { if (!x.id) x.id = uid(); });
-if (!STORE.active || !STORE.items[STORE.active]){ const first = Object.keys(STORE.items)[0]; if (first) STORE.active = first; else { const np = newProject(); STORE.items[np.id] = np; STORE.active = np.id; } }
+if (!STORE.active || !STORE.items[STORE.active]){ const first = Object.keys(STORE.items)[0]; if (first) STORE.active = first; else { const np = demoVelka(); STORE.items[np.id] = np; STORE.active = np.id; } }
 P = STORE.items[STORE.active];
 // oprava textu ze starší verze ukázky: jen tato přesná věta, nic jiného se nemění
 (function fixWording(){ const OLD = 'Nezkoušené díly se dohledávají', NEW = 'Neotestované díly se dohledávají';
