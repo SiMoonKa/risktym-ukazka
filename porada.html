@@ -991,6 +991,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab],[data-act]'); if (!t || t.disabled) return;
   if (t.dataset.tab){ ui.tab = t.dataset.tab; render(); window.scrollTo(0,0); return; }
   const act = t.dataset.act, r = P.rows.find(x => x.id === ui.sel);
+  if (typeof DEMO_VYPNUTO !== 'undefined' && DEMO_VYPNUTO.has(act)) { demoVypnuto(); return; }
   const A = {
     addMember(){ P.team.push({id:uid(), jmeno:'', role:ROLES[P.team.length % 5], pritomen:true}); },
     delMember(){ if (confirm('Odebrat člena týmu?')) P.team = P.team.filter(m => m.id !== t.dataset.id); },
@@ -1528,6 +1529,40 @@ function vTok(){ const steps = P.steps;
       <div class="fmeta">${st.znakVyrobku ? `<span>Znak výrobku: ${esc(st.znakVyrobku)}</span>` : ''}${x.zp.length ? `<span>Znaky procesu: ${esc(x.zp.join(', '))}</span>` : ''}${x.zz ? '<span class="zz">ZZ</span>' : ''}<span>${x.rows.length ? 'Rizik ve FMEA: ' + x.rows.length + (x.h ? ', z toho priorita H: ' + x.h : '') : 'Bez rizik ve FMEA'}</span></div>${t === 'kontrola' ? nokHtml(st) : ''}</div></div>${i < steps.length - 1 ? `<div class="farrow" aria-hidden="true">↓${t === 'kontrola' && NOK[st.nok] ? '<span class="okl">OK</span>' : ''}</div>` : ''}`; }).join('') : '<p class="muted">Zatím žádné kroky. Přidejte je v záložce Porada nebo tlačítkem níže.</p>'}</div>
   <div class="row-actions no-print"><button class="btn small" data-act="addFlowStep">+ Krok bez rizik (přeprava, skladování, kontrola)</button></div>`; }
 render(); fsRestore(P.id); if (P.rows.length || P.team.length) $('saved').textContent = '✓ Projekt načten · ukládá se automaticky';
+</script>
+<div id="uvitani" style="position:fixed;inset:0;z-index:9999;background:rgba(15,39,66,.55);display:none;align-items:center;justify-content:center;padding:16px">
+  <div role="dialog" aria-modal="true" aria-labelledby="uvitaniNadpis" style="background:#fff;color:#0f172a;max-width:540px;width:100%;border-radius:16px;padding:26px 26px 22px;box-shadow:0 30px 80px rgba(0,0,0,.35);font:inherit;max-height:calc(100vh - 32px);overflow:auto">
+    <h2 id="uvitaniNadpis" style="margin:0 0 10px;font-size:1.35rem">Vítej v ukázce RiskTýmu</h2>
+    <p style="margin:0 0 12px;color:#475569">Máš před sebou rozpracovanou FMEA montáže aku vrtacího šroubováku. Firma, lidé i rizika jsou vymyšlené. Zkus tohle:</p>
+    <ol style="margin:0 0 14px;padding-left:1.3em;line-height:1.55">
+      <li>Nahoře přepínej záložky 1 až 7: porada, diagram, PFMEA, kontrolní plán, opatření, zápis a reklamace 8D.</li>
+      <li>V záložce Porada klikni u některého rizika na <b>Projednat</b> a podívej se, jak tým tajně hlasuje o S, O, D.</li>
+      <li>Pak otevři <b>PFMEA</b> a uvidíš, že se všechno propsalo samo.</li>
+    </ol>
+    <p style="margin:0 0 18px;font-size:.9rem;color:#475569;background:#f1f5f9;border-radius:10px;padding:10px 12px">Ukládání do souboru a export do Excelu jsou v ukázce vypnuté. Prohlížet, klikat a hlasovat můžeš bez omezení. Plná verze na vyžádání.</p>
+    <button type="button" id="uvitaniOk" class="btn">Rozumím</button>
+  </div>
+</div>
+<div id="demoToast" role="status" aria-live="polite" hidden style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:10000;background:#0f2742;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.3);font-weight:600;max-width:calc(100vw - 32px);text-align:center">V ukázce vypnuto, plná verze na vyžádání.</div>
+<script>
+// Ukázková verze: ukládání do souboru a export jsou vypnuté, aby se ukázka nedala používat místo plné verze
+const DEMO_VYPNUTO = new Set(['saveFile', 'fsNew', 'fsOpen', 'fsResume', 'xlsx', 'csv', 'xlDoTpl', 'xlTpl']);
+let demoToastT = null;
+function demoVypnuto(){
+  const el = document.getElementById('demoToast'); if (!el) return;
+  el.hidden = false; clearTimeout(demoToastT); demoToastT = setTimeout(() => { el.hidden = true; }, 3500);
+}
+(function(){
+  const KLIC = 'risktym-ukazka-uvitani';
+  let videno = false;
+  try { videno = localStorage.getItem(KLIC) === '1'; } catch(e) {}
+  const box = document.getElementById('uvitani');
+  if (!videno && box) { box.style.display = 'flex'; const ok = document.getElementById('uvitaniOk'); if (ok) ok.focus(); }
+  const zavrit = () => { box.style.display = 'none'; try { localStorage.setItem(KLIC, '1'); } catch(e) {} };
+  document.getElementById('uvitaniOk').addEventListener('click', zavrit);
+  box.addEventListener('click', e => { if (e.target === box) zavrit(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && box.style.display !== 'none') zavrit(); });
+})();
 </script>
 </body>
 </html>
