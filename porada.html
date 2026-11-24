@@ -78,6 +78,46 @@ main{padding:0 0 30px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .card h2{font-size:1.1rem;margin-bottom:10px}
 .card h3{font-size:.98rem;margin:12px 0 6px}
+/* 24. 11. 2026 (Simona „ano“, inspirace přehledem z Dribbble, barvy naše): záložka Přehled */
+.pr-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 0 16px}
+.pr-head h2{font-size:1.6rem;margin:0}
+.pr-head p{margin:2px 0 0;color:var(--muted)}
+.pr-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.pr-stat{appearance:none;text-align:left;font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;position:relative}
+.pr-stat:hover{border-color:#b9c3d3}
+.pr-stat .l{display:block;font-weight:700;font-size:.92rem;padding-right:34px}
+.pr-stat .v{display:block;font-size:2.6rem;font-weight:800;line-height:1.05;letter-spacing:-.03em;margin:10px 0 4px}
+.pr-stat .s{display:block;font-size:.8rem;color:var(--muted)}
+.pr-stat .go{position:absolute;right:12px;top:12px;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.9rem;background:#fff;color:var(--brand)}
+.pr-stat.main{background:var(--brand);border-color:var(--brand);color:#fff}
+.pr-stat.main .s{color:#c9d6e6}
+.pr-stat.main .v{color:#f59e0b}
+.pr-stat.bad .v{color:var(--bad)}
+.pr-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:12px;align-items:start}
+.pr-grid .card{margin:0;border-radius:16px}
+.pr-gauge{display:block;width:100%;max-width:260px;margin:4px auto 0}
+.pr-leg{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:.8rem;color:var(--muted);margin-top:6px}
+.pr-leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.pr-bar{display:grid;grid-template-columns:110px 1fr 34px;align-items:center;gap:8px;font-size:.88rem;margin:8px 0}
+.pr-bar .tr{height:12px;border-radius:99px;background:var(--panel-2);overflow:hidden}
+.pr-bar .tr span{display:block;height:100%;border-radius:99px}
+.pr-bar b{text-align:right}
+.pr-list{list-style:none;margin:0;padding:0}
+.pr-list li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line);font-size:.88rem}
+.pr-list li:first-child{border-top:0}
+.pr-list .av{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.78rem;background:#fef3c7;color:#92400e}
+.pr-list .tx{flex:1;min-width:0}
+.pr-list .tx small{display:block;color:var(--muted)}
+.pr-pill{flex:none;font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:99px;background:var(--panel-2);color:var(--muted);white-space:nowrap}
+.pr-pill.late{background:var(--bad-bg);color:var(--bad)}
+.pr-pill.ok{background:var(--good-bg);color:var(--good)}
+.pr-timer{background:var(--brand)!important;color:#fff;border-color:var(--brand)!important}
+.pr-timer h2{color:#fff}
+.pr-timer .t{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px;color:#f59e0b}
+.pr-timer p{color:#c9d6e6;font-size:.85rem;margin:0 0 10px}
+.pr-timer .btn{background:#f59e0b;border-color:#f59e0b;color:#111827}
+@media (max-width:1000px){.pr-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.pr-stats{grid-template-columns:1fr 1fr}.pr-grid{grid-template-columns:1fr}.pr-stat .v{font-size:2.1rem}}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -274,6 +314,80 @@ footer{font-size:.78rem;color:var(--muted);padding:18px 0 30px}
   input,select,textarea{border:0 !important;padding:0 !important;background:transparent !important;resize:none}
   @page{size:landscape;margin:10mm}
 }
+/* ===== 24. 11. 2026 večer: NOVÝ VZHLED podle předlohy (Dribbble „Task Management Dashboard“), barvy RiskTýmu =====
+   Simona: „aby to vypadalo takto, jen v modrých barvách“. Mění se jen vzhled, obsah a funkce zůstávají. */
+:root{--bg:#eef1f6;--line:#e6e9f0;--panel-2:#f4f6fa;--blue:#1d4ed8;--blue-l:#dbe6ff;--navy:#0f2742;--orange:#f59e0b;--r:20px}
+body{background:var(--bg)}
+.top{background:rgba(238,241,246,.92);border-bottom:0}
+.top .wrap{max-width:1480px;min-height:68px}
+.top .logo>div{font-size:1.05rem}
+.projpick,.whopick{border-radius:999px;border-color:var(--line);background:#fff;padding:9px 14px}
+.btn{border-radius:999px;padding:10px 18px}
+.btn.small{padding:6px 13px}
+.btn.ghost{border:1.5px solid var(--navy);color:var(--navy);background:#fff}
+.btn.ghost:hover{background:#f4f6fa;filter:none}
+input[type=text],input[type=date],input[type=number],select,textarea{border-radius:12px;border-color:#d5dbe6}
+main.wrap{max-width:1480px;display:grid;grid-template-columns:236px minmax(0,1fr);gap:18px;align-items:start;padding-bottom:10px}
+/* menu vlevo */
+.tabs{position:sticky;top:80px;flex-direction:column;gap:2px;overflow:visible;padding:18px 12px;background:#fff;border-radius:var(--r);min-height:calc(100vh - 100px)}
+.tabs .nav-h{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a94a6;padding:4px 12px 8px}
+.tabs .nav-h.mt{margin-top:14px}
+.tab{display:flex;align-items:center;gap:12px;border:0;background:none;border-radius:12px;padding:11px 12px;color:#5b6475;font-weight:600;font-size:.93rem;position:relative;text-align:left}
+.tab:hover{background:#f4f6fa;color:var(--text)}
+.tab.on{background:#f0f4ff;color:var(--blue);font-weight:800}
+.tab.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:5px;border-radius:0 6px 6px 0;background:var(--blue)}
+.tab .ni{width:20px;height:20px;flex:none}
+.tab .cnt{margin-left:auto}
+.tabs .promo{margin-top:auto;position:relative;overflow:hidden;background:var(--navy);color:#fff;border-radius:16px;padding:16px 14px 14px;text-decoration:none;display:block}
+.tabs .promo::after{content:"";position:absolute;right:-40px;bottom:-50px;width:150px;height:150px;border-radius:50%;border:18px solid rgba(29,78,216,.55);box-shadow:0 0 0 18px rgba(29,78,216,.25)}
+.tabs .promo b{display:block;font-size:1rem;line-height:1.25;position:relative;z-index:1}
+.tabs .promo small{display:block;color:#c9d6e6;font-size:.78rem;margin:4px 0 12px;position:relative;z-index:1}
+.tabs .promo span{position:relative;z-index:1;display:block;text-align:center;background:var(--blue);border-radius:999px;padding:8px;font-weight:700;font-size:.85rem}
+/* obsah */
+.panel{border:0;border-radius:0;padding:0;box-shadow:none;min-width:0;background:transparent}
+.sek-body{background:#fff;border-radius:var(--r);padding:22px}
+.sek-top .pr-head p{max-width:760px}
+.pr-stat small{font-size:1.1rem;font-weight:700;color:var(--muted)}
+.pr-stat.main small{color:#c9d6e6}
+.sek-stats .pr-stat{cursor:default}
+.sek-stats .pr-stat .v{font-size:2.4rem}
+@media (max-width:700px){.sek-body{padding:14px}.sek-stats .pr-stat .v{font-size:1.9rem}.pr-head h2{font-size:1.6rem}}
+@media print{.sek-top{display:none}.sek-body{padding:0}}
+.card{border-radius:var(--r);box-shadow:none}
+.panel.prehled .card{border:0;padding:20px}
+.tbl{border-radius:14px}
+table.doc th{background:#eef2f9;border-color:#dfe4ee}
+table.doc td{border-color:#e3e7ef}
+footer.wrap{max-width:1480px;padding-left:270px}
+/* přehled ve stylu předlohy */
+.pr-head{background:none!important;margin:6px 0 18px}
+.pr-head h2{font-size:2.1rem;font-weight:700}
+.pr-stats,.pr-grid{background:none!important}
+.pr-stat{border:0;border-radius:var(--r);padding:20px}
+.pr-stat .go{width:32px;height:32px;border:1.5px solid var(--navy);font-size:1rem}
+.pr-stat .v{font-size:3rem;font-weight:700}
+.pr-stat.main{background:radial-gradient(120% 140% at 100% 0%,#2f5fe0 0%,#1d4ed8 35%,#0f2742 100%)}
+.pr-stat.main .v{color:#fff}
+.pr-stat.main .go{background:#fff;border-color:#fff}
+.pr-stat.main .s{display:inline-flex;align-items:center;gap:6px}
+.pr-grid .card{border:0}
+.pr-timer{background:radial-gradient(130% 120% at 100% 100%,#1d4ed8 0%,#0f2742 60%)!important;position:relative;overflow:hidden}
+.pr-timer::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 110% 120%,rgba(255,255,255,.07) 0 2px,transparent 2px 14px);pointer-events:none}
+.pr-timer .t{color:#fff;font-size:3rem}
+.pr-timer .btn{background:#fff;border-color:#fff;color:var(--navy)}
+.pr-list .av{background:var(--blue-l);color:var(--blue)}
+.pr-pill{background:#eef2f9}
+/* mobil a menší obrazovky: menu nahoře jako pilulky */
+@media (max-width:980px){
+  main.wrap{display:block}
+  .tabs{position:static;flex-direction:row;overflow-x:auto;min-height:0;padding:8px;margin:6px 0 12px;gap:4px}
+  .tabs .nav-h,.tabs .promo{display:none}
+  .tab{padding:8px 12px;white-space:nowrap}
+  .tab .ni{display:none}
+  .tab.on::before{display:none}
+  footer.wrap{padding-left:16px}
+}
+@media print{main.wrap{display:block}.tabs{display:none!important}footer.wrap{padding-left:0}#view>*{background:#fff!important}}
 h1,h2,h3,h4,summary,.q,.btn,.chip,.tag{text-wrap:balance}p,li,dd,td,.muted{text-wrap:pretty}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
 </head>
@@ -312,6 +426,11 @@ function kdoK(r, k){ const pr = P.team.filter(m => m.pritomen).map(m => m.id), h
 const zdrz = (r, k, id) => !!(r.zdrzel && r.zdrzel[k] && r.zdrzel[k][id]);
 const maHlas = (r, k, id) => !!r.votes[k][id] || zdrz(r, k, id);
 const DOPORUC = {O:['Technologie','Výroba','Údržba','Kvalita'], D:['Kvalita','Technologie','Výroba']};
+// 24. 11. 2026 (Simona „chci“): podklad k O dává hlavně technolog a výroba, k D kvalita. Při neshodě zdůvodní tento odborník a zdůvodnění jde do zápisu.
+const PODKLAD_DAVA = {O:['Technologie','Výroba','Údržba'], D:['Kvalita','Technologie']};
+function odbornik(k){ const pr = P.team.filter(m => m.pritomen); for (const role of PODKLAD_DAVA[k] || []){ const m = pr.find(x => x.role === role); if (m) return m; } return null; }
+const odbTxt = k => { const m = odbornik(k); return m ? (m.jmeno || '?') + ' (' + m.role + ')' : ''; };
+const odbLbl = k => odbornik(k) ? ' <span class="muted" style="font-weight:400">· podklad dává: ' + esc(odbTxt(k)) + '</span>' : '';
 function dopH(){ const h = {}; Object.keys(DOPORUC).forEach(k => { const l = P.team.filter(m => DOPORUC[k].includes(m.role)).map(m => m.id); if (P.team.some(m => m.pritomen && l.includes(m.id))) h[k] = l; }); return Object.keys(h).length ? h : null; }
 // kolik hlasů je potřeba teď a kolik po rozdělení podle oddělení
 function pocetHlasu(r, h){ return pokerDims(r).reduce((n, k) => n + (h ? (h[k] ? P.team.filter(m => m.pritomen && h[k].includes(m.id)).length : P.team.filter(m => m.pritomen).length) : kdoK(r, k).length), 0); }
@@ -321,6 +440,8 @@ function rychleHtml(r){ const h = dopH(); if (!h || r.hodnoti || ['S','O','D'].s
   return `<div class="rychle"><span>Rychleji: teď hlasuje každý o všem (${ted} hlasů). Když výskyt a detekci hodnotí jen oddělení, která k nim mají data, stačí ${po} hlasů.</span><span class="row-actions" style="margin:0"><button class="btn small" data-act="hodnotiDop">Rozdělit u této vady</button>${zbyva > 1 ? `<button class="btn small ghost" data-act="hodnotiDopVse">U všech ${zbyva} neprojednaných vad</button>` : ''}</span></div>`; }
 function vycistit(r, k){ r.votes[k] = {}; if (r.zdrzel) r.zdrzel[k] = {}; }
 function zdrzJmen(r, k){ const z = (r.zdrzel && r.zdrzel[k]) || {}; return Object.keys(z).filter(id => z[id]).map(id => { const m = member(id); return m ? (m.jmeno || m.role) : '?'; }).join(', '); }
+// zdůvodnění odborníka při neshodě: kdo (podle oddělení) + text z pole u výsledku
+function zduvTxt(r, k){ const el = $('zd-' + k), s = ((el && el.value) || '').trim(); return s ? (odbTxt(k) ? odbTxt(k) + ': ' : '') + s : ''; }
 const hlasyLog = (r, k) => hlasyJmen(r.votes[k]) + (zdrzJmen(r, k) ? '; nedokázali posoudit: ' + zdrzJmen(r, k) : '');
 const pk = (r, k) => (r.podklad && (r.podklad[k] || '').trim()) ? '<br><span class="lvl">podklad ' + k + '</span>' + esc(r.podklad[k]) : '';
 const bezPodkladu = r => ['O','D'].filter(k => !(r.podklad && (r.podklad[k] || '').trim()));
@@ -368,7 +489,8 @@ const apHtml = a => a ? `<span class="ap ${a}">${a}</span>` : '<span class="mute
 function newProject(){ return {v:1, id:uid(), nazev:'', zakaznik:'', moderator:'', datum:today(), team:[], steps:[], rows:[], revisions:[{rev:'01', date:today(), reason:'Založení FMEA'}], complaints:[], notes:''}; }
 function newRow(stepId){ return {id:uid(), stepId, vada:'', eff:{zavod:'',linka:'',ridic:''}, pricina:'', m4:'stroj', prevence:'', detekce:'', zz:false, S:null, O:null, D:null, votes:{S:{},O:{},D:{}}, revealed:{S:false,O:false,D:false}, log:[], actions:[], cp:{metoda:'', cetnost:'', reakce:'', odpovida:''}}; }
 const SKEY = 'risktym-projekty-v1';
-let STORE, P, ui = {tab:'porada', sel:null, dim:'S', c8:null};
+// 24. 11. 2026 (Simona: „nahoře nevidím velké karty“): po otevření nejdřív Přehled
+let STORE, P, ui = {tab:'prehled', sel:null, dim:'S', c8:null};
 try { STORE = JSON.parse(localStorage.getItem(SKEY)); } catch(e) { STORE = null; }
 if (!STORE || !STORE.items){
   STORE = {active:null, items:{}};
@@ -467,15 +589,28 @@ function warnList(list){
 }
 
 // ===== záložky =====
-const TABS = [['porada','1 · Porada'],['tok','2 · Diagram procesu'],['fmea','3 · PFMEA'],['plan','4 · Kontrolní plán'],['ukoly','5 · Opatření'],['zapis','6 · Zápis'],['d8','7 · Reklamace 8D'],['soubor','Soubor']];
+const TABS = [['prehled','Přehled'],['porada','1 · Porada'],['tok','2 · Diagram procesu'],['fmea','3 · PFMEA'],['plan','4 · Kontrolní plán'],['ukoly','5 · Opatření'],['zapis','6 · Zápis'],['d8','7 · Reklamace 8D'],['soubor','Soubor']];
+// 24. 11. 2026 (nový vzhled): menu vlevo s ikonami, v mobilu pilulky nahoře
+const NAVI = {prehled:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  porada:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 14.5c3 0 6 1.8 6 5.5"/>',
+  tok:'<rect x="3" y="4" width="6" height="5" rx="1.5"/><rect x="15" y="4" width="6" height="5" rx="1.5"/><rect x="9" y="15" width="6" height="5" rx="1.5"/><path d="M9 6.5h6M6 9v3.5h6V15M18 9v3.5h-6"/>',
+  fmea:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/>',
+  plan:'<path d="M9 4h6v3H9z"/><path d="M7 5.5H5v15h14v-15h-2"/><path d="m8.5 13 2 2 4-4.5"/>',
+  ukoly:'<path d="m4 7 2 2 3.5-4"/><path d="M12 7h8"/><path d="m4 15 2 2 3.5-4"/><path d="M12 15h8"/>',
+  zapis:'<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/>',
+  d8:'<path d="M12 3 2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.01"/>',
+  soubor:'<path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/>'};
 function renderTabs(){
   const wc = warnings().filter(x => x[0] === 'err').length;
-  $('tabs').innerHTML = TABS.map(([k,t]) => `<button class="tab ${ui.tab===k?'on':''}" data-tab="${k}">${t}${k==='fmea' && wc ? `<span class="cnt" title="upozornění">${wc}</span>` : ''}</button>`).join('');
+  const tb = ([k,t]) => `<button class="tab ${ui.tab===k?'on':''}" data-tab="${k}"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAVI[k] || ''}</svg><span>${t}</span>${k==='fmea' && wc ? `<span class="cnt" title="upozornění">${wc}</span>` : ''}</button>`;
+  $('tabs').innerHTML = '<span class="nav-h">Menu</span>' + TABS.filter(x => x[0] !== 'soubor').map(tb).join('') + '<span class="nav-h mt">Obecné</span>' + TABS.filter(x => x[0] === 'soubor').map(tb).join('')
+    + '<a class="promo" href="fmea.html"><b>Trénink pro nováčky</b><small>Krátká hra, kde si nový člen týmu vyzkouší FMEA poradu.</small><span>Zahrát si</span></a>';
+  $('view').classList.toggle('prehled', ui.tab === 'prehled');
 }
 function autosize(el){ el.style.height = 'auto'; el.style.height = (el.scrollHeight + 2) + 'px'; }
 // 17. 11. 2026 (Simona „když zadám S/O/D, skočí mi to výš“): po překreslení vrátit posun panelu rizika i stránky.
 function render(){ const rc0 = $('riskCard'), rcTop = rc0 ? rc0.scrollTop : 0, sel0 = ui.sel, winY = window.scrollY; render0(); const rc1 = $('riskCard'); if (rc1 && rcTop && ui.sel === sel0) rc1.scrollTop = rcTop; if (Math.abs(window.scrollY - winY) > 2) window.scrollTo(0, winY); }
-function render0(){ ensureOps(); fillWho(); $('projPick').innerHTML = Object.values(STORE.items).sort((x,y) => projName(x).localeCompare(projName(y), 'cs')).map(x => `<option value="${x.id}" ${x.id===P.id?'selected':''}>${esc(projName(x))}</option>`).join(''); renderTabs(); ({porada:vPorada, tok:vTok, fmea:vFmea, plan:vPlan, ukoly:vUkoly, zapis:vZapis, d8:vD8, soubor:vSoubor})[ui.tab](); document.querySelectorAll('textarea.auto').forEach(autosize); }
+function render0(){ ensureOps(); fillWho(); $('projPick').innerHTML = Object.values(STORE.items).sort((x,y) => projName(x).localeCompare(projName(y), 'cs')).map(x => `<option value="${x.id}" ${x.id===P.id?'selected':''}>${esc(projName(x))}</option>`).join(''); renderTabs(); ({prehled:vPrehled, porada:vPorada, tok:vTok, fmea:vFmea, plan:vPlan, ukoly:vUkoly, zapis:vZapis, d8:vD8, soubor:vSoubor})[ui.tab](); sekceObal(); document.querySelectorAll('textarea.auto').forEach(autosize); }
 
 function novyPanel(){ if (!ui.novy) return ''; const cur = P.rows.find(r => r.id === ui.sel), def = cur ? cur.stepId : (P.steps[0] ? P.steps[0].id : '');
   return `<div class="novy" id="novyPanel"><h3 style="margin:0 0 8px">Nový záznam k projednání</h3>
@@ -619,7 +754,7 @@ function vRisk(r){
       if (dis) anyDis = true;
       const lo = voters.filter(m => r.votes[k][m.id] === mn).map(m => m.jmeno || m.role).join(', '), hi = voters.filter(m => r.votes[k][m.id] === mx).map(m => m.jmeno || m.role).join(', ');
       return `<tr class="${dis ? 'dis' : 'agr'}"><td><b>${DIM[k]}</b></td><td>${voters.filter(m => r.votes[k][m.id]).map(m => esc((m.jmeno||m.role) + ' ' + r.votes[k][m.id])).join(' · ')}${zdrzJmen(r, k) ? `<br><span class="muted">nedokáže posoudit: ${esc(zdrzJmen(r, k))}</span>` : ''}</td>
-        <td>${dis ? `<b>⚠ Neshoda</b>: ${esc(lo)} (${mn}) a ${esc(hi)} (${mx}). Ať vysvětlí proč.` : `<b>✓ Shoda</b> (rozdíl ${mx-mn})`}</td>
+        <td>${dis ? `<b>⚠ Neshoda</b>: ${esc(lo)} (${mn}) a ${esc(hi)} (${mx}). ${odbornik(k) ? `Zdůvodní odborník <b>${esc(odbTxt(k))}</b> z podkladu, pak se rozhodne. Nerozhoduje většina ani šéf.<label class="f" style="margin-top:6px">Zdůvodnění (zapíše se do zápisu)<textarea class="auto" rows="1" id="zd-${k}" placeholder="např. zmetkovitost 0,3 % za 6 měsíců, proto O 3">${esc((r.zduvOdb && r.zduvOdb[k]) || '')}</textarea></label>` : 'Ať vysvětlí proč.'}` : `<b>✓ Shoda</b> (rozdíl ${mx-mn})`}</td>
         <td><input type="number" min="1" max="10" id="agreed-${k}" data-med="${med}" value="${med}" style="width:70px"><br><small class="muted">${esc(hintOf(k, med))}</small></td></tr>`;
     }).join('');
     pokerHtml = `<div class="reveal"><table class="poll"><thead><tr><th></th><th>Hlasy</th><th>Výsledek</th><th>Do FMEA</th></tr></thead><tbody>${rowsH}</tbody></table>
@@ -647,8 +782,8 @@ function vRisk(r){
     ${r.sZdroj ? `<label class="f">Převzatá hodnota S<input type="number" min="1" max="10" data-sfix="1" value="${r.S??''}" style="width:100px"></label><label class="f" style="flex:1;min-width:220px">Odkud přesně (dokument, řádek, požadavek)<input type="text" data-r="sPozn" value="${esc(r.sPozn||'')}" placeholder="např. DFMEA vrtačky rev. 05, řádek 12"></label>` : ''}
     <p class="muted" style="font-size:.82rem;margin:0;flex-basis:100%">${r.sZdroj ? 'Tým o závažnosti nehlasuje, hlasuje jen o výskytu a detekci. Změnu S projednejte s tím, kdo ji určil.' : 'Hlas týmu o závažnosti je jen návrh. Když ji už určil zákazník, DFMEA nebo firemní katalog následků, převezměte ji odtud.'}</p>
   </div>
-  <div class="grid2 podk"><label class="f">Podklad pro výskyt (O)<textarea class="auto" rows="1" data-r="podklad.O" placeholder="např. zmetkovitost 0,3 % za 6 měsíců, 1 reklamace za rok, Cpk 1,45">${esc((r.podklad || {}).O || '')}</textarea></label>
-    <label class="f">Podklad pro detekci (D)<textarea class="auto" rows="1" data-r="podklad.D" placeholder="např. ${esc(r.detekce || 'měření polohy 1 kus za hodinu')}: kontrola každého kusu, nebo jen vzorek">${esc((r.podklad || {}).D || '')}</textarea></label></div>
+  <div class="grid2 podk"><label class="f"><span>Podklad pro výskyt (O)${odbLbl('O')}</span><textarea class="auto" rows="1" data-r="podklad.O" placeholder="např. zmetkovitost 0,3 % za 6 měsíců, 1 reklamace za rok, Cpk 1,45">${esc((r.podklad || {}).O || '')}</textarea></label>
+    <label class="f"><span>Podklad pro detekci (D)${odbLbl('D')}</span><textarea class="auto" rows="1" data-r="podklad.D" placeholder="např. ${esc(r.detekce || 'měření polohy 1 kus za hodinu')}: kontrola každého kusu, nebo jen vzorek">${esc((r.podklad || {}).D || '')}</textarea></label></div>
   <details class="kdoh" ${r.hodnoti ? 'open' : ''}><summary>Kdo hodnotí co: ${r.hodnoti ? 'upraveno' : 'všichni přítomní'}</summary>
     ${pokerAll(r).map(k => `<div class="krow"><b>${DIM[k]}</b>${P.team.filter(m => m.pritomen).map(m => { const on = kdoK(r, k).includes(m.id); return `<button class="tchip ${on ? 'on' : 'off'}" data-act="hodnoti" data-d="${k}" data-id="${m.id}">${on ? '✓' : '✗'} ${esc(m.jmeno || m.role)}</button>`; }).join('')}</div>`).join('')}
     <div class="row-actions"><button class="btn small ghost" data-act="hodnotiDop" title="Výskyt: technologie, výroba, údržba, kvalita. Detekce: kvalita, technologie, výroba.">Doporučené rozdělení podle oddělení</button>${r.hodnoti ? '<button class="btn small ghost" data-act="hodnotiVse">Všichni hodnotí vše</button>' : ''}</div></details>
@@ -776,6 +911,91 @@ function vUkoly(){
     <td><select data-ac="${a.id}" data-k="ucinnost">${[['','neověřeno'],['účinné','účinné'],['neúčinné','neúčinné']].map(([v,l]) => `<option value="${v}" ${(a.ucinnost||'')===v?'selected':''}>${l}</option>`).join('')}</select>${a.ucinnost === 'účinné' ? (a.prevzato ? `<div class="muted" style="font-size:.78rem;margin-top:4px">✓ převzato do FMEA, rev. ${esc(a.prevzatoRev)}</div>` : (r.actions && r.actions.includes(a) ? `<button class="btn small no-print" style="margin-top:6px" data-act="takeOver" data-id="${a.id}" title="Nové hodnocení se stane stávajícím stavem FMEA a zapíše se revize">Převzít do FMEA</button>` : '')) : ''}</td></tr>`).join('') + `</tbody></table></div>` : '<p class="muted">Zatím žádná opatření. Přidáte je u rizika na záložce Porada.</p>');
 }
 
+// ===== SEKCE 1-7 v novém vzhledu =====
+// 24. 11. 2026 (Simona: „i všechny sekce 1-7 ať po rozkliknutí vypadají stejně hezky a jednoduše“):
+// nad obsah každé části velký nadpis, jedna věta a 4 karty s čísly; původní obsah se jen přesune do bílé karty (uzly se přesouvají, nepřekreslují).
+const tvarN = (k, a, b, c) => k === 1 ? a : k > 1 && k < 5 ? b : c;
+function sekceInfo(){
+  const rows = P.rows, n = rows.length, proj = rows.filter(r => r.projednano).length, rated = rows.filter(r => r.S && r.O && r.D);
+  const rozp = rows.filter(r => !r.projednano && (r.S || r.O || r.D)).length, apc = k => rated.filter(r => apOf(r.S, r.O, r.D) === k).length;
+  const acts = allActions(), td = today(), open = acts.filter(x => x.a.stav === 'otevřené'), late = open.filter(x => x.a.termin && x.a.termin < td);
+  const steps = P.steps, kontrol = steps.filter(s => s.typ === 'kontrola').length, zz = rows.filter(r => r.zz).length, pr = P.team.filter(m => m.pritomen).length;
+  const cur = P.revisions[P.revisions.length - 1], w = warnings().length, c8 = P.complaints, c8o = c8.filter(c => c.stav !== 'uzavřená').length;
+  const revS = approvedValid() ? 'schváleno' : 'návrh';
+  return {
+    porada: ['Porada', 'Tým projde rizika krok po kroku a tajně hlasuje o závažnosti, výskytu a detekci.',
+      [['Projednáno', proj + '<small> z ' + n + '</small>', n - proj ? 'čeká ještě ' + (n - proj) : 'vše projednáno', 'main'], ['Přítomní', pr + '<small> z ' + P.team.length + '</small>', 'členů týmu na poradě'], ['Rozpracováno', rozp, tvarN(rozp, 'riziko', 'rizika', 'rizik') + ' bez uzavření'], ['Priorita H', apc('H'), 'vysoká priorita akce', apc('H') ? 'bad' : '']]],
+    tok: ['Diagram procesu', 'Tok výroby od příjmu po expedici. Kroky se samy propíší do PFMEA a kontrolního plánu.',
+      [['Kroků procesu', steps.length, 'v pořadí výroby', 'main'], ['Kontrol', kontrol, 'kontrolních kroků'], ['Rizik u kroků', n, 'možných vad'], ['Zvláštní znaky', zz, 'označené ZZ']]],
+    fmea: ['PFMEA', 'Procesní FMEA podle AIAG-VDA, vyplněná z toho, co tým rozhodl na poradě.',
+      [['Rizik celkem', n, rated.length + ' ohodnoceno', 'main'], ['Priorita H', apc('H'), 'vysoká', apc('H') ? 'bad' : ''], ['Priorita M', apc('M'), 'střední'], ['K doplnění', w, w ? 'upozornění' : 'kompletní', w ? 'bad' : '']]],
+    plan: ['Kontrolní plán', 'Kontroly převzaté z FMEA a diagramu procesu. Zvláštní znaky jsou označené ZZ.',
+      [['Kroků procesu', steps.length, 'v kontrolním plánu', 'main'], ['Kontrol', kontrol, 'kontrolních kroků'], ['Zvláštní znaky', zz, 'označené ZZ'], ['Revize', esc(cur.rev), revS]]],
+    ukoly: ['Opatření', 'Co se udělá, kdo odpovídá a do kdy. Po splnění se ověří účinnost.',
+      [['Otevřená', open.length, tvarN(open.length, 'opatření', 'opatření', 'opatření') + ' v řešení', 'main'], ['Po termínu', late.length, late.length ? 'potřebují pozornost' : 'nic po termínu', late.length ? 'bad' : ''], ['Hotová', acts.filter(x => x.a.stav !== 'otevřené').length, 'splněná nebo ověřená'], ['Účinná', acts.filter(x => x.a.ucinnost === 'účinné').length, 'ověřená účinnost']]],
+    zapis: ['Zápis z porady', 'Vzniká sám z toho, co tým na poradě rozhodl. Nic se nepřepisuje.',
+      [['Přítomní', pr + '<small> z ' + P.team.length + '</small>', 'členů týmu', 'main'], ['Ohodnocená rizika', rated.length, 'z ' + n], ['Úkoly', acts.length, 'opatření v zápisu'], ['Revize', esc(cur.rev), revS]]],
+    d8: ['Reklamace 8D', 'Tým a příčiny se předvyplní z PFMEA. Po uzavření se FMEA přehodnotí a zapíše se revize.',
+      [['Reklamace', c8.length, 'celkem', 'main'], ['Otevřené', c8o, 'v řešení', c8o ? 'bad' : ''], ['Uzavřené', c8.length - c8o, 'vyřešené'], ['Revize FMEA', esc(cur.rev), revS]]],
+    soubor: ['Soubor', 'Projekty, ukládání do souboru na disk, import a export do Excelu.', []]
+  };
+}
+function sekceObal(){
+  const v = $('view'); if (!v || ui.tab === 'prehled') return;
+  const s = sekceInfo()[ui.tab]; if (!s) return;
+  const body = document.createElement('div'); body.className = 'sek-body';
+  while (v.firstChild) body.appendChild(v.firstChild);
+  const head = document.createElement('div'); head.className = 'sek-top';
+  head.innerHTML = `<div class="pr-head"><div><h2>${s[0]}</h2><p>${s[1]}</p></div></div>` + (s[2].length ? `<div class="pr-stats sek-stats">${s[2].map(([l, val, sub, cls]) => `<div class="pr-stat ${cls || ''}"><span class="l">${l}</span><span class="v">${val}</span><span class="s">${sub}</span></div>`).join('')}</div>` : '');
+  v.append(head, body);
+}
+
+// ===== PŘEHLED =====
+// 24. 11. 2026 (Simona „ano“): jedna obrazovka pro manažera: kolik je projednáno, priority, opatření s termíny, tým a měření porady.
+// Jen čte data projektu, nic nemění. Karty vedou rovnou do příslušné záložky.
+function vPrehled(){
+  const rows = P.rows, n = rows.length, proj = rows.filter(r => r.projednano).length, rated = rows.filter(r => r.S && r.O && r.D);
+  const rozp = rows.filter(r => !r.projednano && (r.S || r.O || r.D)).length, ceka = n - proj - rozp;
+  const ap = {H:0, M:0, L:0}; rated.forEach(r => { const a = apOf(r.S, r.O, r.D); if (ap[a] !== undefined) ap[a]++; });
+  const acts = allActions(), td = today(), open = acts.filter(x => x.a.stav === 'otevřené'), late = open.filter(x => x.a.termin && x.a.termin < td);
+  const pct = n ? Math.round(proj / n * 100) : 0, w = warnings().length, cur = P.revisions[P.revisions.length - 1];
+  const tvar = (k, a, b, c) => k === 1 ? a : k > 1 && k < 5 ? b : c;
+  const stat = (cls, l, v, s, tab) => `<button type="button" class="pr-stat ${cls}" data-tab="${tab}"><span class="go" aria-hidden="true">↗</span><span class="l">${l}</span><span class="v">${v}</span><span class="s">${s}</span></button>`;
+  // půlkruh: projednáno (modrá), rozpracováno (oranžová z loga), čeká (šedá)
+  const arc = (from, to, col) => { if (to - from <= 0) return ''; const a0 = Math.PI * (1 - from), a1 = Math.PI * (1 - Math.min(to, .9999)), R = 80, cx = 100, cy = 100;
+    const x0 = cx + R * Math.cos(a0), y0 = cy - R * Math.sin(a0), x1 = cx + R * Math.cos(a1), y1 = cy - R * Math.sin(a1);
+    return `<path d="M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}" fill="none" stroke="${col}" stroke-width="22"/>`; };
+  const fP = n ? proj / n : 0, fR = n ? rozp / n : 0;
+  const gauge = `<svg class="pr-gauge" viewBox="0 0 200 118" role="img" aria-label="Projednáno ${pct} %">${arc(0, 1, '#e7ebf2')}${arc(0, fP, '#1d4ed8')}${arc(fP, fP + fR, '#f59e0b')}<text x="100" y="92" text-anchor="middle" font-size="34" font-weight="800" fill="#111827">${pct} %</text><text x="100" y="112" text-anchor="middle" font-size="11" fill="#5b6475">projednáno</text></svg>`;
+  const bar = (l, v, col) => `<div class="pr-bar"><span>${l}</span><span class="tr"><span style="width:${n ? Math.round(v / n * 100) : 0}%;background:${col}"></span></span><b>${v}</b></div>`;
+  const ini = m => (m.jmeno || m.role || '?').split(/\s+/).map(x => x[0] || '').join('').slice(0, 2).toUpperCase();
+  const nextActs = open.slice().sort((x, y) => (x.a.termin || '9999').localeCompare(y.a.termin || '9999')).slice(0, 5);
+  const pil = P.pilot || {}, run = pil.run, last = (pil.meetings || []).slice(-1)[0], c = pilotCalc();
+  $('view').innerHTML = `<div class="pr-head"><div><h2>Přehled</h2><p>${esc(projName(P))} · revize ${esc(cur.rev)} · ${approvedValid() ? 'schváleno' : 'návrh, zatím neschváleno'}</p></div>
+    <div class="row-actions" style="margin:0"><button class="btn" data-tab="porada">Pokračovat v poradě</button><button class="btn ghost" data-tab="fmea">Otevřít PFMEA</button></div></div>
+  <div class="pr-stats">
+    ${stat('main', 'Projednáno', proj + '<small style="font-size:1.1rem;font-weight:700;color:#c9d6e6"> z ' + n + '</small>', ceka ? 'čeká ještě ' + ceka + ' ' + tvar(ceka, 'riziko', 'rizika', 'rizik') : 'nic dalšího nečeká', 'porada')}
+    ${stat(ap.H ? 'bad' : '', 'Priorita H', ap.H, ap.H ? 'potřebují opatření nebo zdůvodnění' : 'žádné riziko s vysokou prioritou', 'fmea')}
+    ${stat(late.length ? 'bad' : '', 'Otevřená opatření', open.length, late.length ? late.length + ' po termínu' : 'nic po termínu', 'ukoly')}
+    ${stat(w ? 'bad' : '', 'K doplnění', w, w ? tvar(w, 'upozornění', 'upozornění', 'upozornění') + ' v PFMEA' : 'PFMEA je kompletní', 'fmea')}
+  </div>
+  <div class="pr-grid">
+    <div class="card"><h2>Postup porady</h2>${gauge}
+      <div class="pr-leg"><span><i style="background:#1d4ed8"></i>projednáno ${proj}</span><span><i style="background:#f59e0b"></i>rozpracováno ${rozp}</span><span><i style="background:#e7ebf2"></i>čeká ${ceka}</span></div>
+      <h3 style="margin-top:16px">Priority rizik</h3>${bar('Vysoká (H)', ap.H, '#b91c1c')}${bar('Střední (M)', ap.M, '#f59e0b')}${bar('Nízká (L)', ap.L, '#15803d')}${bar('Bez hodnocení', n - rated.length, '#c3cad6')}</div>
+    <div class="card"><h2>Opatření s termínem</h2>${nextActs.length ? `<ul class="pr-list">${nextActs.map(({a, r}) => { const m = member(a.ownerId), lt = a.termin && a.termin < td;
+      return `<li><span class="av">${esc(m ? ini(m) : '?')}</span><span class="tx">${esc(a.text)}<small>${esc((r.id ? rowNo(r) + ' ' : '') + r.vada)} · ${esc(m ? (m.jmeno || m.role) : 'bez odpovědného')}</small></span><span class="pr-pill ${lt ? 'late' : ''}">${a.termin ? (lt ? 'po termínu ' : 'do ') + fd(a.termin) : 'bez termínu'}</span></li>`; }).join('')}</ul>` : '<p class="muted">Žádné otevřené opatření.</p>'}
+      ${open.length > nextActs.length ? `<div class="row-actions"><button class="btn small ghost" data-tab="ukoly">Všechna opatření (${open.length})</button></div>` : ''}</div>
+    <div style="display:grid;gap:12px">
+      <div class="card pr-timer"><h2>Měření porady</h2>${run ? `<div class="t">${Math.max(0, Math.round((Date.now() - run.start) / 60000))} min</div><p>Porada se měří od ${new Date(run.start).toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit'})}. Ukončit jde v záložce Porada.</p>`
+        : last ? `<div class="t">${esc(String(last.min || '-'))} min</div><p>Poslední změřená porada${last.datum ? ' ' + fd(last.datum) : ''}, projednaná rizika: ${esc(String(last.rizik || 0))}.${c.ok && c.pct > 0 ? ' O ' + c.pct + ' % méně času na riziko než dřív.' : ''}</p><button class="btn small" data-act="pilotStart">Měřit další poradu</button>`
+        : `<div class="t">0 min</div><p>Změř délku porady a uvidíš, kolik času RiskTým ušetří.</p><button class="btn small" data-act="pilotStart">Měřit délku porady</button>`}</div>
+      <div class="card"><h2>Tým</h2><ul class="pr-list">${P.team.map(m => { const mo = open.filter(x => x.a.ownerId === m.id).length, mh = acts.filter(x => x.a.ownerId === m.id && x.a.stav !== 'otevřené').length;
+        return `<li><span class="av">${esc(ini(m))}</span><span class="tx">${esc(m.jmeno || '?')}<small>${esc(m.role)}${m.pritomen ? '' : ' · na poradě chybí'}</small></span>${mo ? `<span class="pr-pill">${mo} ${tvar(mo, 'otevřené', 'otevřená', 'otevřených')}</span>` : mh ? `<span class="pr-pill ok">${mh} ${tvar(mh, 'hotové', 'hotová', 'hotových')}</span>` : ''}</li>`; }).join('') || '<li class="muted">Tým zatím není zadaný.</li>'}</ul></div>
+    </div>
+  </div>`;
+}
+
 // ===== 5 ZÁPIS =====
 // jeden zdroj zápisu pro obrazovku, tisk i Excel
 function zapisItems(){
@@ -783,7 +1003,7 @@ function zapisItems(){
   const it = [['Účastníci', (pr.length ? pr.map(nm).join(', ') : '-') + (P.moderator ? ', moderátor: ' + P.moderator : '')]];
   if (abs.length) it.push(['Nepřítomní', abs.map(nm).join(', ')]);
   it.push(['Projednáno', (P.nazev || 'proces') + ', ' + rated.length + ' z ' + P.rows.length + ' rizik ohodnoceno.']);
-  rated.forEach(r => { const last = r.log.slice(-3).map(l => DIM[l.d].slice(-2,-1) + ' ' + l.agreed + (l.spread >= 3 ? ' (velký rozdíl ' + l.min + '-' + l.max + ', vydiskutováno)' : '') + (l.hlasy ? ' [hlasy: ' + l.hlasy + ']' : '')).join(', ');
+  rated.forEach(r => { const last = r.log.slice(-3).map(l => DIM[l.d].slice(-2,-1) + ' ' + l.agreed + (l.spread >= 3 ? ' (velký rozdíl ' + l.min + '-' + l.max + ', vydiskutováno' + (l.zduv ? ', zdůvodnil ' + l.zduv : '') + ')' : '') + (l.hlasy ? ' [hlasy: ' + l.hlasy + ']' : '')).join(', ');
     it.push([rowNo(r) + ' ' + r.vada, 'S ' + r.S + (r.sZdroj ? ' (převzato: ' + SZK[r.sZdroj] + (r.sPozn ? ', ' + r.sPozn : '') + ')' : '') + ' · O ' + r.O + ' · D ' + r.D + ' · AP ' + apOf(r.S,r.O,r.D) + (r.podklad && ((r.podklad.O || '').trim() || (r.podklad.D || '').trim()) ? ' · podklad: ' + ['O', 'D'].filter(k => (r.podklad[k] || '').trim()).map(k => k + ' ' + r.podklad[k].trim()).join(', ') : '') + (last ? ' · hlasování: ' + last : '') + (!r.actions.length && (r.zduvodneni || '').trim() ? ' · bez opatření, zdůvodnění: ' + r.zduvodneni.trim() : '')]); });
   allActions().forEach(({a, r}) => it.push(['Úkol', a.text + ' (' + r.vada + ') · odpovídá ' + mName(a.ownerId) + (a.termin ? ', do ' + fd(a.termin) : '') + (a.zdroj && a.zdroj !== 'FMEA' ? ' · zdroj: ' + a.zdroj : '')]));
   P.complaints.forEach(c => it.push(['Reklamace 8D č. ' + c.n, (c.zakaznik ? c.zakaznik + ': ' : '') + ((c.popis || '').trim().slice(0, 100) || 'bez popisu') + ' · ' + c.stav + (c.rev ? ', FMEA revize ' + c.rev : '')]));
@@ -1086,12 +1306,12 @@ document.addEventListener('click', e => {
       const out = vd.map(k => { const inp = $('agreed-' + k); const vals = Object.values(r.votes[k]).filter(Boolean); if (!inp || !vals.length) return null;
         const v = num10(inp.value), mn = Math.min(...vals), mx = Math.max(...vals); if (mx - mn > 2) dis.push(DIM[k] + ' (' + mn + '-' + mx + ') → ' + v); return {k, v, mn, mx}; }).filter(Boolean);
       if (dis.length && !confirm('Neshoda u: ' + dis.join(', ') + '. Proběhla diskuse a ukládáte tyto hodnoty?')) return 'norender';
-      out.forEach(o => { r[o.k] = o.v; r.log.push({d:o.k, agreed:o.v, min:o.mn, max:o.mx, spread:o.mx-o.mn, date:P.datum, hlasy:hlasyLog(r, o.k)}); vycistit(r, o.k); }); vd.forEach(k => { if (!out.some(o => o.k === k)) vycistit(r, k); });
+      out.forEach(o => { const zd = zduvTxt(r, o.k); r[o.k] = o.v; r.log.push(Object.assign({d:o.k, agreed:o.v, min:o.mn, max:o.mx, spread:o.mx-o.mn, date:P.datum, hlasy:hlasyLog(r, o.k)}, zd && o.mx - o.mn > 2 ? {zduv:zd} : {})); if (r.zduvOdb) delete r.zduvOdb[o.k]; vycistit(r, o.k); }); vd.forEach(k => { if (!out.some(o => o.k === k)) vycistit(r, k); });
       zapisChybejici(r, out.map(o => o.k));
       r.rev = false; r.pdims = null; ui.voter = null; if (pokerAll(r).every(k => r[k])){ delete r.prehodnotit; if (ui.skip) delete ui.skip[r.id]; ui.focus = '#hotovoBox'; } },
     saveAgreed(){ if (!r) return; const vd = pokerDims(r), again = [], ulozene = []; if (badRate(vd.filter(k => { const vals = Object.values(r.votes[k]).filter(Boolean); return vals.length && Math.max(...vals) - Math.min(...vals) <= 2; }).map(k => '#agreed-' + k).join(', '))) { alert('Hodnocení musí být celé číslo 1 až 10. Opravte červeně označené pole.'); return 'norender'; }
       vd.forEach(k => { const vals = Object.values(r.votes[k]).filter(Boolean); if (!vals.length){ vycistit(r, k); return; } const mn = Math.min(...vals), mx = Math.max(...vals), inp = $('agreed-' + k);
-        if (mx - mn > 2){ again.push(k); vycistit(r, k); } else { const v = num10(inp.value); r[k] = v; r.log.push({d:k, agreed:v, min:mn, max:mx, spread:mx-mn, date:P.datum, hlasy:hlasyLog(r, k)}); vycistit(r, k); ulozene.push(k); } });
+        if (mx - mn > 2){ const zd = (($('zd-' + k) || {}).value || '').trim(); if (zd){ r.zduvOdb = r.zduvOdb || {}; r.zduvOdb[k] = zd; } again.push(k); vycistit(r, k); } else { const v = num10(inp.value); r[k] = v; r.log.push({d:k, agreed:v, min:mn, max:mx, spread:mx-mn, date:P.datum, hlasy:hlasyLog(r, k)}); vycistit(r, k); ulozene.push(k); } });
       zapisChybejici(r, ulozene);
       r.rev = false; r.pdims = again.length ? again : null; ui.voter = null; if (!again.length && pokerAll(r).every(k => r[k])){ delete r.prehodnotit; if (ui.skip) delete ui.skip[r.id]; ui.focus = '#hotovoBox'; } },
     addAction(){ if (!r) return; const text = $('naText').value.trim(); if (!text) return alert('Napište opatření.');
@@ -1535,7 +1755,7 @@ render(); fsRestore(P.id); if (P.rows.length || P.team.length) $('saved').textCo
     <h2 id="uvitaniNadpis" style="margin:0 0 10px;font-size:1.35rem">Vítej v ukázce RiskTýmu</h2>
     <p style="margin:0 0 12px;color:#475569">Máš před sebou rozpracovanou FMEA montáže aku vrtacího šroubováku. Firma, lidé i rizika jsou vymyšlené. Zkus tohle:</p>
     <ol style="margin:0 0 14px;padding-left:1.3em;line-height:1.55">
-      <li>Nahoře přepínej záložky 1 až 7: porada, diagram, PFMEA, kontrolní plán, opatření, zápis a reklamace 8D.</li>
+      <li>Začínáš v <b>Přehledu</b>: stav celé FMEA na jedné obrazovce. V menu (na počítači vlevo, v mobilu nahoře) přepínej části 1 až 7: porada, diagram, PFMEA, kontrolní plán, opatření, zápis a reklamace 8D.</li>
       <li>V záložce Porada klikni u některého rizika na <b>Projednat</b> a podívej se, jak tým tajně hlasuje o S, O, D.</li>
       <li>Pak otevři <b>PFMEA</b> a uvidíš, že se všechno propsalo samo.</li>
     </ol>
