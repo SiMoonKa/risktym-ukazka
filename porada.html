@@ -388,6 +388,157 @@ footer.wrap{max-width:1480px;padding-left:270px}
   footer.wrap{padding-left:16px}
 }
 @media print{main.wrap{display:block}.tabs{display:none!important}footer.wrap{padding-left:0}#view>*{background:#fff!important}}
+/* ===== 25. 11. 2026: VZHLED BLÍŽ PŘEDLOZE (Dribbble „Task Management Dashboard“), 2. kolo =====
+   Simona: „pořád to nevypadá jako na Dribbble“. Lehčí písmo, bílá horní lišta jako karta, sloupce jako pilulky,
+   šrafované „čeká“, jemná upozornění. Mění se jen vzhled, obsah a funkce zůstávají. */
+:root{--text:#16181d;--muted:#7b8190}
+body{font-size:14.5px}
+/* lehčí písmo: nadpisy a čísla střední tloušťkou jako v předloze */
+.pr-head h2{font-size:2.3rem;font-weight:500;letter-spacing:-.03em}
+.pr-head p{font-size:.9rem}
+.card h2{font-size:1.08rem;font-weight:600}
+.card h3{font-weight:600}
+.pr-stat .l{font-weight:600;font-size:.95rem}
+.pr-stat .v{font-weight:500;font-size:3.1rem;letter-spacing:-.04em}
+.pr-stat small{font-weight:500!important}
+.pr-stat.bad .v{color:var(--text)}
+.pr-stat.bad .s{color:#b91c1c}
+.tab{font-weight:500;color:#7b8190}
+.tab.on{font-weight:600;background:none;color:var(--text)}
+.tab.on .ni{color:var(--blue)}
+.tab.on::before{left:-12px;width:4px}
+.btn{font-weight:500}
+.logo{font-weight:600}
+.pr-timer .t{font-weight:500;letter-spacing:-.03em}
+.pr-list .av{font-weight:600}
+.saved{font-weight:500}
+.projpick,.whopick{font-weight:500}
+/* drobný štítek pod číslem jako „Increased from last month“ */
+.pr-stat .s{display:flex;align-items:center;gap:7px;font-size:.78rem}
+.pr-stat .s::before{content:"";flex:none;width:16px;height:12px;border:1.4px solid currentColor;border-radius:4px;opacity:.75}
+/* horní lišta: logo nad menu, vpravo bílá zaoblená karta */
+.top{background:var(--bg);backdrop-filter:none}
+.top .wrap{position:relative;isolation:isolate;padding-top:12px;padding-bottom:4px}
+.top .wrap::before{content:"";position:absolute;z-index:-1;top:12px;bottom:4px;left:calc(16px + 236px + 18px);right:16px;background:#fff;border-radius:var(--r)}
+.top .logo{width:236px;flex:none;padding:0 16px;box-sizing:border-box}
+.top .projpick,.top .whopick{background:#f4f6fa;border-color:transparent}
+.top #saveNow{margin-right:12px}
+/* Přehled: sloupce priorit jako pilulky, prázdné části šrafované */
+.pr-cols{display:flex;justify-content:space-around;align-items:flex-end;gap:10px;margin:14px 0 4px}
+.pr-col{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);flex:1;min-width:0}
+.pr-col b{font-weight:500;font-size:.95rem;color:var(--text)}
+.pr-col .cap{position:relative;width:100%;max-width:52px;height:130px;border-radius:999px;overflow:hidden;
+  background:repeating-linear-gradient(135deg,#fff 0 4px,#cfd6e2 4px 6px);box-shadow:inset 0 0 0 1px #dfe4ee}
+.pr-col .cap i{position:absolute;left:0;right:0;bottom:0;border-radius:999px;min-height:0}
+.pr-col span{white-space:nowrap}
+.pr-pill{font-weight:500}
+/* upozornění: bílé s jemným rámečkem a tečkou místo béžových bloků */
+.warn{background:#fff;border:1px solid var(--line);color:var(--text);font-weight:500;border-radius:14px;padding:11px 14px;position:relative;padding-left:30px}
+.warn::before{content:"";position:absolute;left:13px;top:17px;width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.wbtn .go{font-weight:600;color:var(--blue)}
+@media (max-width:980px){
+  .top .wrap::before{left:16px}
+  .top .logo{width:auto;padding:0}
+  .top .wrap{padding-left:24px;padding-right:24px}
+}
+@media (max-width:640px){.top .wrap::before{display:none}.top .wrap{padding-left:16px;padding-right:16px}.pr-head h2{font-size:1.7rem}.pr-stat .v{font-size:2.2rem}}
+@media print{.top .wrap::before{display:none}.warn::before{display:none}.warn{padding-left:14px}}
+/* 25. 11. 2026: jemný pohyb jen při otevření části (třída .anim na chvíli), při práci se nic nehýbe */
+@keyframes rtUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes rtDraw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes rtGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+#view.anim .pr-head,#view.anim .pr-stat,#view.anim .pr-grid>*,#view.anim .sek-body{animation:rtUp .55s cubic-bezier(.2,.8,.2,1) both}
+#view.anim .pr-stat:nth-child(2){animation-delay:.06s}#view.anim .pr-stat:nth-child(3){animation-delay:.12s}#view.anim .pr-stat:nth-child(4){animation-delay:.18s}
+#view.anim .pr-grid>*:nth-child(1){animation-delay:.16s}#view.anim .pr-grid>*:nth-child(2){animation-delay:.24s}#view.anim .pr-grid>*:nth-child(3){animation-delay:.32s}#view.anim .sek-body{animation-delay:.2s}
+#view.anim .pr-gauge path{stroke-dasharray:100;animation:rtDraw 1.1s cubic-bezier(.3,.7,.2,1) .25s both}
+#view.anim .pr-col .cap i{transform-origin:bottom;animation:rtGrow .9s cubic-bezier(.2,.8,.2,1) .35s both}
+button.pr-stat{transition:transform .2s ease,box-shadow .2s ease}
+button.pr-stat:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(15,39,66,.10)}
+.tab{transition:background .15s ease,color .15s ease}
+@media (max-width:1280px){.pr-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.pr-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){#view.anim *{animation:none!important}button.pr-stat:hover{transform:none}}
+/* 25. 11. 2026: Přehled jako mřížka předlohy - 4 sloupce, řady stejně vysoké, texty na jeden řádek */
+.pr-bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"a a b c" "d d e f";gap:14px;align-items:stretch}
+.pr-bento>.card{margin:0;border:0;border-radius:var(--r);padding:20px;min-width:0;display:flex;flex-direction:column}
+.pr-a{grid-area:a}.pr-b{grid-area:b}.pr-c{grid-area:c}.pr-d{grid-area:d}.pr-e{grid-area:e}.pr-f{grid-area:f}
+.pr-ch{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.pr-ch h2{margin:0!important}
+.pr-note{font-size:.78rem;color:var(--muted);margin:2px 0 0}
+.pr-a .pr-cols{flex:1;margin-top:10px}
+.pr-b .pr-big{font-size:1.45rem;font-weight:500;line-height:1.2;letter-spacing:-.02em;color:var(--blue);margin:10px 0 4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pr-b .btn{margin-top:auto;align-self:flex-start}
+.pr-b .pr-note{margin-bottom:14px}
+.pr-one li{align-items:center;padding:8px 0;border-top:0}
+.pr-one .tx b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-one .tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.74rem}
+.pr-one .tx small.late{color:#b91c1c}
+.pr-team{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}
+.pr-e .pr-gauge{margin-top:auto}
+.pr-f{justify-content:flex-start}
+.pr-f .btn{align-self:flex-start;margin-top:auto}
+#view.anim .pr-bento>*{animation:rtUp .55s cubic-bezier(.2,.8,.2,1) both}
+#view.anim .pr-bento>*:nth-child(2){animation-delay:.08s}#view.anim .pr-bento>*:nth-child(3){animation-delay:.14s}#view.anim .pr-bento>*:nth-child(4){animation-delay:.2s}#view.anim .pr-bento>*:nth-child(5){animation-delay:.26s}#view.anim .pr-bento>*:nth-child(6){animation-delay:.32s}
+@media (max-width:1280px){.pr-bento{grid-template-columns:1fr 1fr;grid-template-areas:"a a" "b c" "d d" "e f"}}
+@media (max-width:700px){.pr-bento{grid-template-columns:minmax(0,1fr);grid-template-areas:"a" "b" "c" "d" "e" "f"}.pr-team{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){#view.anim .pr-bento>*{animation:none!important}}
+/* 25. 11. 2026: části 1-7 sladěné s Přehledem - uvnitř bílé karty žádné rámečky, jen jemné šedé plochy (karta v kartě) */
+.pr-stat .s::before{width:7px;height:7px;border:0;border-radius:50%;background:currentColor;opacity:.55}
+.sek-body .card{border:0;background:#f6f8fb;border-radius:18px;padding:20px}
+.sek-body .card .card,.sek-body .card .stepcard{background:#fff}
+.sek-body h2,.sek-body h3{font-weight:600}
+.stepcard{border:0;border-radius:16px}
+.stepcard.editing{box-shadow:inset 0 0 0 2px var(--blue)}
+.stepcard.vyreseno{box-shadow:inset 0 0 0 1.5px #bbe5c8}
+.guide .gsteps li{border:0;background:#fff;border-radius:14px;padding:10px 12px}
+.guide li.gnext{box-shadow:inset 0 0 0 2px var(--blue)}
+.guide li.gnext .gno{background:var(--blue)}
+.fstep{border:0;background:#f6f8fb;border-radius:16px;padding:12px 14px}
+.novy{border:0;box-shadow:inset 0 0 0 2px var(--blue);border-radius:16px;background:#f6f8fb}
+.krokh{border-top:1px solid var(--line)}
+.tchip{font-weight:500}
+/* Porada: název projektu na vlastním řádku, jména přítomných vedle sebe (dřív se řadila pod sebe a tlačítko je překrývalo) */
+.projsum .projtxt{flex:1 1 100%}
+.projsum .projteam{flex:1 1 300px}
+@media print{.sek-body .card,.fstep,.guide .gsteps li{background:#fff!important;box-shadow:none!important}}
+/* 25. 11. 2026: ZJEDNODUŠENÍ částí 1-7 (Simona „co nejmíň textu, krásně čisté“) - nic se nemaže, jen schovává */
+@media screen{#view:not(.napoveda-on) .napoveda{display:none!important}}
+@media screen{#view:not([data-sekce="d8"]) .sek-body .doc-head{display:none}}
+.help-q{appearance:none;margin-left:12px;vertical-align:middle;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--muted);font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;letter-spacing:0;position:relative;top:-4px}
+.help-q:hover,.help-q[aria-pressed="true"]{border-color:var(--blue);color:var(--blue)}
+.napoveda-on .napoveda{animation:rtUp .3s ease both}
+.sek-top .pr-head{align-items:flex-end}
+details.dl{position:relative;display:inline-block}
+details.dl>summary{list-style:none;cursor:pointer}
+details.dl>summary::-webkit-details-marker{display:none}
+.sek-body>details.dl{margin-bottom:12px}
+.dl-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border-radius:16px;box-shadow:0 14px 40px rgba(15,39,66,.16);padding:6px;min-width:200px;display:grid}
+.sek-body>details.dl .dl-menu{left:0;right:auto}
+.dl-i{appearance:none;border:0;background:none;font:inherit;font-size:.9rem;text-align:left;padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)}
+.dl-i:hover{background:#f0f4ff;color:var(--blue)}
+.guide .gbar{height:8px;border-radius:99px;background:#e6eaf2;overflow:hidden;margin:4px 0 12px}
+.guide .gbar i{display:block;height:100%;border-radius:99px;background:var(--blue)}
+.guide li.gskryt{display:none}
+.wsbal{background:#fff;border-radius:14px;margin:0 0 14px}
+.wsbal>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:500;border:1px solid var(--line);border-radius:14px}
+.wsbal>summary::-webkit-details-marker{display:none}
+.wsbal .wdot{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none}
+.wsbal .go{margin-left:auto;color:var(--blue);font-size:.85rem;font-weight:600}
+.wsbal[open]>summary .go{visibility:hidden}
+.wsbal[open]>summary{border-color:transparent}
+.cpt .chips{display:none}
+.cpt td:focus-within .chips{display:flex}
+.cpt td>button.chip{background:none;border:0;border-radius:0;padding:4px 0;margin-top:4px;color:var(--blue);font-weight:500;font-size:.78rem;text-align:left;text-decoration:underline;line-height:1.3;white-space:normal}
+.card.sbal>h2{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}
+.card.sbal>h2::after{content:"Skrýt";font-size:.82rem;font-weight:600;color:var(--blue)}
+.card.sbal.zavr>h2::after{content:"Zobrazit"}
+.card.sbal:not(.zavr)>h2{margin-bottom:10px}
+.card.sbal.zavr>:not(h2){display:none}
+.guide .rhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.guide .rhead h2{margin:0}
+.guide .rhead .muted{margin-right:auto}
+@media (max-width:700px){.dl-menu{left:0;right:auto}}
+@media (max-width:700px){.sek-top .pr-head{align-items:flex-start}.help-q{width:26px;height:26px;top:-2px}}
 h1,h2,h3,h4,summary,.q,.btn,.chip,.tag{text-wrap:balance}p,li,dd,td,.muted{text-wrap:pretty}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
 </head>
@@ -585,7 +736,8 @@ function warnList(list){
   const one = x => `<button class="warn wbtn ${x[0]}" data-act="fix" data-i="${all.findIndex(y => y[1] === x[1])}">${esc(x[1])}<span class="go">Opravit →</span></button>`;
   const sorted = list.filter(x => x[0] === 'err').concat(list.filter(x => x[0] !== 'err'));
   const head = sorted.slice(0, 3), rest = sorted.slice(3);
-  return `<div class="no-print wlist"><div class="wtitle">Kontrola úplnosti: ${list.length} ${list.length === 1 ? 'položka' : list.length < 5 ? 'položky' : 'položek'} k doplnění</div>${head.map(one).join('')}${rest.length ? `<details class="wmore"><summary>Zobrazit další (${rest.length})</summary>${rest.map(one).join('')}</details>` : ''}</div>`;
+  // 25. 11. 2026: upozornění sbalená do jednoho řádku, rozbalí se kliknutím (stav si pamatuje ui.otevr.warn)
+  return `<details class="no-print wlist wsbal" data-sbal="warn"${ui.otevr && ui.otevr.warn ? ' open' : ''}><summary class="wsum"><span class="wdot"></span><span>${list.length} ${list.length === 1 ? 'položka' : list.length < 5 ? 'položky' : 'položek'} k doplnění</span><span class="go">Zobrazit</span></summary>${head.map(one).join('')}${rest.length ? `<details class="wmore"><summary>Zobrazit další (${rest.length})</summary>${rest.map(one).join('')}</details>` : ''}</details>`;
 }
 
 // ===== záložky =====
@@ -610,7 +762,15 @@ function renderTabs(){
 function autosize(el){ el.style.height = 'auto'; el.style.height = (el.scrollHeight + 2) + 'px'; }
 // 17. 11. 2026 (Simona „když zadám S/O/D, skočí mi to výš“): po překreslení vrátit posun panelu rizika i stránky.
 function render(){ const rc0 = $('riskCard'), rcTop = rc0 ? rc0.scrollTop : 0, sel0 = ui.sel, winY = window.scrollY; render0(); const rc1 = $('riskCard'); if (rc1 && rcTop && ui.sel === sel0) rc1.scrollTop = rcTop; if (Math.abs(window.scrollY - winY) > 2) window.scrollTo(0, winY); }
-function render0(){ ensureOps(); fillWho(); $('projPick').innerHTML = Object.values(STORE.items).sort((x,y) => projName(x).localeCompare(projName(y), 'cs')).map(x => `<option value="${x.id}" ${x.id===P.id?'selected':''}>${esc(projName(x))}</option>`).join(''); renderTabs(); ({prehled:vPrehled, porada:vPorada, tok:vTok, fmea:vFmea, plan:vPlan, ukoly:vUkoly, zapis:vZapis, d8:vD8, soubor:vSoubor})[ui.tab](); sekceObal(); document.querySelectorAll('textarea.auto').forEach(autosize); }
+function render0(){ ensureOps(); fillWho(); $('projPick').innerHTML = Object.values(STORE.items).sort((x,y) => projName(x).localeCompare(projName(y), 'cs')).map(x => `<option value="${x.id}" ${x.id===P.id?'selected':''}>${esc(projName(x))}</option>`).join(''); renderTabs(); ({prehled:vPrehled, porada:vPorada, tok:vTok, fmea:vFmea, plan:vPlan, ukoly:vUkoly, zapis:vZapis, d8:vD8, soubor:vSoubor})[ui.tab](); sekceObal(); pohyb(); document.querySelectorAll('textarea.auto').forEach(autosize); }
+// 25. 11. 2026: pohyb jen při přepnutí části nebo projektu, ne při každém kliknutí
+let pohybKlic = '';
+function pohyb(){ const v = $('view'), k = ui.tab + '|' + P.id; if (k === pohybKlic) return; pohybKlic = k;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  v.classList.remove('anim'); void v.offsetWidth; v.classList.add('anim'); clearTimeout(pohyb.t); pohyb.t = setTimeout(() => v.classList.remove('anim'), 1600);
+  v.querySelectorAll('.pr-stat .v').forEach(el => { const tn = el.firstChild; if (!tn || tn.nodeType !== 3) return; const s0 = tn.nodeValue.trim(), cil = +s0; if (String(cil) !== s0 || !(cil > 1) || cil > 9999) return;
+    const t0 = performance.now(), d = 700; const krok = now => { const x = Math.min(1, (now - t0) / d), e = 1 - Math.pow(1 - x, 3); tn.nodeValue = String(Math.round(cil * e)); if (x < 1) requestAnimationFrame(krok); else tn.nodeValue = String(cil); };
+    tn.nodeValue = '0'; requestAnimationFrame(krok); }); }
 
 function novyPanel(){ if (!ui.novy) return ''; const cur = P.rows.find(r => r.id === ui.sel), def = cur ? cur.stepId : (P.steps[0] ? P.steps[0].id : '');
   return `<div class="novy" id="novyPanel"><h3 style="margin:0 0 8px">Nový záznam k projednání</h3>
@@ -640,9 +800,11 @@ function guideSteps(){
 function guideHtml(){ const g = guideSteps(), hotovo = g.filter(x => x[2]).length;
   if (P.guideHide) return `<div class="row-actions no-print" style="margin:0 0 10px"><button class="btn small ghost" data-act="guideShow">Postup projektu (${hotovo} z ${g.length})</button></div>`;
   const dalsi = g.findIndex(x => !x[2]);
-  return `<div class="card guide no-print"><div class="rhead"><h2>Postup projektu</h2><span class="muted">Hotovo ${hotovo} z ${g.length}</span><button class="btn small ghost" data-act="guideHide">Skrýt</button></div>
-    <ol class="gsteps">${g.map((x, i) => `<li class="${x[2] ? 'gok' : i === dalsi ? 'gnext' : ''}"><span class="gno">${x[2] ? '✓' : i + 1}</span><div><b>${x[0]}</b><span>${x[1]}</span></div>${x[2] ? '' : `<button class="btn small ${i === dalsi ? '' : 'ghost'}" data-act="guideGo" data-i="${i}">${i === dalsi ? 'Vyplnit' : 'Přejít'}</button>`}</li>`).join('')}</ol>
-    <p class="muted" style="font-size:.82rem;margin:8px 0 0">Každý údaj zapíšete jednou. Kroky se propíšou do diagramu, PFMEA a kontrolního plánu. Vady a hodnocení do PFMEA a zápisu. Opatření do seznamu opatření, PFMEA a kontrolního plánu. Reklamace do 8D, PFMEA a revizí.${!P.rows.length ? ' Chcete se nejdřív podívat, jak to vypadá? <button class="btn small ghost" data-act="demo">Načíst ukázkový projekt</button>' : ''}</p></div>`; }
+  const vse = !!ui.guideAll;
+  return `<div class="card guide no-print"><div class="rhead"><h2>Postup projektu</h2><span class="muted">Hotovo ${hotovo} z ${g.length}</span><button class="btn small ghost" data-act="guideAll">${vse ? 'Jen další krok' : 'Všechny kroky'}</button><button class="btn small ghost" data-act="guideHide">Skrýt</button></div>
+    <div class="gbar" aria-hidden="true"><i style="width:${g.length ? Math.round(hotovo / g.length * 100) : 0}%"></i></div>
+    <ol class="gsteps">${g.map((x, i) => `<li class="${x[2] ? 'gok' : i === dalsi ? 'gnext' : ''}${!vse && i !== dalsi ? ' gskryt' : ''}"><span class="gno">${x[2] ? '✓' : i + 1}</span><div><b>${x[0]}</b><span>${x[1]}</span></div>${x[2] ? '' : `<button class="btn small ${i === dalsi ? '' : 'ghost'}" data-act="guideGo" data-i="${i}">${i === dalsi ? 'Vyplnit' : 'Přejít'}</button>`}</li>`).join('')}</ol>
+    <p class="muted" style="font-size:.82rem;margin:8px 0 0"><span class="napoveda">Každý údaj zapíšete jednou. Kroky se propíšou do diagramu, PFMEA a kontrolního plánu. Vady a hodnocení do PFMEA a zápisu. Opatření do seznamu opatření, PFMEA a kontrolního plánu. Reklamace do 8D, PFMEA a revizí.</span>${!P.rows.length ? ' Chcete se nejdřív podívat, jak to vypadá? <button class="btn small ghost" data-act="demo">Načíst ukázkový projekt</button>' : ''}</p></div>`; }
 // ===== 1 PORADA =====
 function vPorada(){
   const sel = P.rows.find(r => r.id === ui.sel);
@@ -814,12 +976,13 @@ function addMonths(iso, m){ const d = new Date(iso + 'T12:00:00'); d.setMonth(d.
 function approvedValid(){ const a = P.approval; return !!a && a.rev === P.revisions[P.revisions.length-1].rev && !((P.lastEdit || 0) > a.at); }
 function defaultApprover(){ const q = P.team.find(m => m.role === 'Kvalita') || P.team[0]; return q ? q.id : ''; }
 function head(title){ return `<div class="doc-head"><div><h2>${title}</h2><div class="muted" style="font-size:.85rem">Proces: ${esc(P.nazev || '-')} · ${esc(P.zakaznik || '')}</div></div><div style="font-size:.8rem">Datum: <b>${fd(P.datum)}</b> · Revize: <b>${esc(P.revisions[P.revisions.length-1].rev)}</b> · Moderátor: <b>${esc(P.moderator)}</b>${approvedValid() ? `<br>Schvalovatel: <b>${esc(mName(P.approval.byId))}</b> · ${fd(P.approval.date)}<span class="print-only"> · Podpis: ____________________</span>` : ''}</div></div>`; }
-function exportBar(kind){ return `<div class="row-actions no-print" style="margin-bottom:10px"><button class="btn" data-act="xlsx" data-k="${kind}">${ic('download')} Excel (.xlsx)</button><button class="btn ghost small" data-act="csv" data-k="${kind}" title="Prostý text bez formátování, pro import do jiných systémů">CSV bez formátu</button><button class="btn ghost" data-act="print">${ic('print')} Tisk / PDF</button></div>`; }
+// 25. 11. 2026 (Simona „co nejmíň textu“): tři tlačítka Excel/CSV/Tisk schovaná pod jedno „Stáhnout“; akce zůstávají stejné
+function exportBar(kind){ return `<details class="dl no-print"><summary class="btn ghost">${ic('download')} Stáhnout</summary><div class="dl-menu"><button class="dl-i" data-act="xlsx" data-k="${kind}">${ic('download')} Excel (.xlsx)</button><button class="dl-i" data-act="csv" data-k="${kind}" title="Prostý text bez formátování, pro import do jiných systémů">CSV bez formátu</button><button class="dl-i" data-act="print">${ic('print')} Tisk / PDF</button></div></details>`; }
 function apprCard(){ const a = P.approval, cur = P.revisions[P.revisions.length-1].rev;
   if (approvedValid()) return `<div class="card no-print" id="apprCard" tabindex="-1" style="border-left:5px solid #16a34a"><b>✓ Revize ${esc(a.rev)} schválena</b> · ${esc(mName(a.byId))} · ${fd(a.date)}${a.at ? ' ' + new Date(a.at).toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'}) : ''}${a.potvrzeno ? ' · potvrzeno vlastním jménem' : ''}<br><span class="muted">Příští přezkoumání nejpozději ${fd(addMonths(a.date, 12))}. Při každé změně zapište revizi a nechte FMEA znovu schválit.</span></div>`;
   return `<div class="card no-print" id="apprCard" tabindex="-1" style="border-left:5px solid #d97706"><b>Schválení FMEA</b>${a ? `<p class="warn" style="margin:6px 0">Po schválení (rev. ${esc(a.rev)}, ${fd(a.date)}) byly provedeny změny. Zapište revizi a nechte FMEA znovu schválit.</p>` : '<p class="muted" style="font-size:.85rem;margin:4px 0">Dokud FMEA nikdo neschválí, je to návrh.</p>'}
     <div class="row-actions"><label class="f" style="min-width:240px">Schvaluje<select id="apprBy">${memberOpts(defaultApprover())}</select></label><label class="f" style="min-width:240px">Potvrďte celým jménem<input type="text" id="apprJmeno" autocomplete="off" placeholder="napište své jméno a příjmení"></label><button class="btn" data-act="approve" style="align-self:flex-end">✓ Schválit revizi ${esc(cur)}</button></div>
-    <p class="muted" style="font-size:.8rem;margin:6px 0 0">Schválení je záznam v RiskTýmu: kdo, kdy a kterou revizi schválil. Není to elektronický podpis ani ověření identity. Když váš systém řízené dokumentace vyžaduje podpis, vytiskněte PFMEA a podepište ji.</p></div>`; }
+    <p class="muted napoveda" style="font-size:.8rem;margin:6px 0 0">Schválení je záznam v RiskTýmu: kdo, kdy a kterou revizi schválil. Není to elektronický podpis ani ověření identity. Když váš systém řízené dokumentace vyžaduje podpis, vytiskněte PFMEA a podepište ji.</p></div>`; }
 // 19. 11. 2026: velká FMEA (nad 300 řádků) se v záložce ukazuje po 200 řádcích, aby přepnutí netrvalo sekundy
 function vFmea(){
   const w = warnings(), pfAll = sortedRows(), pfRows = ui.fmeaVse || pfAll.length <= 300 ? pfAll : pfAll.slice(0, ui.fmeaMax || 200);
@@ -844,7 +1007,7 @@ function vPlan(){
   const chips = (r, k, list) => `<div class="chips no-print">${list.map(v => `<button class="chip" data-act="setCp" data-id="${r.id}" data-k="${k}" data-v="${v}">${v}</button>`).join('')}</div>`;
   $('view').innerHTML = exportBar('plan') + (w.length ? warnList(w) : '')
   + head('KONTROLNÍ PLÁN' + (approvedValid() ? '' : ' · návrh')) + `<div class="row-actions" style="margin:0 0 8px"><label class="f" style="max-width:280px">Fáze kontrolního plánu<select data-p="cpFaze">${CP_FAZE.map(f => `<option ${(P.cpFaze || 'Sériová výroba') === f ? 'selected' : ''}>${f}</option>`).join('')}</select></label></div>
-  <p class="muted no-print" style="font-size:.85rem">Řádky vznikají z FMEA. Šedé hodnoty jsou převzaté z FMEA a strukturní analýzy, můžete je přepsat. Ukládá se automaticky. Zvláštní znaky jsou označené ZZ.</p>
+  <p class="muted no-print napoveda" style="font-size:.85rem">Řádky vznikají z FMEA. Šedé hodnoty jsou převzaté z FMEA a strukturní analýzy, můžete je přepsat. Ukládá se automaticky. Zvláštní znaky jsou označené ZZ.</p>
   <div class="tbl"><table class="doc cpt"><thead><tr><th>Č.</th><th>Operace</th><th>Stroj, přípravek, nástroj</th><th>Znak výrobku</th><th>Znak procesu</th><th>ZZ</th><th>Specifikace / tolerance</th><th>Metoda měření</th><th>Velikost vzorku</th><th>Četnost</th><th>Metoda řízení</th><th>Reakční plán</th><th>Odpovídá</th><th>Soulad s FMEA</th></tr></thead><tbody>`
   + rows.map(r => { const st = stepOf(r.stepId), chg = r.actions.some(a => a.nD && r.D && a.nD < r.D);
       const ok = !(r.zz && !r.cp.cetnost) && !(chg && !r.cp.metoda) && !(r.zz && !cpv(r, 'specifikace'));
@@ -924,7 +1087,7 @@ function sekceInfo(){
   const revS = approvedValid() ? 'schváleno' : 'návrh';
   return {
     porada: ['Porada', 'Tým projde rizika krok po kroku a tajně hlasuje o závažnosti, výskytu a detekci.',
-      [['Projednáno', proj + '<small> z ' + n + '</small>', n - proj ? 'čeká ještě ' + (n - proj) : 'vše projednáno', 'main'], ['Přítomní', pr + '<small> z ' + P.team.length + '</small>', 'členů týmu na poradě'], ['Rozpracováno', rozp, tvarN(rozp, 'riziko', 'rizika', 'rizik') + ' bez uzavření'], ['Priorita H', apc('H'), 'vysoká priorita akce', apc('H') ? 'bad' : '']]],
+      [['Projednáno', proj + '<small> z ' + n + '</small>', n - proj ? 'zbývá ještě ' + (n - proj) : 'vše projednáno', 'main'], ['Přítomní', pr + '<small> z ' + P.team.length + '</small>', 'členů týmu na poradě'], ['Rozpracováno', rozp, tvarN(rozp, 'riziko', 'rizika', 'rizik') + ' bez uzavření'], ['Priorita H', apc('H'), 'vysoká priorita akce', apc('H') ? 'bad' : '']]],
     tok: ['Diagram procesu', 'Tok výroby od příjmu po expedici. Kroky se samy propíší do PFMEA a kontrolního plánu.',
       [['Kroků procesu', steps.length, 'v pořadí výroby', 'main'], ['Kontrol', kontrol, 'kontrolních kroků'], ['Rizik u kroků', n, 'možných vad'], ['Zvláštní znaky', zz, 'označené ZZ']]],
     fmea: ['PFMEA', 'Procesní FMEA podle AIAG-VDA, vyplněná z toho, co tým rozhodl na poradě.',
@@ -946,9 +1109,24 @@ function sekceObal(){
   const body = document.createElement('div'); body.className = 'sek-body';
   while (v.firstChild) body.appendChild(v.firstChild);
   const head = document.createElement('div'); head.className = 'sek-top';
-  head.innerHTML = `<div class="pr-head"><div><h2>${s[0]}</h2><p>${s[1]}</p></div></div>` + (s[2].length ? `<div class="pr-stats sek-stats">${s[2].map(([l, val, sub, cls]) => `<div class="pr-stat ${cls || ''}"><span class="l">${l}</span><span class="v">${val}</span><span class="s">${sub}</span></div>`).join('')}</div>` : '');
+  // 25. 11. 2026: v Souboru jdou popisy karet pod „?“, Měření pilotu a stupnice jsou sbalené
+  if (ui.tab === 'soubor'){
+    body.querySelectorAll('.card > h2 + p.muted').forEach(x => x.classList.add('napoveda'));
+    ['pilotCard', 'scaleCard'].forEach(id => { const c = body.querySelector('#' + id), h = c && c.querySelector(':scope > h2'); if (!h) return;
+      let open = !!(ui.otevr && ui.otevr[id]); if (ui.focus){ try { if (c.querySelector(ui.focus)) open = true; } catch (e) {} }
+      c.classList.add('sbal'); c.classList.toggle('zavr', !open); h.dataset.act = 'sbalit'; h.dataset.id = id; h.setAttribute('role', 'button'); h.tabIndex = 0; h.setAttribute('aria-expanded', String(open)); });
+  }
+  const maNap = !!body.querySelector('.napoveda');
+  v.dataset.sekce = ui.tab; v.classList.toggle('napoveda-on', !!ui.napoveda);
+  head.innerHTML = `<div class="pr-head"><div><h2>${s[0]}${maNap ? `<button type="button" class="help-q no-print" data-act="napoveda" aria-pressed="${ui.napoveda ? 'true' : 'false'}" title="${ui.napoveda ? 'Skrýt nápovědu' : 'Zobrazit nápovědu'}">?</button>` : ''}</h2><p>${s[1]}</p></div></div>` + (s[2].length ? `<div class="pr-stats sek-stats">${s[2].map(([l, val, sub, cls]) => `<div class="pr-stat ${cls || ''}"><span class="l">${l}</span><span class="v">${val}</span><span class="s">${sub}</span></div>`).join('')}</div>` : '');
+  const dl = ui.tab !== 'd8' && body.querySelector(':scope > details.dl'); if (dl) head.querySelector('.pr-head').appendChild(dl);
   v.append(head, body);
 }
+// nabídka Stáhnout se zavře po výběru nebo kliknutí jinam; rychlé volby v kontrolním plánu neberou fokus poli (zůstanou otevřené)
+document.addEventListener('click', e => { document.querySelectorAll('details.dl[open]').forEach(d => { if (!d.contains(e.target) || e.target.closest('.dl-i')) d.open = false; }); });
+document.addEventListener('mousedown', e => { if (e.target.closest('.cpt .chips button')) e.preventDefault(); });
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.sbal){ ui.otevr = ui.otevr || {}; ui.otevr[d.dataset.sbal] = d.open; } }, true);
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('h2[role="button"][data-act]')){ e.preventDefault(); e.target.click(); } });
 
 // ===== PŘEHLED =====
 // 24. 11. 2026 (Simona „ano“): jedna obrazovka pro manažera: kolik je projednáno, priority, opatření s termíny, tým a měření porady.
@@ -964,12 +1142,17 @@ function vPrehled(){
   // půlkruh: projednáno (modrá), rozpracováno (oranžová z loga), čeká (šedá)
   const arc = (from, to, col) => { if (to - from <= 0) return ''; const a0 = Math.PI * (1 - from), a1 = Math.PI * (1 - Math.min(to, .9999)), R = 80, cx = 100, cy = 100;
     const x0 = cx + R * Math.cos(a0), y0 = cy - R * Math.sin(a0), x1 = cx + R * Math.cos(a1), y1 = cy - R * Math.sin(a1);
-    return `<path d="M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}" fill="none" stroke="${col}" stroke-width="22"/>`; };
+    return `<path d="M${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}" fill="none" stroke="${col}" stroke-width="22" pathLength="100"/>`; };
   const fP = n ? proj / n : 0, fR = n ? rozp / n : 0;
-  const gauge = `<svg class="pr-gauge" viewBox="0 0 200 118" role="img" aria-label="Projednáno ${pct} %">${arc(0, 1, '#e7ebf2')}${arc(0, fP, '#1d4ed8')}${arc(fP, fP + fR, '#f59e0b')}<text x="100" y="92" text-anchor="middle" font-size="34" font-weight="800" fill="#111827">${pct} %</text><text x="100" y="112" text-anchor="middle" font-size="11" fill="#5b6475">projednáno</text></svg>`;
+  const gauge = `<svg class="pr-gauge" viewBox="0 0 200 118" role="img" aria-label="Projednáno ${pct} %"><defs><pattern id="prStr" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><rect width="2" height="6" fill="#c3cad6"/></pattern></defs>${arc(0, 1, 'url(#prStr)')}${arc(0, fP, '#1d4ed8')}${arc(fP, fP + fR, '#f59e0b')}<text x="100" y="92" text-anchor="middle" font-size="36" font-weight="500" letter-spacing="-1.5" fill="#16181d">${pct} %</text><text x="100" y="112" text-anchor="middle" font-size="11" fill="#5b6475">projednáno</text></svg>`;
   const bar = (l, v, col) => `<div class="pr-bar"><span>${l}</span><span class="tr"><span style="width:${n ? Math.round(v / n * 100) : 0}%;background:${col}"></span></span><b>${v}</b></div>`;
+  // 25. 11. 2026: sloupce jako pilulky v předloze; prázdná část zůstává šrafovaná
+  const colMax = Math.max(1, ap.H, ap.M, ap.L, n - rated.length);
+  const col = (l, v, c) => `<div class="pr-col" title="${l}: ${v}"><b>${v}</b><span class="cap">${c && v ? `<i style="height:${Math.max(12, Math.round(v / colMax * 100))}%;background:${c}"></i>` : ''}</span><span>${l}</span></div>`;
+  // 25. 11. 2026: karta „Další na řadě“ jako „Reminders“ v předloze
+  const dalsi = rows.find(r => !r.projednano), krokTxt = r => { const st = P.steps.find(s => s.id === r.stepId); return st ? 'Krok ' + ((st.op ? st.op + ' ' : '') + (st.krok || '')).trim() : 'Krok procesu nezadán'; };
   const ini = m => (m.jmeno || m.role || '?').split(/\s+/).map(x => x[0] || '').join('').slice(0, 2).toUpperCase();
-  const nextActs = open.slice().sort((x, y) => (x.a.termin || '9999').localeCompare(y.a.termin || '9999')).slice(0, 5);
+  const nextActs = open.slice().sort((x, y) => (x.a.termin || '9999').localeCompare(y.a.termin || '9999')).slice(0, 4);
   const pil = P.pilot || {}, run = pil.run, last = (pil.meetings || []).slice(-1)[0], c = pilotCalc();
   $('view').innerHTML = `<div class="pr-head"><div><h2>Přehled</h2><p>${esc(projName(P))} · revize ${esc(cur.rev)} · ${approvedValid() ? 'schváleno' : 'návrh, zatím neschváleno'}</p></div>
     <div class="row-actions" style="margin:0"><button class="btn" data-tab="porada">Pokračovat v poradě</button><button class="btn ghost" data-tab="fmea">Otevřít PFMEA</button></div></div>
@@ -979,20 +1162,23 @@ function vPrehled(){
     ${stat(late.length ? 'bad' : '', 'Otevřená opatření', open.length, late.length ? late.length + ' po termínu' : 'nic po termínu', 'ukoly')}
     ${stat(w ? 'bad' : '', 'K doplnění', w, w ? tvar(w, 'upozornění', 'upozornění', 'upozornění') + ' v PFMEA' : 'PFMEA je kompletní', 'fmea')}
   </div>
-  <div class="pr-grid">
-    <div class="card"><h2>Postup porady</h2>${gauge}
-      <div class="pr-leg"><span><i style="background:#1d4ed8"></i>projednáno ${proj}</span><span><i style="background:#f59e0b"></i>rozpracováno ${rozp}</span><span><i style="background:#e7ebf2"></i>čeká ${ceka}</span></div>
-      <h3 style="margin-top:16px">Priority rizik</h3>${bar('Vysoká (H)', ap.H, '#b91c1c')}${bar('Střední (M)', ap.M, '#f59e0b')}${bar('Nízká (L)', ap.L, '#15803d')}${bar('Bez hodnocení', n - rated.length, '#c3cad6')}</div>
-    <div class="card"><h2>Opatření s termínem</h2>${nextActs.length ? `<ul class="pr-list">${nextActs.map(({a, r}) => { const m = member(a.ownerId), lt = a.termin && a.termin < td;
-      return `<li><span class="av">${esc(m ? ini(m) : '?')}</span><span class="tx">${esc(a.text)}<small>${esc((r.id ? rowNo(r) + ' ' : '') + r.vada)} · ${esc(m ? (m.jmeno || m.role) : 'bez odpovědného')}</small></span><span class="pr-pill ${lt ? 'late' : ''}">${a.termin ? (lt ? 'po termínu ' : 'do ') + fd(a.termin) : 'bez termínu'}</span></li>`; }).join('')}</ul>` : '<p class="muted">Žádné otevřené opatření.</p>'}
-      ${open.length > nextActs.length ? `<div class="row-actions"><button class="btn small ghost" data-tab="ukoly">Všechna opatření (${open.length})</button></div>` : ''}</div>
-    <div style="display:grid;gap:12px">
-      <div class="card pr-timer"><h2>Měření porady</h2>${run ? `<div class="t">${Math.max(0, Math.round((Date.now() - run.start) / 60000))} min</div><p>Porada se měří od ${new Date(run.start).toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit'})}. Ukončit jde v záložce Porada.</p>`
+  <div class="pr-bento">
+    <div class="card pr-a"><div class="pr-ch"><h2>Priority rizik</h2><span class="pr-note">${rated.length} z ${n} ohodnoceno</span></div>
+      <div class="pr-cols">${col('Vysoká H', ap.H, '#b91c1c')}${col('Střední M', ap.M, '#f59e0b')}${col('Nízká L', ap.L, '#1d4ed8')}${col('Bez hodnocení', n - rated.length, '')}</div></div>
+    <div class="card pr-b"><h2>Další na řadě</h2>${dalsi ? `<p class="pr-big" title="${esc(dalsi.vada || '')}">${esc(dalsi.vada || 'Riziko bez názvu')}</p><p class="pr-note">${esc(krokTxt(dalsi))}</p><button class="btn" data-tab="porada">Projednat na poradě</button>`
+      : `<p class="pr-big">Vše projednáno</p><p class="pr-note">Zápis i PFMEA jsou vyplněné z porady.</p><button class="btn" data-tab="zapis">Otevřít zápis</button>`}</div>
+    <div class="card pr-c"><div class="pr-ch"><h2>Opatření</h2>${open.length ? `<button class="btn small ghost" data-tab="ukoly">Vše (${open.length})</button>` : ''}</div>
+      ${nextActs.length ? `<ul class="pr-list pr-one">${nextActs.map(({a, r}) => { const m = member(a.ownerId), lt = a.termin && a.termin < td;
+      return `<li title="${esc(a.text)}"><span class="av">${esc(m ? ini(m) : '?')}</span><span class="tx"><b>${esc(a.text)}</b><small class="${lt ? 'late' : ''}">${a.termin ? (lt ? 'po termínu ' : 'do ') + fd(a.termin) : 'bez termínu'} · ${esc(m ? (m.jmeno || m.role) : 'bez odpovědného')}</small></span></li>`; }).join('')}</ul>` : '<p class="muted">Žádné otevřené opatření.</p>'}</div>
+    <div class="card pr-d"><div class="pr-ch"><h2>Tým</h2><span class="pr-note">${P.team.filter(m => m.pritomen).length} z ${P.team.length} na poradě</span></div>
+      <ul class="pr-list pr-one pr-team">${P.team.slice(0, 6).map(m => { const mo = open.filter(x => x.a.ownerId === m.id).length, mh = acts.filter(x => x.a.ownerId === m.id && x.a.stav !== 'otevřené').length;
+        return `<li><span class="av">${esc(ini(m))}</span><span class="tx"><b>${esc(m.jmeno || '?')}</b><small>${esc(m.role)}${m.pritomen ? '' : ' · na poradě chybí'}</small></span>${mo ? `<span class="pr-pill">${mo} ${tvar(mo, 'otevřené', 'otevřená', 'otevřených')}</span>` : mh ? `<span class="pr-pill ok">${mh} ${tvar(mh, 'hotové', 'hotová', 'hotových')}</span>` : ''}</li>`; }).join('') || '<li class="muted">Tým zatím není zadaný.</li>'}</ul>
+      ${P.team.length > 6 ? `<p class="pr-note">a ${P.team.length - 6} dalších v části Porada</p>` : ''}</div>
+    <div class="card pr-e"><h2>Postup porady</h2>${gauge}
+      <div class="pr-leg"><span><i style="background:#1d4ed8"></i>projednáno ${proj}</span><span><i style="background:#f59e0b"></i>rozpracováno ${rozp}</span><span><i style="background:repeating-linear-gradient(135deg,#fff 0 2px,#a9b3c3 2px 3.5px);box-shadow:inset 0 0 0 1px #c3cad6"></i>čeká ${ceka}</span></div></div>
+    <div class="card pr-timer pr-f"><h2>Měření porady</h2>${run ? `<div class="t">${Math.max(0, Math.round((Date.now() - run.start) / 60000))} min</div><p>Porada se měří od ${new Date(run.start).toLocaleTimeString('cs-CZ', {hour:'2-digit', minute:'2-digit'})}. Ukončit jde v záložce Porada.</p>`
         : last ? `<div class="t">${esc(String(last.min || '-'))} min</div><p>Poslední změřená porada${last.datum ? ' ' + fd(last.datum) : ''}, projednaná rizika: ${esc(String(last.rizik || 0))}.${c.ok && c.pct > 0 ? ' O ' + c.pct + ' % méně času na riziko než dřív.' : ''}</p><button class="btn small" data-act="pilotStart">Měřit další poradu</button>`
         : `<div class="t">0 min</div><p>Změř délku porady a uvidíš, kolik času RiskTým ušetří.</p><button class="btn small" data-act="pilotStart">Měřit délku porady</button>`}</div>
-      <div class="card"><h2>Tým</h2><ul class="pr-list">${P.team.map(m => { const mo = open.filter(x => x.a.ownerId === m.id).length, mh = acts.filter(x => x.a.ownerId === m.id && x.a.stav !== 'otevřené').length;
-        return `<li><span class="av">${esc(ini(m))}</span><span class="tx">${esc(m.jmeno || '?')}<small>${esc(m.role)}${m.pritomen ? '' : ' · na poradě chybí'}</small></span>${mo ? `<span class="pr-pill">${mo} ${tvar(mo, 'otevřené', 'otevřená', 'otevřených')}</span>` : mh ? `<span class="pr-pill ok">${mh} ${tvar(mh, 'hotové', 'hotová', 'hotových')}</span>` : ''}</li>`; }).join('') || '<li class="muted">Tým zatím není zadaný.</li>'}</ul></div>
-    </div>
   </div>`;
 }
 
@@ -1023,7 +1209,7 @@ function vZapis(){
 function vD8(){
   const c = P.complaints.find(x => x.id === ui.c8);
   $('view').innerHTML = `<div class="row-actions no-print" style="margin-bottom:10px">${P.complaints.length ? `<label class="f" style="flex:1;min-width:260px;max-width:620px">Reklamace (${P.complaints.filter(x => x.stav !== 'uzavřená').length} otevřené z ${P.complaints.length})<select id="c8pick"><option value="" ${!ui.c8?'selected':''}>Vyberte reklamaci…</option>${[...P.complaints].reverse().map(x => `<option value="${x.id}" ${ui.c8===x.id?'selected':''}>${x.stav === 'uzavřená' ? '✓' : '●'} 8D č. ${x.n} · ${fd(x.datum)}${x.zakaznik ? ' · ' + esc(x.zakaznik) : ''}${x.popis ? ' · ' + esc(x.popis.slice(0,40)) : ''} · ${esc(x.stav)}</option>`).join('')}</select></label>` : ''}<button class="btn small" data-act="new8d" style="align-self:flex-end">+ Nová reklamace</button></div>`
-  + (!c ? '<div class="info"><b>Jak přidat reklamaci od zákazníka:</b> klikněte na „+ Nová reklamace“, vyberte vadu z FMEA, které se týká (nebo „Tahle vada ve FMEA není“), vyplňte D2 až D7 a dejte „Uzavřít 8D a aktualizovat FMEA“. FMEA, kontrolní plán a revize se upraví samy.</div>' : v8dForm(c));
+  + (!c ? '<div class="info napoveda"><b>Jak přidat reklamaci od zákazníka:</b> klikněte na „+ Nová reklamace“, vyberte vadu z FMEA, které se týká (nebo „Tahle vada ve FMEA není“), vyplňte D2 až D7 a dejte „Uzavřít 8D a aktualizovat FMEA“. FMEA, kontrolní plán a revize se upraví samy.</div>' : v8dForm(c));
 }
 function v8dForm(c){
   const isNew = c.rowId === 'new', r = isNew ? {} : (P.rows.find(x => x.id === c.rowId) || {}), closed = c.stav === 'uzavřená', dis = closed ? 'disabled' : '';
@@ -1206,7 +1392,7 @@ function demoVelka(){
 }
 
 // ===== události =====
-const NOEDIT = new Set(['fmeaDalsi','fmeaVse','hotoveToggle','ulozitTed','goOpatreni','guideHide','guideShow','guideGo','novyOpen','novyCancel','snapView','snapClose','snapPrint','logAll','saveFile','fsNew','fsOpen','fsResume','fsReload','fsStop','sel','pickVoter','fix','open8d','approve','pilotStart','pilotStop','pilotAdd','pilotDel','xlsx','xlTpl','xlDoTpl','xlCancel']);
+const NOEDIT = new Set(['napoveda','guideAll','sbalit','fmeaDalsi','fmeaVse','hotoveToggle','ulozitTed','goOpatreni','guideHide','guideShow','guideGo','novyOpen','novyCancel','snapView','snapClose','snapPrint','logAll','saveFile','fsNew','fsOpen','fsResume','fsReload','fsStop','sel','pickVoter','fix','open8d','approve','pilotStart','pilotStop','pilotAdd','pilotDel','xlsx','xlTpl','xlDoTpl','xlCancel']);
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab],[data-act]'); if (!t || t.disabled) return;
   if (t.dataset.tab){ ui.tab = t.dataset.tab; render(); window.scrollTo(0,0); return; }
@@ -1223,6 +1409,9 @@ document.addEventListener('click', e => {
     // 17. 11. 2026 (Simona „ať mi to dá projednáno“): stav projednáno u vady + skok na další neprojednanou.
     done(){ if (!r) return 'norender'; if (!r.projednano) r.projednano = Date.now(); const all = sortedRows(), i = all.indexOf(r), dalsi = all.slice(i + 1).concat(all.slice(0, i)).find(x => !x.projednano); ui.sel = dalsi ? dalsi.id : null; ui.fokus = !!dalsi; ui.dim = 'S'; ui.scrollRisk = true; if (!dalsi) setTimeout(() => alert('Všechny vady jsou projednané. 👍'), 50); },
     guideHide(){ P.guideHide = true; save(false); },
+    napoveda(){ ui.napoveda = !ui.napoveda; },
+    guideAll(){ ui.guideAll = !ui.guideAll; },
+    sbalit(){ ui.otevr = ui.otevr || {}; ui.otevr[t.dataset.id] = !ui.otevr[t.dataset.id]; },
     guideShow(){ P.guideHide = false; save(false); },
     guideGo(){ const x = guideSteps()[+t.dataset.i]; if (!x) return 'norender'; const k = x[3], it = x[4]; ui.fokus = false; ui.sel = null;
       // každé tlačítko vede přímo do prvního pole, které chybí (Simona 19. 11.: „ať se to nemusí hledat“)
@@ -1742,7 +1931,7 @@ function symSvg(t){ const a = 'width="36" height="36" viewBox="0 0 36 36" fill="
   return t === 'kontrola' ? `<svg ${a}><rect x="7" y="7" width="22" height="22" rx="2"/></svg>` : t === 'preprava' ? `<svg ${a}><path d="M5 18h22M20 10l8 8-8 8"/></svg>` : t === 'sklad' ? `<svg ${a}><path d="M6 8h24L18 29z"/></svg>` : t === 'cekani' ? `<svg ${a}><path d="M9 7h9a11 11 0 0 1 0 22H9z"/></svg>` : `<svg ${a}><circle cx="18" cy="18" r="12"/></svg>`; }
 function tokInfo(st){ const rows = P.rows.filter(r => r.stepId === st.id && r.vada); return {rows, h:rows.filter(r => apOf(r.S, r.O, r.D) === 'H').length, zz:rows.some(r => r.zz), zp:stepWEs(st).map(w => w.znakProcesu).filter(Boolean)}; }
 function vTok(){ const steps = P.steps;
-  $('view').innerHTML = exportBar('tok') + head('VÝVOJOVÝ DIAGRAM PROCESU') + `<p class="muted no-print" style="font-size:.88rem">Kroky jsou ve stejném pořadí jako ve FMEA, pořadí měníte šipkami v záložce Porada. Kroky bez rizik, například přepravu nebo skladování, přidáte tady. Z diagramu vychází PFMEA a z ní kontrolní plán.</p>
+  $('view').innerHTML = exportBar('tok') + head('VÝVOJOVÝ DIAGRAM PROCESU') + `<p class="muted no-print napoveda" style="font-size:.88rem">Kroky jsou ve stejném pořadí jako ve FMEA, pořadí měníte šipkami v záložce Porada. Kroky bez rizik, například přepravu nebo skladování, přidáte tady. Z diagramu vychází PFMEA a z ní kontrolní plán.</p>
   <div class="legend">${Object.keys(TYP).map(k => `<span>${symSvg(k)}${TYP[k]}</span>`).join('')}</div>
   <div class="flowd">${steps.length ? steps.map((st, i) => { const x = tokInfo(st), t = st.typ || 'operace';
     return `<div class="fstep t-${t}"><div class="fsym" title="${TYP[t]}">${symSvg(t)}</div><div class="fbody"><div class="fhead"><b class="fop">${esc(st.op || '')}</b><input type="text" data-s="${st.id}" data-k="krok" value="${esc(st.krok)}" placeholder="název kroku" aria-label="Název kroku"><select data-s="${st.id}" data-k="typ" aria-label="Typ kroku">${Object.keys(TYP).map(k => `<option value="${k}" ${k === t ? 'selected' : ''}>${TYP[k]}</option>`).join('')}</select></div>
