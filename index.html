@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="cs" data-theme="light">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"><!-- REZIM-HLAVA-START --><script>try{if(localStorage.getItem('risktym-rezim')==='svetly')document.documentElement.setAttribute('data-rezim','svetly')}catch(e){}</script><!-- REZIM-HLAVA-KONEC -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RiskTým · Ukázka FMEA porady</title>
 <meta name="description" content="RiskTým: zapíšeš FMEA poradu a PFMEA, kontrolní plán, opatření i zápis se vyplní automaticky. Po poradě je hotovo.">
@@ -9,8 +9,8 @@
 <meta property="og:title" content="RiskTým · Ukázka FMEA porady">
 <meta property="og:description" content="Zapíšeš poradu a všechny související dokumenty se vyplní automaticky. Po poradě je hotovo.">
 <meta property="og:locale" content="cs_CZ">
-<meta name="theme-color" content="#0f2742">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#08080c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230b0b10%22/%3E%3Cg transform=%22translate(9 9) scale(.82)%22%3E%3Cpath d=%22M8 55 A45 13 0 0 1 98 55%22 transform=%22rotate(-22 53 55)%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z%22 fill=%22%23fff%22 fill-rule=%22evenodd%22/%3E%3Cpath d=%22M98 55 A45 13 0 0 1 8 55%22 transform=%22rotate(-22 53 55)%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3C/g%3E%3C/svg%3E">
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
@@ -122,6 +122,472 @@ details p{color:var(--muted);margin-top:10px}
 .end .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
 footer{font-size:.85rem;color:var(--muted);padding:28px 16px 40px;border-top:1px solid var(--line)}
 footer p{margin:0 0 8px}
+
+/* 25. 11.: pohyb na úvodní stránce - 3D ozubená kola, aku šroubovák, dokumenty se vyplňují; vypnuto při prefers-reduced-motion */
+.hero-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:center}
+.hero-top h1{font-size:2.8rem}
+.scwrap{position:relative;height:420px}
+.scene{position:absolute;left:50%;top:0;width:480px;height:420px;transform:translateX(-50%) scale(var(--s,1));transform-origin:top center}
+.scwrap{height:calc(420px * var(--s,1))}
+.g3d{position:absolute;perspective:900px}
+.g3d .tilt{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(38deg) rotateY(-24deg)}
+.g3d .spin{position:absolute;inset:0;transform-style:preserve-3d;animation:rtSpin 16s linear infinite}
+.g3d .spin svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.g3d.maly .spin{animation:rtSpinM 16s linear infinite}
+@keyframes rtSpin{to{transform:rotate(360deg)}}
+@keyframes rtSpinM{from{transform:rotate(13.75deg)}to{transform:rotate(-626.25deg)}}
+.g3d .tilt::after{content:"";position:absolute;inset:6%;border-radius:50%;background:radial-gradient(closest-side,rgba(15,39,66,.28),rgba(15,39,66,0));transform:translateZ(-60px);filter:blur(6px)}
+.g3d.velky{left:-6px;top:4px;width:250px;height:250px}
+.g3d.maly{width:142px;height:142px}
+.doc{position:absolute;width:142px;background:#fff;border-radius:12px;padding:12px 14px 14px;box-shadow:0 14px 34px rgba(15,39,66,.16),0 2px 6px rgba(15,39,66,.08);animation:rtFloat 6s ease-in-out infinite}
+.doc .dh{display:flex;align-items:center;justify-content:space-between;gap:6px;white-space:nowrap;font-size:.74rem;font-weight:800;color:var(--navy);margin-bottom:9px}
+.doc .ok{width:20px;height:20px;border-radius:50%;background:var(--green);display:grid;place-items:center;transform:scale(0);animation:rtOk 7s ease-in-out infinite}
+.doc .ok svg{width:12px;height:12px}
+.doc .ln{display:block;height:7px;border-radius:4px;background:#e8edf3;margin-top:7px;overflow:hidden}
+.doc .ln i{display:block;height:100%;width:0;background:#9fb3c8;border-radius:4px;animation:rtLn 7s ease-in-out infinite}
+.doc .ln:nth-child(3) i{max-width:80%}
+.doc .ln:nth-child(4) i{max-width:60%}
+.doc.d1{right:6px;top:8px;animation-delay:0s}
+.doc.d2{right:18px;top:136px;animation-delay:-2s}
+.doc.d3{right:0;top:264px;animation-delay:-4s}
+.doc.d1 .ok,.doc.d1 .ln i{animation-delay:0s}
+.doc.d2 .ok,.doc.d2 .ln i{animation-delay:.6s}
+.doc.d3 .ok,.doc.d3 .ln i{animation-delay:1.2s}
+@keyframes rtFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes rtLn{0%,8%{width:0}38%,90%{width:100%}100%{width:0}}
+@keyframes rtOk{0%,40%{transform:scale(0)}46%{transform:scale(1.2)}50%,88%{transform:scale(1)}94%,100%{transform:scale(0)}}
+.drill{position:absolute;left:0;bottom:0;width:214px;animation:rtFloat 5s ease-in-out infinite;animation-delay:-1s;filter:drop-shadow(0 14px 18px rgba(15,39,66,.18))}
+.drill .vrt{animation:rtBit .35s linear infinite}
+@keyframes rtBit{to{transform:translateX(-12px)}}
+@media (max-width:900px){.hero-top{grid-template-columns:1fr;gap:8px}.hero-top h1{font-size:2rem}}
+/* objevování při posunu stránky (jen se zapnutým JS a bez omezení pohybu) */
+.rv-on .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv-on .rv.in{opacity:1;transform:none}
+.rv-on .col.rt li{opacity:0;transform:translateX(-14px);transition:opacity .45s ease,transform .45s ease}
+.rv-on .compare.in .col.rt li{opacity:1;transform:none}
+.rv-on .compare.in .col.rt li:nth-child(2){transition-delay:.5s}
+.rv-on .compare.in .col.rt li:nth-child(3){transition-delay:.75s}
+.rv-on .compare.in .col.rt li:nth-child(4){transition-delay:1s}
+.rv-on .compare.in .col.rt li:nth-child(5){transition-delay:1.25s}
+.col.rt li b{display:inline-flex;align-items:center;gap:8px}
+.col.rt li:not(:first-child) b::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.5L12 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.rv-on .step.in .num{animation:rtPop .6s cubic-bezier(.3,1.6,.5,1) .15s both}
+@keyframes rtPop{0%{transform:scale(.3)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .g3d .spin,.doc,.doc .ok,.doc .ln i,.drill,.drill .vrt{animation:none}
+  .doc .ok{transform:none}.doc .ln i{width:100%}
+}
+
+/* 25. 11.: tmavá sekce „bento“ podle předlohy (Dribbble 27188793) - 6 karet kolem hlavní, každá s živou ukázkou */
+.bsec{background:#0b1220;padding:76px 0;color:#fff}
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:270px 150px 120px 300px;gap:20px;grid-template-areas:"a b c" "a m c" "d m f" "d e f"}
+.bc{position:relative;overflow:hidden;border-radius:14px;background:linear-gradient(180deg,#141d30,#0e1526);border:1px solid rgba(255,255,255,.07);padding:28px 30px}
+.bc h3{font-size:1.3rem;font-weight:500;letter-spacing:-.01em;color:#fff}
+.bc p{color:#a3adbf;font-size:.95rem;line-height:1.5;margin-top:8px;max-width:32ch}
+.b-a{grid-area:a}.b-b{grid-area:b}.b-c{grid-area:c}.b-d{grid-area:d}.b-e{grid-area:e}.b-f{grid-area:f}
+.b-m{grid-area:m;display:grid;place-items:center;text-align:center;background:linear-gradient(155deg,#1a3361 0%,#11213f 55%,#0e1a33 100%);border-color:rgba(96,165,250,.22)}
+.b-m .bl{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:600;color:#dbe6ff;font-size:1.05rem}
+.b-m h2{font-size:2.1rem;font-weight:400;line-height:1.15;color:#e6edf9;margin:12px 0 0;letter-spacing:-.02em}
+.b-m::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.06) 50%,transparent 65%);transform:translateX(-100%);animation:bSweep 7s ease-in-out infinite;animation-play-state:paused}
+@keyframes bSweep{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
+/* a: záznam rizika se sám píše */
+.b-okno{position:absolute;left:30px;right:-24px;bottom:-1px;height:56%;border:1px solid rgba(255,255,255,.14);border-bottom:0;border-radius:12px 12px 0 0;background:#0a111f;padding:16px 18px;font:13px/1.85 ui-monospace,Consolas,"Cascadia Mono",monospace;color:#d5deea;box-shadow:0 -20px 50px rgba(59,130,246,.08)}
+.b-okno .ln{white-space:nowrap;overflow:hidden;text-overflow:clip;min-height:1.85em}
+.b-okno .k{color:#f59e0b}
+.b-okno .car::after{content:"";display:inline-block;width:7px;height:14px;background:#93c5fd;margin-left:2px;vertical-align:-2px;animation:bBlink 1s steps(1) infinite}
+@keyframes bBlink{50%{opacity:0}}
+/* b: tajné hlasování - karty se otočí najednou */
+.b-hlas{position:absolute;left:30px;right:30px;bottom:30px;display:flex;gap:8px;align-items:flex-end}
+.b-k{flex:1;max-width:44px;perspective:400px}
+.b-k .in{position:relative;height:54px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.b-k .f,.b-k .z{position:absolute;inset:0;border-radius:8px;display:grid;place-items:center;backface-visibility:hidden;font-weight:700}
+.b-k .f{background:#1b2740;border:1px solid rgba(255,255,255,.1);color:#64748b;font-size:1.1rem}
+.b-k .z{background:#eef4ff;color:#0f2742;transform:rotateY(180deg);font-size:1.25rem}
+.b-k small{display:block;text-align:center;font-size:.68rem;color:#7c889d;margin-top:6px;letter-spacing:.02em}
+.b-hlas.odkryt .b-k .in{transform:rotateY(180deg)}
+.b-hlas .shoda{position:absolute;right:0;top:-40px;background:rgba(21,128,61,.18);color:#86efac;border:1px solid rgba(134,239,172,.3);border-radius:99px;padding:3px 12px;font-size:.8rem;font-weight:600;opacity:0;transform:translateY(6px);transition:opacity .4s .5s,transform .4s .5s}
+.b-hlas.odkryt .shoda{opacity:1;transform:none}
+/* c: všechno propojené - dokumenty obíhají kolem */
+.b-orb{position:absolute;left:50%;top:178px;width:270px;height:270px;margin-left:-135px}
+.b-orb .kr{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(147,197,253,.16)}
+.b-orb .kr.k2{inset:48px;border-color:rgba(147,197,253,.10)}
+.b-orb .st{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#4f86f7,#1d4ed8 60%,#163a9e);box-shadow:0 0 0 10px rgba(59,130,246,.08),0 16px 40px rgba(29,78,216,.45)}
+.b-orb .rot{position:absolute;inset:0;animation:bOrb 28s linear infinite;animation-play-state:paused}
+.b-orb .ch{position:absolute;left:50%;top:50%;width:0;height:0}
+.b-orb .ch em{position:absolute;left:0;top:0;animation:bOrb 28s linear infinite reverse;animation-play-state:paused}
+.b-orb .ch span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#16213a;border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:5px 11px;font-size:.78rem;font-weight:600;font-style:normal;color:#dbe6ff}
+@keyframes bOrb{to{transform:rotate(360deg)}}
+/* d: reklamace 8D - kroky se postupně splní */
+.b-8d{position:absolute;left:30px;right:30px;bottom:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px 10px}
+.b-8d div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.75rem;color:#7c889d}
+.b-8d i{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.9rem;color:#9fb0c8;background:#16213a;border:1px solid rgba(255,255,255,.1);transition:background .35s,color .35s,transform .35s,border-color .35s}
+.b-8d div.ok i{background:#15803d;border-color:#22c55e;color:#fff;transform:scale(1.06)}
+.b-8d div.ok span{color:#cbd5e1}
+/* e: hotové dokumenty jedou dokola */
+.b-pas{position:absolute;left:0;right:0;bottom:30px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.b-pas .tr{display:flex;gap:12px;width:max-content;animation:bPas 22s linear infinite;animation-play-state:paused}
+@keyframes bPas{to{transform:translateX(-50%)}}
+.b-doc{width:96px;height:96px;border-radius:10px;background:#16213a;border:1px solid rgba(255,255,255,.09);padding:12px 10px;display:flex;flex-direction:column;gap:5px}
+.b-doc b{font-size:.72rem;color:#dbe6ff;font-weight:600;margin-bottom:3px;white-space:nowrap}
+.b-doc i{display:block;height:5px;border-radius:3px;background:#2a3a58}
+.b-doc i:nth-of-type(2){width:80%}.b-doc i:nth-of-type(3){width:60%}.b-doc i:nth-of-type(4){width:72%}
+.b-doc.hl{background:linear-gradient(160deg,#f59e0b,#d97706);border-color:#fbbf24}
+.b-doc.hl b{color:#1f1300}.b-doc.hl i{background:rgba(31,19,0,.28)}
+/* f: opatření s termíny - odškrtávají se */
+.b-pan{position:absolute;left:30px;right:-24px;bottom:-1px;height:56%;border:1px solid rgba(255,255,255,.14);border-bottom:0;border-radius:12px 12px 0 0;background:#0a111f;padding:12px 0 0}
+.b-pan .hd{display:flex;justify-content:space-between;padding:0 16px 10px;font-size:.78rem;color:#7c889d;border-bottom:1px solid rgba(255,255,255,.07)}
+.b-pan .rw{display:grid;grid-template-columns:20px 1fr auto auto;gap:10px;align-items:center;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.82rem;color:#d5deea}
+.b-pan .rw .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-pan .ck{width:18px;height:18px;border-radius:50%;border:1.5px solid #475569;display:grid;place-items:center;transition:background .3s,border-color .3s}
+.b-pan .ck svg{opacity:0;transition:opacity .3s}
+.b-pan .rw.ok .ck{background:#15803d;border-color:#22c55e}.b-pan .rw.ok .ck svg{opacity:1}
+.b-pan .rw.ok .tx{color:#7c889d}
+.b-pan .av{width:24px;height:24px;border-radius:50%;background:#1e3a8a;color:#bfdbfe;font-size:.65rem;font-weight:700;display:grid;place-items:center}
+.b-pan .dt{font-size:.72rem;color:#94a3b8;background:#16213a;border-radius:6px;padding:2px 7px}
+.b-pan .rw.ok .dt{color:#86efac;background:rgba(21,128,61,.18)}
+/* běží jen když je sekce vidět */
+.bento.hraje .b-m::after,.bento.hraje .b-orb .rot,.bento.hraje .b-orb .ch em,.bento.hraje .b-pas .tr{animation-play-state:running}
+/* příjezd karet */
+.rv-on .bento .bc{opacity:0;transform:translateY(34px) scale(.97);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv-on .bento .b-m{transform:scale(.9)}
+.rv-on .bento.in .bc{opacity:1;transform:none}
+.rv-on .bento.in .b-a,.rv-on .bento.in .b-b{transition-delay:.25s}
+.rv-on .bento.in .b-c,.rv-on .bento.in .b-e{transition-delay:.4s}
+.rv-on .bento.in .b-d,.rv-on .bento.in .b-f{transition-delay:.55s}
+@media (max-width:1100px){.b-m h2{font-size:1.7rem}}
+@media (max-width:900px){
+  .bsec{padding:48px 0}
+  .bento{grid-template-columns:1fr;grid-template-rows:none;grid-template-areas:"m" "a" "b" "c" "d" "e" "f";gap:14px}
+  .b-a,.b-c,.b-d,.b-f{min-height:380px}.b-b,.b-e{min-height:280px}.b-m{min-height:190px}
+}
+@media (prefers-reduced-motion:reduce){
+  .b-m::after,.b-orb .rot,.b-orb .ch em,.b-pas .tr,.b-okno .car::after{animation:none}
+}
+
+/* ===== 25. 11.: CELÁ STRÁNKA TMAVÁ PODLE PŘEDLOHY (Dribbble 27188793, Simona: „přesně jako tam“) =====
+   téměř černé pozadí s fialovým nádechem, tenké písmo, karty s jemnou fialovou/modrou září, tenké okraje */
+:root{--text:#ededf3;--muted:#9d9cae;--line:rgba(255,255,255,.08);--band:transparent;--blue:#3b82f6;--blue-d:#2563eb;--bg:#08080c;--card:#100f17;--card2:#14121c}
+body{background:var(--bg);color:var(--text);font-weight:400}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(900px 600px at 85% -10%,rgba(99,102,241,.10),transparent 60%),radial-gradient(800px 600px at -10% 40%,rgba(168,85,247,.07),transparent 60%)}
+h1,h2,h3{font-weight:500;letter-spacing:-.025em}
+a{color:#a5b4fc}
+:focus-visible{outline-color:#a5b4fc}
+.top{background:rgba(8,8,12,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{color:#fff;font-weight:600}
+.btn{background:linear-gradient(180deg,#3b82f6,#2563eb);border-color:transparent;color:#fff;font-weight:500;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 8px 24px rgba(37,99,235,.28)}
+.btn:hover{background:linear-gradient(180deg,#4f8ff7,#2f6df0);border-color:transparent}
+.btn.sec{background:rgba(255,255,255,.03);color:#ededf3;border:1px solid rgba(255,255,255,.14);box-shadow:none}
+.btn.sec:hover{background:rgba(255,255,255,.07)}
+/* úvod */
+.hero h1{color:#fff;font-weight:500}
+.hero h1 .hl{background:linear-gradient(transparent 70%,rgba(245,158,11,.55) 70%,rgba(245,158,11,.55) 88%,transparent 88%)}
+.stats{border-top-color:var(--line)}
+.stat b{font-weight:500;color:#fff}
+.stat.zero b{color:#4ade80}
+.video video{border:1px solid rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.02);background:#000;border-radius:14px}
+.doc{background:linear-gradient(180deg,#17151f,#121019);box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08)}
+.doc .dh{color:#ededf3}
+.doc .ln{background:rgba(255,255,255,.07)}
+.doc .ln i{background:#6d7695}
+.g3d .tilt::after{background:radial-gradient(closest-side,rgba(0,0,0,.6),rgba(0,0,0,0))}
+.drill{filter:drop-shadow(0 16px 22px rgba(0,0,0,.55))}
+/* sekce a karty */
+section.band{background:transparent}
+section{position:relative}
+.intro,.small,.cap,.train p,.step p,details p{color:var(--muted)}
+.cap b{color:#fff}
+.col{background:radial-gradient(520px 260px at 50% 120%,rgba(124,58,237,.16),transparent 65%),linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:12px}
+.col.now h3{color:#f87171}.col.now .sum{color:#f87171}
+.col.rt{border:1px solid rgba(74,222,128,.28);background:radial-gradient(520px 260px at 50% 120%,rgba(34,197,94,.13),transparent 65%),linear-gradient(180deg,var(--card2),var(--card))}
+.col.rt h3,.col.rt .sum{color:#4ade80}
+.col h3,.col .sum{font-weight:500}
+.col li{border-top-color:var(--line)}
+.col li b{font-weight:500}
+.shot{background:#0d0c12;border:1px solid rgba(255,255,255,.09);box-shadow:0 24px 60px rgba(0,0,0,.5);border-radius:12px}
+a.shot:hover{box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 0 1px rgba(165,180,252,.35)}
+.step .txt{background:none}
+.step h3{font-weight:500}
+.tabs button{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);color:#d4d4de;font-weight:500}
+.tabs button:hover{border-color:rgba(165,180,252,.5)}
+.tabs button[aria-pressed="true"]{background:#fff;border-color:#fff;color:#0b0b10}
+details{border-bottom-color:var(--line)}
+summary{font-weight:500}
+.end .wrap{max-width:900px;border-radius:14px;padding:56px 24px;border:1px solid rgba(96,165,250,.2);background:linear-gradient(150deg,#16264a 0%,#0f1a33 55%,#0c1427 100%);overflow:hidden;position:relative}
+.end h2{font-weight:400;font-size:2.4rem;color:#e6edf9}
+footer{border-top-color:var(--line);color:#7d7c8e}
+/* bento přesně podle předlohy */
+.bsec{background:transparent}
+.bento{grid-template-rows:300px 140px 140px 320px}
+.bc{background:radial-gradient(560px 300px at 60% 115%,rgba(124,58,237,.17),transparent 62%),linear-gradient(180deg,var(--card2),var(--card));border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:30px 34px}
+.bc h3{font-size:1.55rem;font-weight:400;color:#f4f4f8;letter-spacing:-.02em}
+.bc p{color:#a1a0b2;font-size:.98rem;font-weight:400;margin-top:10px}
+.bc .more{display:inline-flex;align-items:center;gap:7px;margin-top:14px;color:#f4f4f8;text-decoration:none;font-size:.98rem;position:relative;z-index:2}
+.bc .more:hover{color:#c7d2fe}
+.bc .more svg{transition:transform .2s}.bc .more:hover svg{transform:translateX(3px)}
+.b-m{background:linear-gradient(150deg,#1a2c52 0%,#132241 50%,#0f1b34 100%);border-color:rgba(96,165,250,.2)}
+.b-m::before{content:"";position:absolute;right:-60px;top:-40px;width:340px;height:340px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,0));clip-path:polygon(50% 0,100% 85%,0 85%);transform:rotate(12deg)}
+.b-m h2{font-weight:400;font-size:2.5rem;color:#e3eaf7}
+.b-m .bl{color:#cfe0ff;font-weight:500}
+.b-okno{left:34px;background:linear-gradient(#0b0a11,#0b0a11) padding-box,linear-gradient(150deg,rgba(255,255,255,.28),rgba(236,72,153,.55) 55%,rgba(236,72,153,0) 85%) border-box;border:1px solid transparent;border-bottom:0;box-shadow:0 -30px 60px rgba(236,72,153,.07);color:#c9c7d6}
+.b-okno .k{color:#f0abfc}
+.b-okno .car::after{background:#f0abfc}
+.b-k .f{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#6f6e82}
+.b-hlas{bottom:34px}
+.b-orb{top:196px}
+.b-orb .kr{border-color:rgba(165,180,252,.13)}
+.b-orb .st{background:radial-gradient(circle at 35% 30%,#5b8cff,#2350e0 60%,#1a3bb0);box-shadow:0 0 0 12px rgba(59,130,246,.07),0 0 60px rgba(59,130,246,.45)}
+.b-orb .ch span{background:rgba(20,18,28,.92);border-color:rgba(255,255,255,.12)}
+.b-8d i{background:rgba(255,255,255,.04)}
+.b-doc{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.b-doc i{background:rgba(255,255,255,.1)}
+.b-doc.hl{background:linear-gradient(160deg,#e879f9,#a855f7);border-color:#f0abfc}
+.b-doc.hl b{color:#1b0626}.b-doc.hl i{background:rgba(27,6,38,.3)}
+.b-pan{left:34px;background:linear-gradient(#0b0a11,#0b0a11) padding-box,linear-gradient(150deg,rgba(255,255,255,.28),rgba(139,92,246,.5) 55%,rgba(139,92,246,0) 85%) border-box;border:1px solid transparent;border-bottom:0}
+.b-pan .av{background:#312e81;color:#c7d2fe}
+.b-pan .dt,.b-k small{background:rgba(255,255,255,.05)}
+.b-k small{background:none}
+@media (max-width:900px){.b-a,.b-c,.b-d,.b-f{min-height:420px}.b-b,.b-e{min-height:320px}.b-m h2{font-size:2rem}.end h2{font-size:1.9rem}.end .wrap{margin:0 16px;width:auto}}
+@media (max-width:1100px) and (min-width:901px){.b-m h2{font-size:2rem}.bc h3{font-size:1.35rem}}
+
+/* 25. 11. odpoledne: ÚVOD - 3D vrstvy dokumentů místo koleček (Simona: „modernější 3D efekt“)
+   4 skleněné vrstvy v izometrii: Porada nahoře, pod ní PFMEA, Kontrolní plán, Zápis; rozestupují se a skládají, myš je naklání */
+.hero{overflow-x:clip}
+@media (max-width:900px){.scwrap{margin-top:10px}}
+.h3d{position:absolute;inset:0;perspective:1500px;perspective-origin:50% 30%}
+.h3d-kyv{position:absolute;left:50%;top:52%;width:0;height:0;transform-style:preserve-3d;animation:h3Kyv 14s ease-in-out infinite}
+@keyframes h3Kyv{0%,100%{transform:rotateX(calc(56deg + var(--my,0deg))) rotateZ(calc(-40deg + var(--mx,0deg)))}50%{transform:rotateX(calc(52deg + var(--my,0deg))) rotateZ(calc(-30deg + var(--mx,0deg)))}}
+.h3d-st{position:absolute;transform-style:preserve-3d}
+.h3d-podl{position:absolute;left:-280px;top:-110px;width:460px;height:340px;border-radius:50%;background:radial-gradient(closest-side,rgba(99,102,241,.55),rgba(168,85,247,.22) 55%,transparent);filter:blur(22px);transform:translateZ(-40px)}
+.h3d-v{position:absolute;left:-150px;top:-150px;width:340px;height:230px;border-radius:14px;padding:16px 18px;box-sizing:border-box;
+  background:linear-gradient(160deg,rgba(30,27,46,.92),rgba(14,13,22,.94)) padding-box,linear-gradient(140deg,rgba(255,255,255,.35),rgba(165,180,252,.25) 40%,rgba(236,72,153,.35) 80%,rgba(255,255,255,.08)) border-box;
+  border:1px solid transparent;box-shadow:0 30px 50px rgba(0,0,0,.45);transform-style:preserve-3d}
+.h3d-v .lb{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:600;color:#f1f1f6;margin-bottom:14px}
+.h3d-v .lb .ok{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#86efac;background:rgba(34,197,94,.16);border:1px solid rgba(134,239,172,.35);border-radius:99px;padding:3px 9px}
+/* střídání: horní karta vyjede stranou a zasune se dospod, každá se postupně ukáže celá (řídí JS třídami p0-p3) */
+.h3d-v{transition:transform .9s cubic-bezier(.65,0,.35,1),opacity .5s}
+.h3d-v.p0{transform:translate3d(0,0,150px)}
+.h3d-v.p1{transform:translate3d(-34px,46px,100px)}
+.h3d-v.p2{transform:translate3d(-68px,92px,50px)}
+.h3d-v.p3{transform:translate3d(-102px,138px,0)}
+.h3d-v.p4,.h3d-v.p5,.h3d-v.p6,.h3d-v.p7{transform:translate3d(-136px,184px,-50px);opacity:0}
+.h3d-v.ven{transform:translate3d(250px,150px,170px);opacity:.0}
+/* 25. 11.: všech 8 částí aplikace (Přehled, Porada, Diagram, PFMEA, Kontrolní plán, Opatření, Zápis, 8D), vidět jsou 4 */
+.h3d-v .kp4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.h3d-v .kp4 div{border-radius:9px;padding:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}.h3d-v .kp4 div:first-child{background:linear-gradient(160deg,#3b6cf0,#1d3fb0);border-color:transparent}
+.h3d-v .kp4 small{display:block;font-size:9px;color:#c7cbe0;white-space:nowrap;overflow:hidden}.h3d-v .kp4 b{display:block;font-size:24px;font-weight:600;color:#fff;margin-top:6px}
+.h3d-v .tok{display:flex;align-items:center;gap:0;margin-top:22px}.h3d-v .tok i{font-style:normal;font-size:11px;font-weight:700;color:#e5e7f5;border:1px solid rgba(165,180,252,.45);border-radius:8px;padding:12px 6px;background:rgba(99,102,241,.14);white-space:nowrap}.h3d-v .tok i.k{border-color:rgba(251,191,36,.6);background:rgba(245,158,11,.16)}.h3d-v .tok u{flex:1;height:2px;background:linear-gradient(90deg,rgba(165,180,252,.6),rgba(165,180,252,.2))}
+.h3d-v .op .r{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid rgba(255,255,255,.07)}.h3d-v .op .c{width:16px;height:16px;border-radius:50%;border:1.5px solid #5b6178;display:grid;place-items:center}.h3d-v .op .ok .c{background:#16a34a;border-color:#22c55e}.h3d-v .op b{display:block;height:8px;border-radius:4px;background:rgba(255,255,255,.14)}.h3d-v .op em{font-style:normal;font-size:10px;color:#a1a0b2;background:rgba(255,255,255,.06);border-radius:5px;padding:2px 6px}.h3d-v .op .ok em{color:#86efac;background:rgba(34,197,94,.16)}
+.h3d-v .d8{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 8px;justify-items:center;margin-top:6px}.h3d-v .d8 i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;color:#a1a0b2;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}.h3d-v .d8 i.ok{background:#16a34a;border-color:#22c55e;color:#fff}
+.h3d-v.p0 .lb{color:#fff}
+.h3d-v:not(.p0) .obs{opacity:.55}
+.h3d-v .obs{transition:opacity .6s}
+.h3d-v.aktivni{background:linear-gradient(160deg,rgba(37,52,104,.95),rgba(18,22,44,.96)) padding-box,linear-gradient(140deg,rgba(255,255,255,.55),rgba(96,165,250,.55) 45%,rgba(168,85,247,.45)) border-box;box-shadow:0 30px 60px rgba(0,0,0,.45),0 0 50px rgba(59,130,246,.28)}
+.h3d-v .hl{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.h3d-v .hl i{height:56px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:20px;color:#0f1630;background:#eef3ff;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.h3d-v .pf .r{display:grid;grid-template-columns:1.3fr 1fr .8fr 30px;gap:8px;align-items:center;padding:7px 0;border-top:1px solid rgba(255,255,255,.07)}
+.h3d-v .pf b,.h3d-v .zp b,.h3d-v .g b{display:block;height:8px;border-radius:4px;background:rgba(255,255,255,.14)}
+.h3d-v .pf em{font-style:normal;font-size:11px;font-weight:700;text-align:center;border-radius:6px;padding:2px 0;color:#fff}
+.h3d-v .pf em.h{background:#dc2626}.h3d-v .pf em.m{background:#d97706}.h3d-v .pf em.l{background:#2563eb}
+.h3d-v .g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 8px}
+.h3d-v .g b{height:22px;border-radius:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08)}
+.h3d-v .g b:nth-child(4n+1){background:rgba(165,180,252,.22)}
+.h3d-v .zp b{margin-top:12px;height:9px}
+@media (prefers-reduced-motion:reduce){.h3d-kyv{animation:none;transform:rotateX(55deg) rotateZ(-36deg)}.h3d-v{transition:none}}
+
+/* ---- prostřední karta „Celá FMEA“ jako na předloze: velké průsvitné tvary loga, světlo shora, jemná mřížka ---- */
+.b-m{background:radial-gradient(420px 220px at 50% -10%,rgba(147,197,253,.28),transparent 70%),linear-gradient(160deg,#1c3a78 0%,#142a58 45%,#0d1a3a 100%);border:1px solid rgba(147,197,253,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 30px 80px rgba(29,78,216,.18)}
+.b-m::before{content:"";position:absolute;inset:0;right:auto;top:auto;width:auto;height:auto;transform:none;clip-path:none;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 75%)}
+.b-m .tv{position:absolute;pointer-events:none}
+.b-m .tv svg{display:block;width:100%;height:100%}
+.b-m .tv.t1{left:-14%;top:-30%;width:62%;height:120%;animation:bTv1 12s ease-in-out infinite;animation-play-state:paused}
+.b-m .tv.t2{right:-18%;bottom:-42%;width:70%;height:130%;animation:bTv2 14s ease-in-out infinite;animation-play-state:paused}
+@keyframes bTv1{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(14px,10px) rotate(-3deg)}}
+@keyframes bTv2{0%,100%{transform:translate(0,0) rotate(14deg)}50%{transform:translate(-16px,-8px) rotate(9deg)}}
+.bento.hraje .b-m .tv{animation-play-state:running}
+.b-m > div:not(.tv){position:relative;z-index:1}
+.b-m h2{font-weight:400;background:linear-gradient(180deg,#ffffff 20%,#b8c8ec 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+.b-m .bl svg{filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+@media (prefers-reduced-motion:reduce){.b-m .tv{animation:none}}
+
+/* ---- oběžná dráha se vejde celá (žádné useknutí dole ani po stranách) ---- */
+.b-orb{--r:104px;top:auto;bottom:30px;width:208px;height:208px;margin-left:-104px}
+.b-orb .kr.k2{inset:40px}
+.b-orb .st{width:72px;height:72px;margin:-36px 0 0 -36px}
+.b-orb .ch span{font-size:.74rem;padding:4px 10px}
+@media (max-width:1100px) and (min-width:901px){.b-orb{--r:88px;width:176px;height:176px;margin-left:-88px}.b-orb .kr.k2{inset:32px}}
+/* 25. 11.: panely v kartách celé uvnitř (Simona: „opatření je useknuté“), telefony bez šedého pruhu dole */
+.b-okno,.b-pan{right:34px!important;border-radius:12px 12px 0 0}
+.b-pan .rw{grid-template-columns:20px minmax(0,1fr) auto auto}
+@media (max-width:1100px){.b-pan .dt{display:none}}
+.phones{align-items:flex-start}
+
+/* ===== 25. 11.: SVĚTLÝ REŽIM úvodní stránky (přepínač v záhlaví; tmavý je výchozí) ===== */
+.rezim{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid rgba(127,127,140,.35);background:transparent;color:inherit;display:inline-grid;place-items:center;cursor:pointer;padding:0;margin-left:6px}
+.rezim:hover{background:rgba(127,127,140,.14)}
+.rezim svg{width:18px;height:18px}
+@media print{.rezim{display:none!important}}
+.top .rezim{color:#ededf3}
+html[data-rezim="svetly"]{--text:#111827;--muted:#4b5563;--line:#e5e7eb;--bg:#f6f7fb;--card:#ffffff;--card2:#ffffff}
+html[data-rezim="svetly"] body{background:#f6f7fb;color:#111827}
+html[data-rezim="svetly"] body::before{background:radial-gradient(900px 600px at 85% -10%,rgba(99,102,241,.10),transparent 60%),radial-gradient(800px 600px at -10% 40%,rgba(168,85,247,.06),transparent 60%)}
+html[data-rezim="svetly"] a{color:#1d4ed8}
+html[data-rezim="svetly"] .top{background:rgba(255,255,255,.85);border-bottom-color:#e5e7eb}
+html[data-rezim="svetly"] .top .rezim{color:#111827}
+html[data-rezim="svetly"] .logo{color:#111827}
+html[data-rezim="svetly"] .btn.sec{background:#fff;color:#111827;border-color:#d1d5db}
+html[data-rezim="svetly"] .btn.sec:hover{background:#f3f4f6}
+html[data-rezim="svetly"] .hero h1,html[data-rezim="svetly"] .stat b{color:#0b0b10}
+html[data-rezim="svetly"] .stat.zero b{color:#15803d}
+html[data-rezim="svetly"] .video video{border-color:#e5e7eb;box-shadow:0 24px 60px rgba(17,24,39,.18)}
+html[data-rezim="svetly"] .h3d-podl{background:radial-gradient(closest-side,rgba(99,102,241,.35),rgba(168,85,247,.14) 55%,transparent)}
+html[data-rezim="svetly"] .h3d-v{background:linear-gradient(160deg,#ffffff,#f4f5fb) padding-box,linear-gradient(140deg,rgba(99,102,241,.45),rgba(168,85,247,.25) 50%,rgba(236,72,153,.3)) border-box;box-shadow:0 24px 44px rgba(30,27,75,.16)}
+html[data-rezim="svetly"] .h3d-v.aktivni{background:linear-gradient(160deg,#eef2ff,#ffffff) padding-box,linear-gradient(140deg,#6366f1,#3b82f6 45%,#a855f7) border-box;box-shadow:0 26px 50px rgba(30,27,75,.2),0 0 40px rgba(99,102,241,.25)}
+html[data-rezim="svetly"] .h3d-v .lb,html[data-rezim="svetly"] .h3d-v.p0 .lb{color:#111827}
+html[data-rezim="svetly"] .h3d-v .pf b,html[data-rezim="svetly"] .h3d-v .zp b,html[data-rezim="svetly"] .h3d-v .op b{background:#d9dcea}
+html[data-rezim="svetly"] .h3d-v .g b{background:#eef0f7;border-color:#dfe2ee}
+html[data-rezim="svetly"] .h3d-v .g b:nth-child(4n+1){background:#c7d2fe}
+html[data-rezim="svetly"] .h3d-v .pf .r,html[data-rezim="svetly"] .h3d-v .op .r{border-top-color:#e5e7eb}
+html[data-rezim="svetly"] .h3d-v .kp4 div{background:#f3f4fa;border-color:#e3e5ef}
+html[data-rezim="svetly"] .h3d-v .kp4 small{color:#4b5563}html[data-rezim="svetly"] .h3d-v .kp4 b{color:#111827}
+html[data-rezim="svetly"] .h3d-v .kp4 div:first-child small,html[data-rezim="svetly"] .h3d-v .kp4 div:first-child b{color:#fff}
+html[data-rezim="svetly"] .h3d-v .tok i{color:#1e1b4b;background:#eef2ff;border-color:#a5b4fc}
+html[data-rezim="svetly"] .h3d-v .tok i.k{background:#fef3c7;border-color:#f59e0b}
+html[data-rezim="svetly"] .h3d-v .d8 i{color:#4b5563;background:#f3f4fa;border-color:#d9dcea}
+html[data-rezim="svetly"] .h3d-v .op em{color:#4b5563;background:#f1f2f8}
+html[data-rezim="svetly"] .h3d-v .op .ok em{color:#15803d;background:#dcfce7}
+html[data-rezim="svetly"] .h3d-v .op .c{border-color:#9ca3af}
+html[data-rezim="svetly"] .h3d-v .lb .ok{color:#15803d;background:#dcfce7;border-color:#86efac}
+html[data-rezim="svetly"] .h3d-v .hl i{background:#1e1b4b;color:#fff}
+html[data-rezim="svetly"] .intro,html[data-rezim="svetly"] .small,html[data-rezim="svetly"] .cap,html[data-rezim="svetly"] .train p,html[data-rezim="svetly"] .step p,html[data-rezim="svetly"] details p,html[data-rezim="svetly"] .bc p{color:#4b5563}
+html[data-rezim="svetly"] .cap b,html[data-rezim="svetly"] summary,html[data-rezim="svetly"] h2,html[data-rezim="svetly"] h3{color:#111827}
+html[data-rezim="svetly"] .col{background:radial-gradient(520px 260px at 50% 120%,rgba(124,58,237,.07),transparent 65%),#fff;border-color:#e5e7eb;box-shadow:0 10px 30px rgba(17,24,39,.06)}
+html[data-rezim="svetly"] .col.now h3,html[data-rezim="svetly"] .col.now .sum{color:#b91c1c}
+html[data-rezim="svetly"] .col.rt{border-color:#86efac;background:radial-gradient(520px 260px at 50% 120%,rgba(34,197,94,.08),transparent 65%),#fff}
+html[data-rezim="svetly"] .col.rt h3,html[data-rezim="svetly"] .col.rt .sum{color:#15803d}
+html[data-rezim="svetly"] .shot{background:#fff;border-color:#e5e7eb;box-shadow:0 18px 44px rgba(17,24,39,.12)}
+html[data-rezim="svetly"] .tabs button{background:#fff;border-color:#d1d5db;color:#111827}
+html[data-rezim="svetly"] .tabs button[aria-pressed="true"]{background:#111827;border-color:#111827;color:#fff}
+html[data-rezim="svetly"] details{border-bottom-color:#e5e7eb}
+html[data-rezim="svetly"] footer{color:#6b7280;border-top-color:#e5e7eb}
+html[data-rezim="svetly"] .end .wrap h2{color:#fff}
+/* bento ve světlém režimu: bílé karty s jemnou fialovou září */
+html[data-rezim="svetly"] .bc{background:radial-gradient(560px 300px at 60% 115%,rgba(124,58,237,.08),transparent 62%),#fff;border-color:#e5e7eb;box-shadow:0 12px 34px rgba(17,24,39,.06)}
+html[data-rezim="svetly"] .bc h3{color:#111827}
+html[data-rezim="svetly"] .bc .more{color:#111827}html[data-rezim="svetly"] .bc .more:hover{color:#4338ca}
+html[data-rezim="svetly"] .b-m h2{background:linear-gradient(180deg,#ffffff 20%,#dbe4fb 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-rezim="svetly"] .b-m .bl{color:#e6edf9}
+html[data-rezim="svetly"] .b-k .f{background:#f3f4f8;border-color:#e2e4ee;color:#9ca3af}
+html[data-rezim="svetly"] .b-k .z{background:#1e1b4b;color:#fff}
+html[data-rezim="svetly"] .b-k small{color:#6b7280}
+html[data-rezim="svetly"] .b-hlas .shoda{color:#15803d;background:#dcfce7;border-color:#86efac}
+html[data-rezim="svetly"] .b-orb .kr{border-color:rgba(99,102,241,.22)}
+html[data-rezim="svetly"] .b-orb .ch span{background:#fff;border-color:#d9dcea;color:#1e1b4b;box-shadow:0 4px 12px rgba(17,24,39,.08)}
+html[data-rezim="svetly"] .b-8d i{background:#f3f4f8;border-color:#e2e4ee;color:#6b7280}
+html[data-rezim="svetly"] .b-8d div span{color:#6b7280}html[data-rezim="svetly"] .b-8d div.ok span{color:#111827}
+html[data-rezim="svetly"] .b-8d div.ok i{background:#16a34a;border-color:#22c55e;color:#fff}
+html[data-rezim="svetly"] .b-doc{background:#f6f7fb;border-color:#e3e5ef}html[data-rezim="svetly"] .b-doc b{color:#111827}html[data-rezim="svetly"] .b-doc i{background:#dfe2ee}
+html[data-rezim="svetly"] .b-pan{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(150deg,rgba(99,102,241,.45),rgba(139,92,246,.3) 55%,rgba(139,92,246,0) 90%) border-box}
+html[data-rezim="svetly"] .b-pan .hd{color:#6b7280;border-bottom-color:#e5e7eb}
+html[data-rezim="svetly"] .b-pan .rw{color:#111827;border-bottom-color:#f0f1f5}
+html[data-rezim="svetly"] .b-pan .rw.ok .tx{color:#6b7280}
+html[data-rezim="svetly"] .b-pan .ck{border-color:#9ca3af}
+html[data-rezim="svetly"] .b-pan .av{background:#e0e7ff;color:#3730a3}
+html[data-rezim="svetly"] .b-pan .dt{color:#4b5563;background:#f1f2f8}
+html[data-rezim="svetly"] .b-pan .rw.ok .dt{color:#15803d;background:#dcfce7}
+
+/* oprava kontrastu (kontrola 25. 11.) */
+.btn{background:linear-gradient(180deg,#2563eb,#1d4ed8)}
+.btn:hover{background:linear-gradient(180deg,#2f6df0,#1e50e0)}
+html[data-rezim="svetly"] a.btn:not(.sec){color:#fff}
+html[data-rezim="svetly"] .b-m{background:radial-gradient(420px 220px at 50% -10%,rgba(147,197,253,.28),transparent 70%),linear-gradient(160deg,#1c3a78 0%,#142a58 45%,#0d1a3a 100%);border-color:rgba(147,197,253,.28)}
+html[data-rezim="svetly"] .end .intro{color:#c7d4f0}
+html[data-rezim="svetly"] .end .btn.sec{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)}
+
+/* 25. 11.: snímky aplikace dole jemně vyblednou (tabulka pokračuje, žádný ostrý řez) */
+a.shot:not(.phones a){position:relative}
+.step a.shot:not(:has(img[src*="hlasovani-detail"]))::after,#galLink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(rgba(8,8,12,0),rgba(8,8,12,.92));pointer-events:none}
+html[data-rezim="svetly"] .step a.shot:not(:has(img[src*="hlasovani-detail"]))::after,html[data-rezim="svetly"] #galLink::after{background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.95))}
+
+/* 25. 11. odpoledne: NIC USEKNUTÉHO v kartách (Simona) - panely celé uvnitř se všemi okraji, dokumenty jako 3 celé dlaždice */
+.b-okno,.b-pan{top:auto!important;bottom:30px!important;left:34px!important;right:34px!important;height:auto!important;border-bottom-width:1px!important;border-bottom-style:solid!important;border-radius:12px!important}
+.b-okno{min-height:166px;border-color:transparent}
+.b-pan{padding-bottom:4px}
+.b-pan .rw:last-child{border-bottom:0}
+.b-pas{left:34px!important;right:34px!important;bottom:30px!important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;-webkit-mask-image:none!important;mask-image:none!important;overflow:visible!important}
+.b-pas .b-doc{width:auto;height:96px;transition:background .5s,border-color .5s}
+.b-pas .b-doc b{white-space:normal;line-height:1.2}
+@media (max-width:900px){.b-f{min-height:500px!important}.b-a{min-height:440px!important}}
+
+/* 25. 11.: všech 6 dokumentů obíhá na dvou drahách proti sobě (Simona: „musí se točit všechny dokumenty“) */
+.b-orb{--r:104px;--r2:60px}
+.b-orb .kr.k2{inset:calc(var(--r) - var(--r2))}
+.b-orb .st{width:58px;height:58px;margin:-29px 0 0 -29px}
+.b-orb .st svg{width:34px;height:34px}
+.b-orb .rot2{position:absolute;inset:0;animation:bOrb 22s linear infinite reverse;animation-play-state:paused}
+.b-orb .rot2 .ch em{animation:bOrb 22s linear infinite;animation-play-state:paused}
+.bento.hraje .b-orb .rot2,.bento.hraje .b-orb .rot2 .ch em{animation-play-state:running}
+.b-orb .rot2 .ch span{font-size:.68rem;padding:3px 8px}
+@media (max-width:1100px) and (min-width:901px){.b-orb{--r:88px;--r2:52px}}
+@media (max-width:900px){.b-c{min-height:480px!important}}
+@media (prefers-reduced-motion:reduce){.b-orb .rot2,.b-orb .rot2 .ch em{animation:none}}
+
+/* celý snímek (zápis až do konce) se dole nevybledá */
+#galLink.cely::after{display:none}
+
+/* 25. 11.: 3D karty se při posouvání nesmí překrývat s videem ani lištou - celá sada menší a výš */
+.h3d{transform:translateY(-52px) scale(.76);transform-origin:50% 50%}
+.hero .video{margin-top:24px}
+
+/* 25. 11.: video schované pod tlačítkem (Simona: „zatím ho schovej“), načte se až po kliknutí */
+.vidbtn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:none;border:0;padding:6px 0;font:inherit;font-size:.98rem;font-weight:500;color:#c7d2fe;cursor:pointer}
+.vidbtn:hover{color:#fff}
+html[data-rezim="svetly"] .vidbtn{color:#3730a3}html[data-rezim="svetly"] .vidbtn:hover{color:#1e1b4b}
+.video[hidden]{display:none!important}
+
+/* 25. 11.: galerie dokumentů je v kroku 3 (dřív samostatná sekce skoro totožná s krokem 3) */
+.step .galerie .tabs{margin-top:0}
+
+/* 25. 11. odpoledne: celé bento na jednu obrazovku bez posouvání (Simona) - nižší karty, menší písmo a obrázky */
+@media (min-width:901px){
+  .bsec{padding:20px 0 28px}
+  .bento{grid-template-rows:240px 100px 100px 240px;gap:12px}
+  .bc{padding:20px 24px}
+  .bc h3{font-size:1.22rem}
+  .bc p{font-size:.86rem;margin-top:6px;line-height:1.4}
+  .bc .more{margin-top:8px;font-size:.88rem}
+  .b-m h2{font-size:2.1rem}
+  .b-okno,.b-pan,.b-pas{left:24px!important;right:24px!important;bottom:18px!important}
+  .b-okno{min-height:140px;font-size:12px;line-height:1.7;padding:12px 14px}
+  .b-pan .hd{padding:0 14px 8px;font-size:.72rem}
+  .b-pan .rw{padding:6px 14px;font-size:.76rem;gap:8px}
+  .b-pan .av{width:20px;height:20px;font-size:.58rem}
+  .b-pan .dt{font-size:.66rem}
+  .b-hlas{left:24px;right:24px;bottom:18px}
+  .b-k .in{height:42px}.b-k .z{font-size:1.05rem}.b-k .f{font-size:.95rem}
+  .b-k small{margin-top:3px}
+  .b-hlas .shoda{top:auto;bottom:calc(100% + 6px);right:0}
+  .b-orb{--r:84px;--r2:48px;bottom:16px;width:168px;height:168px;margin-left:-84px}
+  .b-orb .st{width:50px;height:50px;margin:-25px 0 0 -25px}.b-orb .st svg{width:28px;height:28px}
+  .b-orb .ch span{font-size:.68rem;padding:3px 9px}.b-orb .rot2 .ch span{font-size:.62rem;padding:2px 7px}
+  .b-8d{left:24px;right:24px;bottom:18px;gap:8px 8px}
+  .b-8d i{width:38px;height:38px;font-size:.8rem}.b-8d div{font-size:.68rem;gap:3px}
+  .b-pas .b-doc{height:68px;padding:9px 9px}.b-pas .b-doc b{font-size:.66rem}
+}
+@media (max-width:1100px) and (min-width:901px){.b-orb{--r:74px;--r2:42px;width:148px;height:148px;margin-left:-74px}}
+
+/* štítky na obou drahách se točí spolu (dřív proti sobě a občas se přejely) */
+.b-orb .rot2{animation:bOrb 28s linear infinite;animation-play-state:paused}
+.b-orb .rot2 .ch em{animation:bOrb 28s linear infinite reverse;animation-play-state:paused}
+.bento.hraje .b-orb .rot2,.bento.hraje .b-orb .rot2 .ch em{animation-play-state:running}
+@media (min-width:901px){.b-orb .rot .ch span{font-size:.62rem;padding:3px 8px}.b-orb .rot2 .ch span{font-size:.6rem;padding:2px 7px}}
+@media (prefers-reduced-motion:reduce){.b-orb .rot2,.b-orb .rot2 .ch em{animation:none}}
+
+/* rozměry drah podle šířky: vnitřní štítky nesmí zajet přes logo, vnější a vnitřní se nesmí potkat */
+@media (min-width:1101px){.b-orb{--r:96px;--r2:58px;width:192px;height:192px;margin-left:-96px}.b-orb .st{width:44px;height:44px;margin:-22px 0 0 -22px}.b-orb .st svg{width:26px;height:26px}}
+@media (max-width:1100px) and (min-width:901px){.b-orb{--r:86px;--r2:54px;width:172px;height:172px;margin-left:-86px}.b-orb .st{width:38px;height:38px;margin:-19px 0 0 -19px}.b-orb .st svg{width:22px;height:22px}.b-orb .rot .ch span{font-size:.56rem}.b-orb .rot2 .ch span{font-size:.54rem}}
+@media (max-width:900px){.b-orb{--r:108px;--r2:68px;width:216px;height:216px;margin-left:-108px}.b-orb .st{width:48px;height:48px;margin:-24px 0 0 -24px}.b-orb .st svg{width:28px;height:28px}.b-orb .rot2 .ch span{font-size:.62rem}}
+
+/* 26. 11.: oprava - na mobilu (jeden sloupec) nesmí platit pevné výšky řádků z desktopu, jinak se karty bento překrývají */
+@media (max-width:900px){.bento{grid-template-rows:none!important}}
 </style>
 </head>
 <body>
@@ -129,7 +595,7 @@ footer p{margin:0 0 8px}
 <header class="top">
   <div class="wrap">
     <a class="logo" href="index.html">
-      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0f2742"/><path d="M17 7 L28 26 H6 Z" fill="#f59e0b"/><circle cx="12" cy="22" r="2.4" fill="#0f2742"/><circle cx="17" cy="22" r="2.4" fill="#0f2742"/><circle cx="22" cy="22" r="2.4" fill="#0f2742"/><rect x="15.8" y="12" width="2.4" height="6" rx="1.2" fill="#0f2742"/></svg>
+      <svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" class="rt-logo"><path d="M8 55 A45 13 0 0 1 98 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".9"/><path d="M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z" fill="currentColor" fill-rule="evenodd"/><path d="M98 55 A45 13 0 0 1 8 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round"/></svg>
       RiskTým
     </a>
     <a class="btn sec" href="fmea.html">Trénink</a>
@@ -140,31 +606,70 @@ footer p{margin:0 0 8px}
 <main>
 <section class="hero">
   <div class="wrap hero-grid">
+    <div class="hero-top">
     <div class="hero-txt">
       <h1>Zapíšeš poradu a všechny související dokumenty se vyplní <span class="hl">automaticky</span></h1>
-      <p class="lead">Dnes trvá FMEA porada hodinu a pak se ještě hodiny ručně vypisuje PFMEA, kontrolní plán, opatření a zápis. V RiskTýmu se vyplní samy z toho, co tým zapíše na poradě. Po poradě je hotovo.</p>
+      <p class="lead">Po poradě je hotovo.</p>
       <div class="cta">
         <a class="btn" href="porada.html">Otevřít ukázku</a>
         <a class="btn sec" href="fmea.html">Zahrát si trénink</a>
       </div>
-      <p class="note">Běží v prohlížeči, nic se neinstaluje. Firma a rizika v ukázce jsou vymyšlené.</p>
+      <p class="note">Běží v prohlížeči, nic se neinstaluje.</p>
+      <button type="button" class="vidbtn" id="vidBtn" aria-expanded="false" aria-controls="vidBox"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg><span>Ukázat video návod (52 s)</span></button>
       <div class="stats">
         <div class="stat"><b>1 hodina</b><span>porada, stejně jako dnes</span></div>
         <div class="stat zero"><b>0 hodin</b><span>přepisování po poradě</span></div>
       </div>
     </div>
-    <figure class="video">
-      <video id="smycka" autoplay muted loop playsinline preload="metadata" poster="img/smycka-poster.webp" width="1280" height="720" aria-label="Záznam z ukázky: tým uloží hodnocení a to se objeví v PFMEA, kontrolním plánu i zápisu"><source src="img/smycka.mp4" type="video/mp4"></video>
-      <figcaption>Skutečný záznam z ukázky: tým uloží hodnocení výskytu a detekce a to se hned objeví v PFMEA, kontrolním plánu i zápisu.</figcaption>
+    <div class="scwrap" aria-hidden="true">
+      <div class="scene">
+        <div class="h3d">
+          <div class="h3d-kyv"><div class="h3d-st">
+            <div class="h3d-podl"></div>
+            <div class="h3d-v p7"><span class="lb">Reklamace 8D</span><div class="obs d8"><i class="ok">D1</i><i class="ok">D2</i><i class="ok">D3</i><i class="ok">D4</i><i class="ok">D5</i><i class="">D6</i><i class="">D7</i><i class="">D8</i></div></div>
+            <div class="h3d-v p6"><span class="lb">Zápis</span><div class="obs zp"><b style="width:92%"></b><b style="width:78%"></b><b style="width:86%"></b><b style="width:64%"></b><b style="width:74%"></b></div></div>
+            <div class="h3d-v p5"><span class="lb">Opatření</span><div class="obs op"><div class="r ok"><span class="c"><svg width="9" height="9" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b></b><em>9. 12.</em></div><div class="r ok"><span class="c"><svg width="9" height="9" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b></b><em>25. 12.</em></div><div class="r"><span class="c"></span><b></b><em>15. 1.</em></div></div></div>
+            <div class="h3d-v p4"><span class="lb">Kontrolní plán</span><div class="obs g"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div>
+            <div class="h3d-v p3"><span class="lb">PFMEA</span><div class="obs pf"><div class="r"><b></b><b></b><b></b><em class="h">H</em></div><div class="r"><b></b><b></b><b></b><em class="m">M</em></div><div class="r"><b></b><b></b><b></b><em class="l">L</em></div><div class="r"><b></b><b></b><b></b><em class="m">M</em></div></div></div>
+            <div class="h3d-v p2"><span class="lb">Diagram procesu</span><div class="obs tok"><i>OP 05</i><u></u><i class="k">OP 10</i><u></u><i>OP 20</i><u></u><i>OP 50</i></div></div>
+            <div class="h3d-v p1"><span class="lb">Porada<span class="ok"><svg width="10" height="10" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Shoda</span></span><div class="obs hl"><i>3</i><i>3</i><i>4</i><i>3</i><i>3</i><i>4</i></div></div>
+            <div class="h3d-v p0 aktivni"><span class="lb">Přehled</span><div class="obs kp4"><div><small>Projednáno</small><b>12</b></div><div><small>Priorita H</small><b>5</b></div><div><small>Opatření</small><b>3</b></div><div><small>K doplnění</small><b>3</b></div></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <figure class="video" id="vidBox" hidden>
+      <video id="smycka" muted playsinline controls preload="none" poster="img/smycka-poster.webp" width="1280" height="720" aria-label="Video návod: jak proběhne porada v RiskTýmu, od rizika přes tajné hlasování k hotové PFMEA, kontrolnímu plánu a zápisu"><source src="img/smycka.mp4" type="video/mp4"></video>
+      <figcaption>Návod: jak proběhne porada, natočený ve skutečné ukázce</figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="bsec" aria-label="Co RiskTým umí">
+  <div class="wrap">
+    <div class="bento" id="bento">
+      <div class="bc b-a"><h3>Porada krok po kroku</h3><p>Ke každému kroku výroby zapíšete, co se může pokazit.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-okno" aria-hidden="true"><div class="ln" data-t="Krok: OP 50 Montáž motoru"></div><div class="ln" data-t="Vada: Přiskřípnutý vodič"></div><div class="ln" data-t="Následek: Neprojde zkouškou izolace"></div><div class="ln" data-t="Příčina: Vodiče nejsou v drážkách"></div><div class="ln" data-t="Prevence: Návodka s fotkou"></div></div></div>
+      <div class="bc b-b"><h3>Tajné hlasování</h3><p>Každý hodnotí sám, hlasy se ukážou najednou.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-hlas" aria-hidden="true"><div class="b-k"><div class="in"><span class="f">?</span><span class="z">3</span></div><small>TD</small></div><div class="b-k"><div class="in"><span class="f">?</span><span class="z">3</span></div><small>LH</small></div><div class="b-k"><div class="in"><span class="f">?</span><span class="z">4</span></div><small>KS</small></div><div class="b-k"><div class="in"><span class="f">?</span><span class="z">3</span></div><small>MK</small></div><div class="b-k"><div class="in"><span class="f">?</span><span class="z">3</span></div><small>JV</small></div><div class="b-k"><div class="in"><span class="f">?</span><span class="z">4</span></div><small>PN</small></div><span class="shoda">Shoda: 3</span></div></div>
+      <div class="bc b-c"><h3>Všechno propojené</h3><p>Jedno rozhodnutí se propíše do všech dokumentů.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-orb" aria-hidden="true"><div class="kr"></div><div class="kr k2"></div><div class="rot"><div class="ch" style="transform:rotate(0deg) translateY(calc(-1 * var(--r))) rotate(0deg)"><em><span>PFMEA</span></em></div><div class="ch" style="transform:rotate(120deg) translateY(calc(-1 * var(--r))) rotate(-120deg)"><em><span>Kontrolní plán</span></em></div><div class="ch" style="transform:rotate(240deg) translateY(calc(-1 * var(--r))) rotate(-240deg)"><em><span>Reklamace 8D</span></em></div></div><div class="rot2"><div class="ch" style="transform:rotate(60deg) translateY(calc(-1 * var(--r2))) rotate(-60deg)"><em><span>Diagram</span></em></div><div class="ch" style="transform:rotate(180deg) translateY(calc(-1 * var(--r2))) rotate(-180deg)"><em><span>Opatření</span></em></div><div class="ch" style="transform:rotate(300deg) translateY(calc(-1 * var(--r2))) rotate(-300deg)"><em><span>Zápis</span></em></div></div><div class="st"><svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true" class="rt-logo"><path d="M8 55 A45 13 0 0 1 98 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".9"/><path d="M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z" fill="#fff" fill-rule="evenodd"/><path d="M98 55 A45 13 0 0 1 8 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round"/></svg></div></div></div>
+      <div class="bc b-m"><div class="tv t1" aria-hidden="true"><svg viewBox="0 0 100 90" preserveAspectRatio="none"><defs><linearGradient id="tvA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#93c5fd" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><ellipse cx="50" cy="45" rx="47" ry="16" fill="none" stroke="url(#tvA)" stroke-width="4"/></svg></div><div class="tv t2" aria-hidden="true"><svg viewBox="0 0 100 90" preserveAspectRatio="none"><defs><linearGradient id="tvB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#93c5fd" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><ellipse cx="50" cy="45" rx="47" ry="16" fill="none" stroke="url(#tvB)" stroke-width="4"/></svg></div><div><div class="bl"><svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true" class="rt-logo"><path d="M8 55 A45 13 0 0 1 98 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".9"/><path d="M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z" fill="#fff" fill-rule="evenodd"/><path d="M98 55 A45 13 0 0 1 8 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round"/></svg>RiskTým</div><h2>Celá FMEA<br>na jednom místě</h2></div></div>
+      <div class="bc b-d"><h3>Reklamace 8D</h3><p>Předvyplní se z FMEA. Po uzavření se FMEA aktualizuje.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-8d" aria-hidden="true"><div><i>D1</i><span>Tým</span></div><div><i>D2</i><span>Popis</span></div><div><i>D3</i><span>Zadržení</span></div><div><i>D4</i><span>Příčina</span></div><div><i>D5</i><span>Opatření</span></div><div><i>D6</i><span>Ověření</span></div><div><i>D7</i><span>Prevence</span></div><div><i>D8</i><span>Uzavření</span></div></div></div>
+      <div class="bc b-e"><h3>Dokumenty hotové</h3><p>PFMEA, kontrolní plán, opatření i zápis.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-pas" aria-hidden="true"><div class="b-doc hl"><b>PFMEA</b><i></i><i></i><i></i><i></i></div><div class="b-doc"><b>Kontrolní plán</b><i></i><i></i><i></i><i></i></div><div class="b-doc"><b>Zápis</b><i></i><i></i><i></i><i></i></div></div></div>
+      <div class="bc b-f"><h3>Opatření s termíny</h3><p>Kdo, co a do kdy. Na nic se nezapomene.</p><a class="more" href="porada.html">Zobrazit v ukázce <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="b-pan" aria-hidden="true"><div class="hd"><span>Opatření</span><span>Termín</span></div><div class="rw"><span class="ck"><svg width="10" height="10" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tx">Kontrola obalu lupou</span><span class="av">LH</span><span class="dt">do 9. 12.</span></div><div class="rw"><span class="ck"><svg width="10" height="10" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tx">Hlídání proudu svařování</span><span class="av">MK</span><span class="dt">do 25. 12.</span></div><div class="rw"><span class="ck"><svg width="10" height="10" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tx">Fotka vedení vodičů</span><span class="av">TD</span><span class="dt">do 15. 1.</span></div><div class="rw"><span class="ck"><svg width="10" height="10" viewBox="0 0 16 16"><path d="M3.5 8.5l2.8 2.6L12.5 5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tx">Kalibr u každého kusu</span><span class="av">KS</span><span class="dt">do 20. 1.</span></div></div></div>
+    </div>
   </div>
 </section>
 
 <section class="band" id="cas">
   <div class="wrap">
     <h2>Kolik času to ušetří</h2>
-    <p class="intro">Porada zůstane stejně dlouhá. Odpadne všechno, co se dnes dělá po ní.</p>
-    <div class="compare">
+    <div class="rv compare">
       <div class="col now">
         <h3>Dnes</h3>
         <ul>
@@ -188,73 +693,64 @@ footer p{margin:0 0 8px}
         <p class="sum">Po poradě se nic nepřepisuje</p>
       </div>
     </div>
-    <p class="small">Kolik hodin přesně odpadne, záleží na velikosti FMEA. RiskTým měří délku porady, takže skutečný čas uvidíš na vlastní poradě.</p>
   </div>
 </section>
 
 <section id="jak">
   <div class="wrap">
     <h2>Jak to funguje</h2>
-    <p class="intro">Tři kroky na jedné poradě.</p>
 
-    <div class="step">
+    <div class="step rv">
       <div class="txt">
         <span class="num">1</span>
         <h3>Tým projde proces krok po kroku</h3>
-        <p>U každého kroku moderátor zapíše, co se může pokazit, proč a jak tomu dnes ve výrobě bráníte.</p>
+        <p>Ke každému kroku zapíšete, co se může pokazit. Na poradě to vypadá takto:</p>
       </div>
-      <a class="shot" href="img/03-porada-zaznam.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/03-porada-zaznam.webp" width="2166" height="1334" alt="Záznam rizika na poradě" loading="lazy"></a>
+      <a class="shot" href="img/03-porada-zaznam.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/03-porada-zaznam.webp" width="2166" height="1364" alt="Záznam rizika na poradě" loading="lazy"></a>
     </div>
 
-    <div class="step">
+    <div class="step rv">
       <div class="txt">
         <span class="num">2</span>
         <h3>Každý hodnotí sám za sebe</h3>
-        <p>Odborník řekne podklad: k výskytu technolog, k detekci kvalita. Pak hlasují všichni a hlasy se ukážou najednou. Když se hodně rozejdou, odborník hodnocení zdůvodní a zdůvodnění jde do zápisu. Nerozhoduje většina ani šéf.</p>
+        <p>Hlasy se ukážou najednou. Nerozhoduje většina ani šéf. Po hlasování to vypadá takto:</p>
       </div>
-      <a class="shot" href="img/04-porada-hlasovani.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/04-hlasovani-detail.webp" width="1990" height="532" alt="Tajné hlasování týmu a hotové hodnocení" loading="lazy"></a>
+      <a class="shot" href="img/04-porada-hlasovani.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/04-hlasovani-detail.webp" width="1994" height="622" alt="Tajné hlasování týmu a hotové hodnocení" loading="lazy"></a>
     </div>
 
-    <div class="step">
+    <div class="step rv">
       <div class="txt">
         <span class="num">3</span>
-        <h3>Dokumenty se vyplní samy</h3>
-        <p>Jedno rozhodnutí se propíše do PFMEA, kontrolního plánu, opatření i zápisu. Když se změní kontrola, změní se všude.</p>
+        <h3>Z porady se automaticky vyplní všechny dokumenty</h3>
+        <p>PFMEA, kontrolní plán, opatření i zápis. Nic dalšího není potřeba, všechno se propíše samo. Hned po poradě to vypadá takto (přepínej mezi dokumenty, kliknutím obrázek zvětšíš):</p>
       </div>
-      <a class="shot" href="img/07-kontrolni-plan.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/07-kontrolni-plan.webp" width="2166" height="1060" alt="Kontrolní plán vyplněný z porady" loading="lazy"></a>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="dokumenty">
-  <div class="wrap">
-    <h2>Co z jedné porady vznikne</h2>
-    <p class="intro">Přepínej a prohlédni si všechno, co RiskTým vyplní. Kliknutím obrázek zvětšíš.</p>
-    <div class="tabs" role="group" aria-label="Dokumenty">
-      <button type="button" data-i="0" aria-pressed="true">Přehled</button>
+      <div class="galerie">
+      <div class="tabs" role="group" aria-label="Dokumenty">
+      <button type="button" data-i="0" aria-pressed="false">Přehled</button>
       <button type="button" data-i="1" aria-pressed="false">Diagram procesu</button>
-      <button type="button" data-i="2" aria-pressed="false">PFMEA</button>
+      <button type="button" data-i="2" aria-pressed="true">PFMEA</button>
       <button type="button" data-i="3" aria-pressed="false">Kontrolní plán</button>
       <button type="button" data-i="4" aria-pressed="false">Opatření</button>
       <button type="button" data-i="5" aria-pressed="false">Zápis</button>
       <button type="button" data-i="6" aria-pressed="false">Reklamace 8D</button>
     </div>
-    <a class="shot" id="galLink" href="img/01-prehled.webp" target="_blank" rel="noopener" title="Zvětšit"><img id="galImg" src="img/01-prehled.webp" width="2166" height="1330" alt="Přehled" loading="lazy"></a>
-    <p class="cap" id="galCap"><b>Přehled.</b> Stav celé FMEA na jedné obrazovce: kolik je projednáno, priority, opatření s termíny a tým.</p>
+    <a class="shot" id="galLink" href="img/06-pfmea.webp" target="_blank" rel="noopener" title="Zvětšit"><img id="galImg" src="img/06-pfmea.webp" width="2166" height="1060" alt="PFMEA" loading="lazy"></a>
+    <p class="cap" id="galCap"><b>PFMEA.</b> Celá tabulka podle AIAG-VDA.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="trenink">
-  <div class="wrap train">
+  <div class="rv wrap train">
     <div>
       <h2>Trénink pro nováčky</h2>
-      <p>Cvičná porada na mobilu. Nováček sám hodnotí rizika a na konci dostane body, porovnání s týmem a záznam o zaškolení.</p>
-      <p>Na skutečnou poradu pak přijde připravený.</p>
+      <p>Cvičná porada na mobilu. Na skutečnou poradu pak nováček přijde připravený.</p>
       <a class="btn" href="fmea.html">Zahrát si trénink</a>
     </div>
     <div class="phones">
       <a class="shot" href="img/02a-mobil-porada.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/02a-mobil-porada.webp" width="600" height="1274" alt="Trénink na mobilu: porada" loading="lazy"></a>
-      <a class="shot" href="img/02b-mobil-vysledek.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/02b-mobil-vysledek.webp" width="600" height="1188" alt="Trénink na mobilu: výsledek" loading="lazy"></a>
+      <a class="shot" href="img/02b-mobil-vysledek.webp" target="_blank" rel="noopener" title="Zvětšit"><img src="img/02b-mobil-vysledek.webp" width="600" height="1274" alt="Trénink na mobilu: výsledek" loading="lazy"></a>
     </div>
   </div>
 </section>
@@ -262,13 +758,10 @@ footer p{margin:0 0 8px}
 <section class="band" id="otazky">
   <div class="wrap">
     <h2>Časté otázky</h2>
-    <div class="faq">
-      <details><summary>Pro koho to je?</summary><p>Pro firmy, kde je FMEA povinná: automotive, letectví, farmacie, zdravotnické prostředky, elektronika a strojírenství.</p></details>
+    <div class="rv faq">
       <details><summary>FMEA už máme v Excelu. Co s ní?</summary><p>RiskTým ji z Excelu načte a výsledek porady umí zapsat zpátky do vaší firemní šablony. Dokumenty tak dál ukládáte ve svém formátu.</p></details>
       <details><summary>Kam se ukládají data?</summary><p>Jen k vám: do prohlížeče a do souboru na vašem disku. Nic se neposílá na internet. RiskTým může běžet i na firemním intranetu, podrobnosti jsou na stránce <a href="PRO-IT.html">Informace pro IT</a>.</p></details>
       <details><summary>Musí se něco instalovat?</summary><p>Ne. Otevře se v prohlížeči na počítači, tabletu i mobilu.</p></details>
-      <details><summary>Co v ukázce nefunguje?</summary><p>Ukládání do souboru a export do Excelu jsou vypnuté. Prohlížet, klikat, hlasovat a tisknout do PDF můžeš bez omezení. Plná verze je na vyžádání.</p></details>
-      <details><summary>Je výrobce nářadí skutečný?</summary><p>Ne. Firma Ozubené kolečko, její aku vrtací šroubovák, lidé u stolu i všechna rizika jsou vymyšlené a nesouvisí s žádným skutečným výrobcem.</p></details>
     </div>
   </div>
 </section>
@@ -287,7 +780,8 @@ footer p{margin:0 0 8px}
 
 <footer>
   <div class="wrap" style="padding:0">
-    <p>Ukázková verze RiskTýmu. Firma, osoby a rizika jsou vymyšlené. Stupnice jsou zjednodušené pro výuku. Web nesbírá osobní údaje a nepoužívá cookies.</p>
+    <p>Pro firmy, kde je FMEA povinná: automotive, letectví, farmacie, zdravotnické prostředky, elektronika a strojírenství.</p>
+    <p>Ukázková verze RiskTýmu. Firma Ozubené kolečko, osoby a rizika jsou vymyšlené a nesouvisí s žádným skutečným výrobcem. Ukládání do souboru a export do Excelu jsou v ukázce vypnuté, plná verze je na vyžádání. Stupnice jsou zjednodušené pro výuku. Web nesbírá osobní údaje a nepoužívá cookies.</p>
     <p>Nezávislý projekt, není spojený s AIAG, VDA QMC ani IATF. Nenahrazuje školení FMEA ani příručky, podle kterých pracuje vaše firma.</p>
     <p>© 2026 Simona Fichtnerová, všechna práva vyhrazena. Kód ani obsah nesmíte bez jejího souhlasu kopírovat ani používat.</p>
   </div>
@@ -296,19 +790,19 @@ footer p{margin:0 0 8px}
 <script>
 (function(){
   var G = [
-    ['01-prehled', 1330, 'Přehled', 'Stav celé FMEA na jedné obrazovce: kolik je projednáno, priority, opatření s termíny a tým.'],
-    ['05-diagram', 1418, 'Diagram procesu', 'Kroky výroby za sebou, u každého počet rizik a co se stane s vadným dílem.'],
-    ['06-pfmea', 1366, 'PFMEA', 'Celá tabulka podle AIAG-VDA, od struktury až po opatření.'],
-    ['07-kontrolni-plan', 1060, 'Kontrolní plán', 'Co, jak a jak často se kontroluje. Bere se přímo z PFMEA.'],
-    ['08-opatreni', 1370, 'Opatření', 'Kdo co udělá a do kdy. Na nic se nezapomene.'],
-    ['09-zapis', 1190, 'Zápis', 'Zápis z porady je hotový ve chvíli, kdy porada skončí.'],
-    ['10-reklamace-8d', 1324, 'Reklamace 8D', 'Při reklamaci se 8D předvyplní z FMEA a po uzavření se FMEA aktualizuje.']
+    ['01-prehled', 1342, 'Přehled', 'Stav celé FMEA na jedné obrazovce.'],
+    ['05-diagram', 1430, 'Diagram procesu', 'Kroky výroby za sebou.'],
+    ['06-pfmea', 1060, 'PFMEA', 'Celá tabulka podle AIAG-VDA.'],
+    ['07-kontrolni-plan', 1332, 'Kontrolní plán', 'Bere se přímo z PFMEA.'],
+    ['08-opatreni', 1370, 'Opatření', 'Kdo, co a do kdy.'],
+    ['09-zapis', 1650, 'Zápis', 'Hotový, když porada skončí.'],
+    ['10-reklamace-8d', 1334, 'Reklamace 8D', 'Předvyplní se z FMEA.']
   ];
   var img = document.getElementById('galImg'), link = document.getElementById('galLink'), cap = document.getElementById('galCap');
   var bs = document.querySelectorAll('.tabs button');
   bs.forEach(function(b){ b.addEventListener('click', function(){
-    var g = G[+b.dataset.i], src = 'img/' + g[0] + '.webp';
-    img.src = src; img.height = g[1]; img.alt = g[2]; link.href = src;
+    var g = G[+b.dataset.i], src = (window.rtObr ? rtObr('img/' + g[0] + '.webp') : 'img/' + g[0] + '.webp');
+    img.src = src; img.height = g[1]; img.alt = g[2]; link.href = src; link.classList.toggle('cely', g[0] === '09-zapis');
     cap.innerHTML = '<b>' + g[2] + '.</b> ' + g[3];
     bs.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
   }); });
@@ -317,6 +811,119 @@ footer p{margin:0 0 8px}
 <script>
 (function(){ var v = document.getElementById('smycka'); if (!v) return;
   try { if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); v.pause(); v.controls = true; } } catch(e) {}
+})();
+</script>
+<script>
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  function cesta(n, R, r, h){ var d = '', k, s = 2*Math.PI/n;
+    for (k = 0; k < n; k++){ var a = k*s - s/2;
+      [[r, a], [r, a+s*.18], [R, a+s*.34], [R, a+s*.66], [r, a+s*.82]].forEach(function(q, i){
+        d += (k === 0 && i === 0 ? 'M' : 'L') + (Math.cos(q[1])*q[0]).toFixed(2) + ' ' + (Math.sin(q[1])*q[0]).toFixed(2) + ' '; }); }
+    return d + 'Z M' + h + ' 0 A' + h + ' ' + h + ' 0 1 0 ' + (-h) + ' 0 A' + h + ' ' + h + ' 0 1 0 ' + h + ' 0 Z'; }
+  document.querySelectorAll('[data-gear]').forEach(function(tilt){
+    /* kovová čelní plocha (světlo shora zleva), boky tmavší podle hloubky */
+    var BARVY = {ocel:['#eef2f7','#a3b1c2','#64748b','#334155','#475569'], oranz:['#fde68a','#f59e0b','#c2410c','#7c2d12','#9a3412']};
+    var g = tilt.dataset.gear.split(','), n = +g[0], R = +g[1], r = +g[2], h = +g[3], c = BARVY[g[4]], L = 16, gi = g[4];
+    var spin = document.createElement('div'); spin.className = 'spin'; tilt.appendChild(spin);
+    var d = cesta(n, R, r, h);
+    for (var i = 0; i < L; i++){
+      var svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', (-R) + ' ' + (-R) + ' ' + (2*R) + ' ' + (2*R));
+      svg.style.transform = 'translateZ(' + ((i - L + 1)*1.6) + 'px)';
+      var pa = document.createElementNS(NS, 'path'); pa.setAttribute('d', d); pa.setAttribute('fill-rule', 'evenodd');
+      if (i === L-1){ var df = document.createElementNS(NS, 'defs'); df.innerHTML = '<linearGradient id="kov-' + gi + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c[0] + '"/><stop offset=".5" stop-color="' + c[1] + '"/><stop offset="1" stop-color="' + c[2] + '"/></linearGradient>'; svg.insertBefore(df, svg.firstChild); }
+      pa.setAttribute('fill', i === L-1 ? 'url(#kov-' + gi + ')' : (i < L/2 ? c[3] : c[4])); svg.appendChild(pa);
+      if (i === L-1){ [[r*.64, 'rgba(0,0,0,.18)', 4], [r*.64 + 3, 'rgba(255,255,255,.35)', 1.5], [h + 4, 'rgba(0,0,0,.25)', 3]].forEach(function(k){ var c2 = document.createElementNS(NS, 'circle'); c2.setAttribute('r', k[0]); c2.setAttribute('fill', 'none'); c2.setAttribute('stroke', k[1]); c2.setAttribute('stroke-width', k[2]); svg.appendChild(c2); }); }
+      spin.appendChild(svg); }
+  });
+  /* malé kolo zapadá do velkého: středy ve vzdálenosti součtu roztečných kružnic, pod úhlem 33,75 st. */
+  var V = document.querySelector('.g3d.velky'), M = document.querySelector('.g3d.maly');
+  if (V && M){ var cx = -6 + 125, cy = 4 + 125, dist = (125+104)/2 + (71+50)/2, a = 33.75*Math.PI/180;
+    M.style.left = (cx + Math.cos(a)*dist - 71) + 'px'; M.style.top = (cy + Math.sin(a)*dist - 71) + 'px'; }
+  /* scéna se zmenší na šířku sloupce, aby nic nepřetékalo */
+  var W = document.querySelector('.scwrap');
+  function vejdi(){ if (W) W.style.setProperty('--s', Math.min(1, W.clientWidth / 480).toFixed(3)); }
+  vejdi(); addEventListener('resize', vejdi);
+  var klid = false; try { klid = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+  if (klid || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('rv-on');
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+/* bento: živé ukázky běží jen když je sekce vidět; při omezení pohybu se ukáže konečný stav */
+(function(){
+  var B = document.getElementById('bento'); if (!B) return;
+  var lines = [].slice.call(B.querySelectorAll('.b-okno .ln')), H = B.querySelector('.b-hlas'), D8 = [].slice.call(B.querySelectorAll('.b-8d div')), OP = [].slice.call(B.querySelectorAll('.b-pan .rw'));
+  function hotovo(){ lines.forEach(function(l){ l.innerHTML = '<span class="k">' + l.dataset.t.split(': ')[0] + ':</span> ' + l.dataset.t.split(': ')[1]; }); H.classList.add('odkryt'); D8.forEach(function(d){ d.classList.add('ok'); }); OP.forEach(function(o){ o.classList.add('ok'); }); }
+  var klid = false; try { klid = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+  if (klid || !('IntersectionObserver' in window)) { hotovo(); return; }
+  var vidno = false, tik = 0;
+  new IntersectionObserver(function(es){ es.forEach(function(e){ vidno = e.isIntersecting; B.classList.toggle('hraje', vidno); if (vidno) B.classList.add('in'); }); }, { rootMargin: '0px 0px -10% 0px' }).observe(B);
+  /* psaní záznamu */
+  var li = 0, ci = 0, pauza = 0;
+  function pis(){ if (!vidno) return; if (pauza > 0){ pauza--; return; }
+    if (li >= lines.length){ lines.forEach(function(l){ l.innerHTML = ''; }); li = 0; ci = 0; return; }
+    var l = lines[li], s = l.dataset.t, k = s.indexOf(': '); ci++;
+    var a = s.slice(0, ci), h = ci <= k + 1 ? '<span class="k">' + a + '</span>' : '<span class="k">' + s.slice(0, k + 1) + '</span>' + s.slice(k + 1, ci);
+    lines.forEach(function(x){ x.classList.remove('car'); }); l.innerHTML = h; l.classList.add('car');
+    if (ci >= s.length){ li++; ci = 0; pauza = li >= lines.length ? 45 : 8; } }
+  /* takt 60 ms: psaní; hlasování, 8D a opatření pomaleji */
+  setInterval(function(){ pis(); if (!vidno) return; tik++;
+    var t = tik % 75; if (t === 0) H.classList.remove('odkryt'); if (t === 30) H.classList.add('odkryt');
+    var d = tik % 140; if (d === 0) D8.forEach(function(x){ x.classList.remove('ok'); }); if (d > 10 && d <= 106 && d % 12 === 10) D8[(d - 10) / 12 - 1].classList.add('ok');
+    var o = tik % 120; if (o === 0) OP.forEach(function(x){ x.classList.remove('ok'); }); if (o > 15 && o % 22 === 15 && OP[Math.floor((o - 15) / 22)]) OP[Math.floor((o - 15) / 22)].classList.add('ok');
+    if (tik % 30 === 0){ var DD = [].slice.call(B.querySelectorAll('.b-pas .b-doc')), ix = DD.findIndex(function(d){ return d.classList.contains('hl'); }); DD.forEach(function(d){ d.classList.remove('hl'); }); if (DD.length) DD[(ix + 1) % DD.length].classList.add('hl'); }
+  }, 60);
+})();
+</script>
+<script>
+/* 3D vrstvy v úvodu: karty se střídají nahoře (každá se ukáže celá) a lehce se naklánějí podle myši */
+(function(){ var h = document.querySelector('.hero'), k = document.querySelector('.h3d-kyv'); if (!h || !k) return;
+  try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch(e) {}
+  var V = [].slice.call(k.querySelectorAll('.h3d-v')).reverse(); /* v DOM odspodu nahoru, V[0] = vrchní */
+  function poradi(){ V.forEach(function(v, i){ v.classList.remove('p0','p1','p2','p3','p4','p5','p6','p7','aktivni'); v.classList.add('p' + i); if (!i) v.classList.add('aktivni'); }); }
+  setInterval(function(){ if (document.hidden) return; var top = V[0]; top.classList.add('ven');
+    setTimeout(function(){ V.push(V.shift()); top.style.transition = 'none'; poradi(); top.classList.add('ven'); void top.offsetWidth; top.style.transition = '';
+      setTimeout(function(){ top.classList.remove('ven'); }, 40); }, 900); }, 3200);
+  h.addEventListener('pointermove', function(e){ var b = h.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;
+    k.style.setProperty('--mx', (x * 12).toFixed(2) + 'deg'); k.style.setProperty('--my', (-y * 8).toFixed(2) + 'deg'); });
+  h.addEventListener('pointerleave', function(){ k.style.setProperty('--mx', '0deg'); k.style.setProperty('--my', '0deg'); });
+})();
+</script>
+<!-- REZIM-PREPINAC-START --><script>
+/* přepínač světlého a tmavého režimu RiskTýmu: tlačítko v záhlaví, volba se pamatuje v prohlížeči */
+(function(){ var K = 'risktym-rezim', d = document.documentElement;
+  var SLUNCE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var MESIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  function svetly(){ return d.getAttribute('data-rezim') === 'svetly'; }
+  function popis(){ document.querySelectorAll('.rezim').forEach(function(b){ var t = svetly() ? 'Přepnout na tmavý režim' : 'Přepnout na světlý režim'; b.setAttribute('aria-label', t); b.title = t; b.innerHTML = svetly() ? MESIC : SLUNCE; }); }
+  var h = document.querySelector('header .wrap'); if (h && !h.querySelector('.rezim')){ var b = document.createElement('button'); b.type = 'button'; b.className = 'rezim'; h.appendChild(b); }
+  document.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('.rezim'); if (!b) return;
+    if (svetly()) d.removeAttribute('data-rezim'); else d.setAttribute('data-rezim', 'svetly');
+    try { localStorage.setItem(K, svetly() ? 'svetly' : 'tmavy'); } catch(e) {}
+    popis(); try { window.dispatchEvent(new Event('rezim')); } catch(e) {} });
+  popis();
+})();
+</script><!-- REZIM-PREPINAC-KONEC -->
+<script>
+/* obrázky aplikace podle režimu: světlý režim = světlé snímky ze složky img/svetle/ */
+(function(){ function sv(){ return document.documentElement.getAttribute('data-rezim') === 'svetly'; }
+  window.rtObr = function(src){ src = src.replace('img/svetle/', 'img/'); return sv() && /img\/(0[1-9]|10)[a-z]?-/.test(src) ? src.replace('img/', 'img/svetle/') : src; };
+  function prepni(){ document.querySelectorAll('img[src^="img/"]').forEach(function(i){ var n = rtObr(i.getAttribute('src')); if (n !== i.getAttribute('src')) i.setAttribute('src', n); });
+    document.querySelectorAll('a.shot[href^="img/"]').forEach(function(a){ a.setAttribute('href', rtObr(a.getAttribute('href'))); }); }
+  prepni(); window.addEventListener('rezim', prepni);
+})();
+</script>
+<script>
+/* tlačítko Ukázat video ukázku: video se načte a pustí až po kliknutí */
+(function(){ var b = document.getElementById('vidBtn'), f = document.getElementById('vidBox'), v = document.getElementById('smycka'); if (!b || !f || !v) return;
+  var klid = false; try { klid = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+  b.addEventListener('click', function(){ var otevrit = f.hidden; f.hidden = !otevrit; b.setAttribute('aria-expanded', otevrit ? 'true' : 'false');
+    b.querySelector('span').textContent = otevrit ? 'Skrýt video' : 'Ukázat video návod (52 s)';
+    if (otevrit){ v.preload = 'auto'; if (klid) { v.controls = true; } else { try { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){ v.controls = true; }); } catch(e) { v.controls = true; } } requestAnimationFrame(function(){ var h = document.querySelector('.top'), hh = h ? h.getBoundingClientRect().height : 0; window.scrollTo({top: Math.max(0, f.getBoundingClientRect().top + window.pageYOffset - hh - 16), behavior: klid ? 'auto' : 'smooth'}); }); }
+    else { try { v.pause(); } catch(e) {} } });
 })();
 </script>
 </body>

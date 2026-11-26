@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="cs">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"><!-- REZIM-HLAVA-START --><script>try{if(localStorage.getItem('risktym-rezim')==='svetly')document.documentElement.setAttribute('data-rezim','svetly')}catch(e){}</script><!-- REZIM-HLAVA-KONEC -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RiskTým · Informace pro IT</title>
 <meta name="description" content="Jak provozovat RiskTým na firemním intranetu: soubory, bezpečnostní hlavičky, kde jsou data, aktualizace a licence.">
@@ -35,11 +35,66 @@ td.h{font-family:ui-monospace,Consolas,monospace;font-size:.72rem;word-break:bre
 .tbl{overflow-x:auto}
 .note{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px}
 footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:.85rem}
+/* TMAVY-VZHLED-START */
+@media screen{html:not([data-rezim="svetly"]){color-scheme:dark}
+html:not([data-rezim="svetly"]) body{background:#08080c;color:#ededf3}
+html:not([data-rezim="svetly"]) body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(900px 600px at 85% -10%,rgba(99,102,241,.10),transparent 60%),radial-gradient(800px 600px at -10% 40%,rgba(168,85,247,.07),transparent 60%)}
+html:not([data-rezim="svetly"]) input,html:not([data-rezim="svetly"]) select,html:not([data-rezim="svetly"]) textarea{background-color:#0d0c13;color:#ededf3;border-color:rgba(255,255,255,.14)}
+html:not([data-rezim="svetly"]) input::placeholder,html:not([data-rezim="svetly"]) textarea::placeholder{color:#6f6e82}
+html:not([data-rezim="svetly"]) select option{background:#14121c;color:#ededf3}
+html:not([data-rezim="svetly"]) input:focus,html:not([data-rezim="svetly"]) select:focus,html:not([data-rezim="svetly"]) textarea:focus{border-color:#818cf8;outline-color:#818cf8}
+html:not([data-rezim="svetly"]) :focus-visible{outline-color:#a5b4fc}
+html:not([data-rezim="svetly"]) a{color:#a5b4fc}
+html:not([data-rezim="svetly"]) .logo,html:not([data-rezim="svetly"]) a.logo,html:not([data-rezim="svetly"]) header .logo{color:#ededf3}
+html:not([data-rezim="svetly"]) .logo small{color:#a1a0b2}
+html:not([data-rezim="svetly"]) a.pill{color:#ededf3}
+html:not([data-rezim="svetly"]) svg text[fill="#16181d"],html:not([data-rezim="svetly"]) svg text[fill="#111827"],html:not([data-rezim="svetly"]) svg text[fill="#0f172a"],html:not([data-rezim="svetly"]) svg text[fill="#0f2742"]{fill:#ededf3}
+html:not([data-rezim="svetly"]) svg text[fill="#5b6475"],html:not([data-rezim="svetly"]) svg text[fill="#6b7280"],html:not([data-rezim="svetly"]) svg text[fill="#475569"]{fill:#a1a0b2}
+html:not([data-rezim="svetly"]) .top{background:rgba(8,8,12,.78)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+html:not([data-rezim="svetly"]) .btn{background:linear-gradient(180deg,#2563eb,#1d4ed8);border-color:transparent;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 6px 18px rgba(37,99,235,.25)}
+html:not([data-rezim="svetly"]) .btn:hover{background:linear-gradient(180deg,#2f6df0,#1e50e0)}
+html:not([data-rezim="svetly"]) .btn.ghost,html:not([data-rezim="svetly"]) .btn.sec,html:not([data-rezim="svetly"]) .btn.secondary{background:rgba(255,255,255,.03);color:#ededf3;border:1px solid rgba(255,255,255,.14);box-shadow:none}
+html:not([data-rezim="svetly"]) .btn.ghost:hover,html:not([data-rezim="svetly"]) .btn.sec:hover,html:not([data-rezim="svetly"]) .btn.secondary:hover{background:rgba(255,255,255,.07)}
+html:not([data-rezim="svetly"]) .btn.danger,html:not([data-rezim="svetly"]) .btn.bad{background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(248,113,113,.4);box-shadow:none}
+html:not([data-rezim="svetly"]) .card,html:not([data-rezim="svetly"]) .panel{background:radial-gradient(600px 280px at 60% 115%,rgba(124,58,237,.10),transparent 62%),linear-gradient(180deg,#14121c,#100f17);border-color:rgba(255,255,255,.08)}
+html:not([data-rezim="svetly"]) table{color:#ededf3}
+html:not([data-rezim="svetly"]) th{color:#a1a0b2}
+html:not([data-rezim="svetly"]) td,html:not([data-rezim="svetly"]) th{border-color:rgba(255,255,255,.08)}
+html:not([data-rezim="svetly"]) hr{border-color:rgba(255,255,255,.08)}
+html:not([data-rezim="svetly"]) ::selection{background:rgba(129,140,248,.35)}
+html:not([data-rezim="svetly"]) img{color-scheme:light}
+
+
+html:not([data-rezim="svetly"]){--bg:#100f17;--panel:#15131d;--text:#96aad9;--muted:#a1a0b2;--line:#424f61;--brand:#8bb5e5;--brand-2:#819eee}
+html:not([data-rezim="svetly"]) header{background:#15131d}
+html:not([data-rezim="svetly"]) p,html:not([data-rezim="svetly"]) li{color:#a4b3cb}
+html:not([data-rezim="svetly"]) .facts li{background:#15131d}
+html:not([data-rezim="svetly"]) code{background:#1e252f}
+html:not([data-rezim="svetly"]) table{background:#15131d}
+html:not([data-rezim="svetly"]) th{background:#1f242d}
+html:not([data-rezim="svetly"]) .note{background:#3b3311}
+html:not([data-rezim="svetly"]){--bg:#08080c;--panel:#14121c;--text:#ededf3;--muted:#a1a0b2;--line:rgba(255,255,255,.08);--brand:#1b2a55;--brand-2:#7c9cff}
+html:not([data-rezim="svetly"]) header .wrap{display:flex;align-items:center}
+html:not([data-rezim="svetly"]) header .rezim{margin-left:auto}
+
+
+}
+@media screen{
+/* přepínač režimu vpravo v záhlaví */
+html[data-rezim="svetly"] header .wrap{display:flex;align-items:center}
+html[data-rezim="svetly"] header .rezim{margin-left:auto}
+
+}
+.rezim{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid rgba(127,127,140,.35);background:transparent;color:inherit;display:inline-grid;place-items:center;cursor:pointer;padding:0;margin-left:6px}
+.rezim:hover{background:rgba(127,127,140,.14)}
+.rezim svg{width:18px;height:18px}
+@media print{.rezim{display:none!important}}
+/* TMAVY-VZHLED-KONEC */
 h1,h2,h3,h4,summary,.q,.btn,.chip,.tag{text-wrap:balance}p,li,dd,td,.muted{text-wrap:pretty}</style>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Crect width=%2734%27 height=%2734%27 rx=%279%27 fill=%27%230f2742%27/%3E%3Cpath d=%27M17 7 L28 26 H6 Z%27 fill=%27%23f59e0b%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230b0b10%22/%3E%3Cg transform=%22translate(9 9) scale(.82)%22%3E%3Cpath d=%22M8 55 A45 13 0 0 1 98 55%22 transform=%22rotate(-22 53 55)%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z%22 fill=%22%23fff%22 fill-rule=%22evenodd%22/%3E%3Cpath d=%22M98 55 A45 13 0 0 1 8 55%22 transform=%22rotate(-22 53 55)%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%228%22 stroke-linecap=%22round%22/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
-<header><div class="wrap"><a href="index.html"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#0f2742"/><path d="M17 7 L28 26 H6 Z" fill="#f59e0b"/><circle cx="12" cy="22" r="2.4" fill="#0f2742"/><circle cx="17" cy="22" r="2.4" fill="#0f2742"/><circle cx="22" cy="22" r="2.4" fill="#0f2742"/><rect x="15.8" y="12" width="2.4" height="6" rx="1.2" fill="#0f2742"/></svg><span>RiskTým<small>Informace pro IT</small></span></a></div></header>
+<header><div class="wrap"><a href="index.html"><svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true" class="rt-logo"><path d="M8 55 A45 13 0 0 1 98 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round" opacity=".9"/><path d="M24 14 H57 C72 14 81 23 81 36 C81 46 75 53 66 56 L82 86 H63 L49 58 H41 V86 H24 Z M41 28 V45 H56 C62 45 65 41.5 65 36.5 C65 31.5 62 28 56 28 Z" fill="currentColor" fill-rule="evenodd"/><path d="M98 55 A45 13 0 0 1 8 55" transform="rotate(-22 53 55)" fill="none" stroke="#f59e0b" stroke-width="7" stroke-linecap="round"/></svg><span>RiskTým<small>Informace pro IT</small></span></a></div></header>
 <main><div class="wrap">
 <h1>RiskTým na firemním intranetu</h1>
 <p class="lead">Podklad pro správce IT: co RiskTým je, jak ho nasadit na interní server, kde jsou uložená data a co při nasazení zkontrolovat.</p>
@@ -118,9 +173,9 @@ Referrer-Policy: no-referrer</pre>
 <p>Podle nich ověříte, že soubory na serveru odpovídají dodané verzi.</p>
 <div class="tbl"><table>
 <tr><th>Soubor</th><th>SHA-256</th></tr>
-<tr><td><code>index.html</code></td><td class="h">3e4463f6b35f4425b05c063181cf62f02bcab815194ab6e034e965eac894938f</td></tr>
-<tr><td><code>fmea.html</code></td><td class="h">be01d980c7bec21bd44413d7f089c428dc7c497751aeebe87c0e0970eaad1773</td></tr>
-<tr><td><code>porada.html</code></td><td class="h">737d262b572187602f09800505881958d2b6f6f00d861831370964c2c72b2d7d</td></tr>
+<tr><td><code>index.html</code></td><td class="h">6ee94cdefb3649d263a30eb1f3e4313da71d8d777b623d8393304cdeb984b2cf</td></tr>
+<tr><td><code>fmea.html</code></td><td class="h">a200f56fe1b8fee95d9425b6bb72d78495395cd7199960dee03131dc334340b5</td></tr>
+<tr><td><code>porada.html</code></td><td class="h">c071dd98f2a0772fdbaee7d5fe9139791bb4f9229245b5f21f083eb5efefbcac</td></tr>
 <tr><td><code>fonts/inter-latin.woff2</code></td><td class="h">3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62</td></tr>
 <tr><td><code>fonts/inter-latin-ext.woff2</code></td><td class="h">34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956</td></tr>
 <tr><td><code>fonts/LICENSE-Inter.txt</code></td><td class="h">426ef06df3fa0af49e84ec5c89908fa9234a756e6872deeae0016bb1822f0544</td></tr>
@@ -131,5 +186,27 @@ Referrer-Policy: no-referrer</pre>
 <div class="note" style="margin-top:24px">RiskTým vytváří návrhy dokumentů. Obsah kontroluje, schvaluje a podepisuje odpovědná osoba ve firmě.</div>
 </div></main>
 <footer><div class="wrap">Ukázková verze RiskTýmu. © 2026 Simona Fichtnerová, všechna práva vyhrazena. Kód ani obsah nesmíte bez jejího souhlasu kopírovat ani používat. · <a href="index.html">Zpět na RiskTým</a></div></footer>
+
+
+
+
+
+
+
+<!-- REZIM-PREPINAC-START --><script>
+/* přepínač světlého a tmavého režimu RiskTýmu: tlačítko v záhlaví, volba se pamatuje v prohlížeči */
+(function(){ var K = 'risktym-rezim', d = document.documentElement;
+  var SLUNCE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var MESIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  function svetly(){ return d.getAttribute('data-rezim') === 'svetly'; }
+  function popis(){ document.querySelectorAll('.rezim').forEach(function(b){ var t = svetly() ? 'Přepnout na tmavý režim' : 'Přepnout na světlý režim'; b.setAttribute('aria-label', t); b.title = t; b.innerHTML = svetly() ? MESIC : SLUNCE; }); }
+  var h = document.querySelector('header .wrap'); if (h && !h.querySelector('.rezim')){ var b = document.createElement('button'); b.type = 'button'; b.className = 'rezim'; h.appendChild(b); }
+  document.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('.rezim'); if (!b) return;
+    if (svetly()) d.removeAttribute('data-rezim'); else d.setAttribute('data-rezim', 'svetly');
+    try { localStorage.setItem(K, svetly() ? 'svetly' : 'tmavy'); } catch(e) {}
+    popis(); try { window.dispatchEvent(new Event('rezim')); } catch(e) {} });
+  popis();
+})();
+</script><!-- REZIM-PREPINAC-KONEC -->
 </body>
 </html>
